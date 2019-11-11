@@ -3,9 +3,9 @@
 
 class PDOConnection {
 	private static $dbhost = "127.0.0.1";
-	private static $dbname = "mvcbee";
-	private static $dbuser = "mvcbeeuser";
-	private static $dbpass = "mvcbeepass";
+	private static $dbname = "ABP";
+	private static $dbuser = "adminABP";
+	private static $dbpass = "adminABP";
 	private static $db_singleton = null;
 
 	public static function getInstance() {
