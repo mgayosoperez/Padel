@@ -255,7 +255,7 @@ CREATE OR REPLACE TABLE `PROMOCIONADO_HAS_DEPORTISTA` (
 		CONSTRAINT PK_partido_promocionado PRIMARY KEY (`idPromocionado`, `deportista`),
 		-- CLAVES FORANEAS
 		CONSTRAINT FK_deportista_partido_promocionado FOREIGN KEY (`deportista`) REFERENCES `DEPORTISTA` (`login`),
-		CONSTRAINT FK_promocionado_partido_promocionado FOREIGN KEY (`promocionado`) REFERENCES `PARTIDO_PROMOCIONADO` (`idPromocionado`)
+		CONSTRAINT FK_promocionado_partido_promocionado FOREIGN KEY (`idPromocionado`) REFERENCES `PARTIDO_PROMOCIONADO` (`idPromocionado`)
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
