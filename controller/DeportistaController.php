@@ -1,7 +1,6 @@
 <?php
 
 require_once(__DIR__."/../core/ViewManager.php");
-require_once(__DIR__."/../core/I18n.php");
 
 require_once(__DIR__."/../model/Deportista/Deportista.php");
 require_once(__DIR__."/../model/Deportista/DeportistaMapper.php");
@@ -21,16 +20,18 @@ class DeportistaController extends BaseController {
 
 	}
 
+	public function index(){
+		$this->view->render("deportistas", "index");
+	}
+
 	
 	public function login() {
-		if (isset($_POST["deportista"])){ 
-		
-			if ($this->deportistaMapper->isValidUser($_POST["login"], $_POST["passwd"])) {
+		if (isset($_POST["login"])){ 
+			if ($this->DeportistaMapper->isValidDeportista($_POST["login"], $_POST["passwd"])) {
 
-				$_SESSION["currentdeportista"]=$_POST["deportista"];
-
-				
-				$this->view->redirect("deportista", "index");    //lo vamos viendo papa
+				$_SESSION["currentuser"]=$_POST["login"];
+				$this->view->setVariable("user", $_POST["login"]);	
+				$this->view->redirect("deportista", "index");
 
 			}else{
 				$errors = array();
@@ -40,36 +41,34 @@ class DeportistaController extends BaseController {
 		}
 
 		
-		$this->view->render("deportista", "login");
+		$this->view->render("deportistas", "login");
 	}
 
 	
 	public function register() {
 
 		$deportista = new Deportista();
-
 		if (isset($_POST["login"])){ 
-
 			
 			$deportista->setLogin($_POST["login"]);
 			$deportista->setPassword($_POST["passwd"]);
-			$deportista->setName($_POST["nombre"]);
+			$deportista->setNombre($_POST["nombre"]);
 			$deportista->setApellidos($_POST["apellidos"]);
 			$deportista->setSexo($_POST["sexo"]);
+			$deportista->setDni($_POST["dni"]);
 
 			try{
 				$deportista->checkIsValidForRegister(); 
 
-				if (!$this->deportistaMapper->loginExists($_POST["login"])){
+				if (!($this->DeportistaMapper->loginExists($_POST["login"]))){
+					
+					$this->DeportistaMapper->save($deportista);
 
 					
-					$this->deportistaMapper->save($deportista);
+					$this->view->setFlash("Login ".$deportista->getNombre()." successfully added. Please login now");
 
 					
-					$this->view->setFlash("Login ".$deportista->getUsername()." successfully added. Please login now");
-
-					
-					$this->view->redirect("deportistas", "login");
+					$this->view->redirect("deportista", "login");
 				} else {
 					$errors = array();
 					$errors["login"] = "login already exists";
@@ -90,6 +89,9 @@ class DeportistaController extends BaseController {
 
 	}
 
+	public function reserva(){
+		$this->view->render("deportistas", "reserva");
+	}
 
 	public function logout() {
 		session_destroy();

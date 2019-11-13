@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../core/PDOConnection.php");
+require_once(__DIR__."/../../core/PDOConnection.php");
 
 class DeportistaMapper {
 
@@ -14,13 +14,6 @@ class DeportistaMapper {
 		$sql = $this->db->prepare("INSERT INTO DEPORTISTA (login, password, DNI, nombre, apellidos, sexo) values (?,?,?,?,?,?)");
 		$sql->execute(array($deportista->getLogin(), $deportista->getPasswd(),
 			$deportista->getDni(), $deportista->getNombre(), $deportista->getApellidos(), $deportista->getSexo()));
-
-		if(!$this->mysqli->query($sql)){
-			return 'Error en la inserción';
-		}				
-		else{
-			return 'Inserción realizada con éxito';
-		}	
 	}
 
 	public function loginExists($login) {
@@ -34,7 +27,7 @@ class DeportistaMapper {
 
 
 	public function isValidDeportista($login, $passwd) {
-		$stmt = $this->db->prepare("SELECT count(login) FROM DEPORTISTA where login=? and passwd=?");
+		$stmt = $this->db->prepare("SELECT count(login) FROM DEPORTISTA where login=? and password=?");
 		$stmt->execute(array($login, $passwd));
 
 		if ($stmt->fetchColumn() > 0) {
