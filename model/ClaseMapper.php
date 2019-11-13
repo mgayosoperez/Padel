@@ -22,14 +22,34 @@ class ClaseMapper{
 
   public function showall(){
     $stmt = $this->db->prepare("SELECT * from CLASE");
-    $clases_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $clases = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $clases = array();
-    foreach ($clases_db as $clase) {
-      array_push($clases, $clase);
-    }
     return $clases;
   }
+
+  public function existeClaseHora($hora){
+    $stmt = $this->db->prepare("SELECT count(hora) from CLASE WHERE hora = ?");
+    $stmt->execute(array($hora));
+
+    if ($stmt->fetchColumn > 0) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  public function existeClaseId($idClase){
+    $stmt = $this->db->prepare("SELECT count(idClase) from CLASE WHERE idClase = ?");
+    $stmt->execute(array($idClase));
+
+    if ($stmt->fetchColumn > 0) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+
 }
 
  ?>
