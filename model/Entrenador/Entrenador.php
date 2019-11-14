@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__."/../core/ValidationException.php");
+require_once(__DIR__."/../../core/ValidationException.php");
 
 
 class Entrenador{
@@ -11,11 +11,10 @@ class Entrenador{
  private $nombre;
  private $apellidos;
  private $sexo;
- private $clase;
 
 
  function __construct($login = NULL, $passwd = NULL, $dni = NULL, $nss = NULL,
-                    $nombre = NULL, $apellidos = NULL, $sexo = NULL, $clase = NULL){
+                    $nombre = NULL, $apellidos = NULL, $sexo = NULL){
    $this->login = $login;
    $this->passwd = $passwd;
    $this->dni = $dni;
@@ -23,7 +22,6 @@ class Entrenador{
    $this->nombre = $nombre;
    $this->apellidos = $apellidos;
    $this->sexo = $sexo;
-   $this->clase = $clase;
  }
 
 
@@ -49,9 +47,6 @@ class Entrenador{
  public function getSexo(){
    return $this->sexo;
  }
- public function getClase(){
-   return $this->clase;
- }
 
  //Setters
  public function setLogin($login){
@@ -75,30 +70,33 @@ class Entrenador{
  public function setSexo($sexo){
    $this->sexo = $sexo;
  }
- public function setClase($clase){
-   $this->clase = $clase;
- }
+
 
  public function checkIsValidForRegister() {
    $errors = array();
-   if (strlen($this->username) < 5) {
-     $errors["username"] = "Username must be at least 5 characters length";
-
+   if (strlen($this->login) < 5) {
+     $errors["login"] = "Username must be at least 5 characters length";
    }
    if (strlen($this->passwd) < 5) {
      $errors["passwd"] = "Password must be at least 5 characters length";
    }
-   if (strlen($this->name) < 5) {
-     $errors["name"] = "Name must be at least 5 characters length";
+   if (strlen($this->dni) < 5) {
+     $errors["dni"] = "Name must be at least 5 characters length";
    }
-   if (strlen($this->email) < 5) {
-     $errors["email"] = "Email must be at least 5 characters length";
+   if (strlen($this->nss) < 5) {
+     $errors["nss"] = "Email must be at least 5 characters length";
    }
-   if (strlen($this->phone) < 5) {
-     $errors["phone"] = "Phone must be at least 5 characters length";
+   if (strlen($this->nombre) < 1) {
+     $errors["nombre"] = "nombre must be at least 1 characters length";
    }
+   if (strlen($this->apellidos) < 2) {
+     $errors["apellidos"] = "apellidos must be at least 2 characters length";
+   }
+   if (strlen($this->sexo) < 4) {
+     $errors["sexo"] = "apellidos must be at least 5 characters length";
    if (sizeof($errors)>0){
      throw new ValidationException($errors, "user is not valid");
    }
  }
+}
 }

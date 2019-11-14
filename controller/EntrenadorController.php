@@ -2,8 +2,8 @@
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 
-require_once(__DIR__."/../model/Entrenador.php");
-require_once(__DIR__."/../model/EntrenadorMapper.php");
+require_once(__DIR__."/../model/Entrenador/Entrenador.php");
+require_once(__DIR__."/../model/Entrenador/EntrenadorMapper.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
 
@@ -15,8 +15,9 @@ class EntrenadorController extends BaseController
 
   private $entrenadorMapper;
 
-  function __construct()
-  {
+  public function __construct(){
+      parent::__construct();
+
     $this->entrenadorMapper = new EntrenadorMapper();
   }
 
@@ -31,28 +32,27 @@ class EntrenadorController extends BaseController
   public function add(){
     $entrenador = new Entrenador();
 
-    if (isset($_POST["username"])){ // reaching via HTTP Post...
+    if (isset($_POST["login"])){ // reaching via HTTP Post...
 
 			// populate the User object with data form the form
-			$entrenador->setLogin($_POST["username"]);
+			$entrenador->setLogin($_POST["login"]);
 			$entrenador->setPasswd($_POST["passwd"]);
       $entrenador->setDni($_POST["dni"]);
       $entrenador->setNss($_POST["nss"]);
 			$entrenador->setNombre($_POST["nombre"]);
 			$entrenador->setApellidos($_POST["apellidos"]);
 			$entrenador->setSexo($_POST["sexo"]);
-      $entrenador->setClase($_POST["clase"]);
 
       try{
         $entrenador->checkIsValidForRegister();
 
-        if (!$this->entrenadorMapper->entrenadorExiste($_POST["username"])) {
+        if (!$this->entrenadorMapper->entrenadorExiste($_POST["login"])) {
           // Guardamos el ENTRENADOR
           $this->entrenadorMapper->add($entrenador);
 
-          $this->view->setFlash("Username ".$entrenador->getLogin()." successfully added. Please login now");
-          //Redirijimos la vista a index.php?Controller=entrenador&action=showall
-          $this->view->redirect("entrenador", "showall");
+          $this->view->setFlash("Entrenador ".$entrenador->getLogin()." añadido.");
+          //Redirijimos la vista a index.php?Controller=entrenador&action=index
+          $this->view->redirect("entrenador", "index");
         }else {
 					$errors = array();
 					$errors["username"] = "Username already exists";
@@ -65,35 +65,46 @@ class EntrenadorController extends BaseController
 				$this->view->setVariable("errors", $errors);
 			}
 
-    }else {
-      //$this->view->setVariable("entrenador", $entrenador);
-      // render the view (/view/entrenadores/add.php)
+    }
+      $this->view->setVariable("entrenador", $entrenador);
+      //render the view (/view/entrenadores/add.php)
   		$this->view->render("entrenadores", "add");
     }
-  }
+
 
 
   public function delete(){
     $entrenador = new Entrenador();
-    if(isset($_POST["username"])){
-      $entrenador->setLogin($_POST["username"]);
+    if(isset($_GET["username"])){
+      /*$entrenador->setLogin($_POST["username"]);
 			$entrenador->setPasswd($_POST["passwd"]);
       $entrenador->setDni($_POST["dni"]);
       $entrenador->setNss($_POST["nss"]);
 			$entrenador->setNombre($_POST["nombre"]);
 			$entrenador->setApellidos($_POST["apellidos"]);
-			$entrenador->setSexo($_POST["sexo"]);
-      $entrenador->setClase($_POST["clase"]);
+			$entrenador->setSexo($_POST["sexo"]);*/
 
-      if (!$this->entrenadorMapper->entrenadorExiste($_POST["username"])) {
+      if (!$this->entrenadorMapper->entrenadorExiste($_GET["username"])) {
         $errors = array();
         $errors["username"] = "Entrenador no existe";
         $this->view->setVariable("errors", $errors);
       }else{
-        $this->entrenadorMapper->delete($entrenador);
-      }
+        $entrenador = $this->entrenadorMapper->findByUsername($_GET["username"]);
 
+
+        $this->entrenadorMapper->delete($entrenador);
+
+        $this->view->setFlash("Entrenador ".$entrenador->getLogin()." borrado.");
+        //Redirijimos la vista a index.php?Controller=entrenador&action=index
+        $this->view->redirect("entrenador", "index");
+      }
     }
+
+    $entrenador = $this->entrenadorMapper->findByUsername($_GET["login"]);
+    $this->view->setVariable("entrenador", $entrenador);
+    //render the view (/view/entrenadores/add.php)
+    $this->view->render("entrenadores", "delete");
+
   }
 
 
@@ -110,7 +121,6 @@ class EntrenadorController extends BaseController
 			$entrenador->setNombre($_POST["nombre"]);
 			$entrenador->setApellidos($_POST["apellidos"]);
 			$entrenador->setSexo($_POST["sexo"]);
-      $entrenador->setClase($_POST["clase"]);
 
       try{
         $entrenador->checkIsValidForRegister();
@@ -119,9 +129,9 @@ class EntrenadorController extends BaseController
           // Guardamos el ENTRENADOR
           $this->entrenadorMapper->update($entrenador);
 
-          $this->view->setFlash("Username ".$entrenador->getLogin()." successfully updated. Please login now");
-          //Redirijimos la vista a index.php?Controller=entrenador&action=showall
-          $this->view->redirect("entrenador", "showall");
+          $this->view->setFlash("Username ".$entrenador->getLogin()." successfully updated.");
+          //Redirijimos la vista a index.php?Controller=entrenador&action=index
+          $this->view->redirect("entrenador", "index");
         }else {
 					$errors = array();
 					$errors["username"] = "Username already exists";
@@ -134,27 +144,32 @@ class EntrenadorController extends BaseController
 				$this->view->setVariable("errors", $errors);
 			}
 
-    }else if(isset($_POST["login"])){
-        $array = $this->entrenadorMapper->findByUsername($_POST["login"]);
-        /*$entrenador->setLogin($array["Login"]);
-  			$entrenador->setPasswd($array["Password"]);
-        $entrenador->setDni($array["DNI"]);
-        $entrenador->setNss($array["NSS"]);
-  			$entrenador->setNombre($array["Nombre"]);
-  			$entrenador->setApellidos($array["Apellidos"]);
-  			$entrenador->setSexo($array["Sexo"]);
-        $entrenador->setClase($array["Clase"]);*/
-      }
-      // Put the User object visible to the view
-  		$this->view->setVariable("entrenador", $array); //O $entrenador ???
+    }
+    $entrenador = $this->entrenadorMapper->findByUsername($_GET["login"]);
+    // Put the Entrenador object visible to the view
 
-  		// render the view (/view/entrenadores/update.php)
-  		$this->view->render("entrenadores", "update");
+    $this->view->setVariable("entrenador", $entrenador);
+      // render the view (/view/entrenadores/update.php)
+    $this->view->render("entrenadores", "edit");
+
 }
 
   public function showcurrent(){
-    $entrenador = $this->entrenadorMapper->findByUsername($_POST["username"]);
-    $this->view->setVariable("entrenador", $entrenador);
+    if(isset($_POST["username"])){
+      $array = $this->entrenadorMapper->findByUsername($_POST["username"]);
+      $entrenador = new Entrenador();
+      $entrenador->setLogin($array["login"]);
+      $entrenador->setPasswd($array["password"]);
+      $entrenador->setDni($array["DNI"]);
+      $entrenador->setNss($array["NSS"]);
+      $entrenador->setNombre($array["nombre"]);
+      $entrenador->setApellidos($array["apellidos"]);
+      $entrenador->setSexo($array["sexo"]);
+
+      $this->view->setVariable("entrenador", $entrenador);
+    }
+
+
     $this->view->render("entrenadores", "showcurrent");
   }
 

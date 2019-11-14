@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__."/../core/PDOConnection.php");
+require_once(__DIR__."/../../core/PDOConnection.php");
 
 
 class EntrenadorMapper{
@@ -12,53 +12,71 @@ class EntrenadorMapper{
 
   public function findAll(){
     $stmt = $this->db->query("SELECT * FROM ENTRENADOR");
+
     $entrenadores_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $entrenadores = array();
     foreach ($entrenadores_db as $entrenador) {
 
       array_push($entrenadores, new Entrenador($entrenador["login"], $entrenador["password"],
                 $entrenador["DNI"], $entrenador["NSS"], $entrenador["nombre"], $entrenador["apellidos"],
-                $entrenador["sexo"], $entrenador["clase"]));
-    }
+                $entrenador["sexo"]));
+    }/*
+    while($row = $stmt->fetch_object()){
+      $entrenadores[] = $row;
+    }*/
     return $entrenadores;
   }
 
   public function add(Entrenador $entrenador){
     $stmt = $this->db->prepare("INSERT INTO ENTRENADOR(login, password, DNI, NSS,
-                                nombre, apellidos, sexo, clase)
-                                values (?,?,?,?,?,?,?,?)");
+                                nombre, apellidos, sexo)
+                                values (?,?,?,?,?,?,?)");
 
     $stmt->execute(array($entrenador->getLogin(), $entrenador->getPasswd(),
                           $entrenador->getDni(), $entrenador->getNss(),
                           $entrenador->getNombre(),$entrenador->getApellidos(),
-                          $entrenador->getSexo(), $entrenador->getClase()));
-    return $this->db->lastInsertId();
+                          $entrenador->getSexo()));
+
+    if(!$this->db->query($stmt)){
+
+      return 'Error en la inserción';
+    }
+    else{
+      return 'Inserción realizada con éxito';
+    }
   }
 
   public function delete(Entrenador $entrenador){
     $stmt = $this->db->prepare("DELETE from ENTRENADOR WHERE login=?");
     $stmt->execute(array($entrenador->getLogin()));
+
+    if ($this->db->query($stmt)) {
+
+        return "Borrado realizado con exito";
+
+    } else {
+        return "Error en el borrado";
+    }
   }
 
 
   public function update(Entrenador $entrenador){
-    $stmt = $this->db->prepare("UPDATE ENTRENADOR SET login = ?,
+    $stmt = $this->db->prepare("UPDATE ENTRENADOR SET
                               password = ?, DNI = ?,
                               NSS = ?, nombre = ?,
-                              apellidos = ?, sexo = ?,
-                              clase = ?");
+                              apellidos = ?, sexo = ?");
 
-    $stmt->execute(array($entrenador->getLogin(), $entrenador->getPasswd(),
+    $stmt->execute(array($entrenador->getPasswd(),
                     $entrenador->getDni(), $entrenador->getNss(),
                     $entrenador->getNombre(),$entrenador->getApellidos(),
-                    $entrenador->getSexo(), $entrenador->getClase()));
+                    $entrenador->getSexo()));
   }
 
 
 
-  public function entrenadorExiste($username) {
-		$stmt = $this->db->prepare("SELECT count(username) FROM ENTRENADOR where login=?");
-		$stmt->execute(array($username));
+  public function entrenadorExiste($login) {
+		$stmt = $this->db->prepare("SELECT count(login) FROM ENTRENADOR where login=?");
+		$stmt->execute(array($login));
 
 		if ($stmt->fetchColumn() > 0) {
 			return true;
@@ -68,7 +86,12 @@ class EntrenadorMapper{
   public function findByUsername($username) {
     $stmt = $this->db->prepare("SELECT * FROM ENTRENADOR where login=?");
 		$stmt->execute(array($username));
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $entrenador = $stmt->fetch(PDO::FETCH_ASSOC);
+    $toret = new Entrenador($entrenador["login"], $entrenador["password"],
+              $entrenador["DNI"], $entrenador["NSS"], $entrenador["nombre"], $entrenador["apellidos"],
+              $entrenador["sexo"]);
+
+    return $toret;
   }
 
 
