@@ -225,8 +225,13 @@ CREATE OR REPLACE TABLE `RESERVA_HAS_DEPORTISTA` (
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_reserva_has_deportista PRIMARY KEY (`idReserva`, `idDeportista`),
 		-- CLAVES FORANEAS
+<<<<<<< HEAD
+		CONSTRAINT FK_idreserva_reserva_has_deportista	FOREIGN KEY (`idReserva`) REFERENCES `RESERVA` (`idReserva`) ON DELETE CASCADE,	
+		CONSTRAINT FK_iddeportista_reserva_has_deportista	FOREIGN KEY (`idDeportista`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE
+=======
 		CONSTRAINT FK_idreserva_reserva_has_deportista	FOREIGN KEY (`idReserva`) REFERENCES `RESERVA` (`idReserva`),	
 		CONSTRAINT FK_iddeportista_reserva_has_deportista	FOREIGN KEY (`idDeportista`) REFERENCES `DEPORTISTA` (`login`)
+>>>>>>> 4070f327002770d2b99dbac81bef8f79974fcd9b
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
