@@ -41,9 +41,9 @@ class ReservaMapper{
   }
 
   public function getHasReserva($id){
-  	 $sql = $this->db->prepare("SELECT idReserva FROM RESERVA_HAS_DEPORTISTA WHERE idDeportista = ?");
-
-  	 $sql->execute(array($id));
+     $sql = $this->db->prepare("SELECT reserva.idReserva FROM reserva, reserva_has_deportista WHERE reserva.idReserva = reserva_has_deportista.idReserva AND reserva.fecha > ? AND reserva_has_deportista.idDeportista =?");
+  	 $fecha = date("Y-m-d H:i" ,time());
+     $sql->execute(array($fecha,$id));
 
   	 $reserva = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -70,8 +70,9 @@ class ReservaMapper{
  	}
 
  	public function numReserva($id){
- 		$sql = $this->db->prepare("SELECT count(idReserva) FROM RESERVA_HAS_DEPORTISTA WHERE idDeportista = ?");
- 		$sql->execute(array($id));
+ 		$sql = $this->db->prepare("SELECT count(reserva.idReserva) FROM reserva, reserva_has_deportista WHERE reserva.idReserva = reserva_has_deportista.idReserva AND reserva.fecha > ? AND reserva_has_deportista.idDeportista =?");
+    $fecha = date("Y-m-d H:i" ,time());
+ 		$sql->execute(array($fecha,$id));
  		$toret="0";
  		$numReserva = $sql->fetch(PDO::FETCH_ASSOC);
  		if($numReserva!=NULL){

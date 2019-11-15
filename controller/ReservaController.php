@@ -37,11 +37,11 @@ class ReservaController extends BaseController {
 
 				$this->ReservaMapper->add($reserva);
 				sleep (1);
-				
+				$this->view->redirect("deportista", "index");
 			}else{
 				echo("No hay pistas");
 			}
-			$this->view->redirect("deportista", "index");
+			
 
 		}
 	}

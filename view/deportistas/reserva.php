@@ -158,7 +158,7 @@ function fondoHora(int $horis){
 </table>
 
 <form  action="index.php?controller=reserva&amp;action=addReserva" method="POST" class="text-center">
-  <input type="text" name="fecha" id="input" >
+  <input hidden type="text" name="fecha" id="input" >
    <input type="submit" value="Realizar reserva" class="btn btn-yagami mx-auto" style="width: 200px;"></input>
 </form>
 	</div>
