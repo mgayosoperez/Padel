@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../core/ValidationException.php");
+require_once(__DIR__."/../../core/ValidationException.php");
 
 class Reserva{
 
@@ -14,8 +14,7 @@ class Reserva{
         $this->fecha = $fecha;
         $this->idPista = $idPista;
     }
-}
-// geters
+    // geters
 public function getIdReserva()
 {
     return $this->idReserva;
@@ -46,4 +45,6 @@ public function setPista($idPista)
 {
     $this->idPista = $idPista;
 }
+}
+
 ?>

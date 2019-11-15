@@ -2,10 +2,13 @@
 //file: view/users/register.php
 
 require_once(__DIR__."/../../core/ViewManager.php");
+require_once(__DIR__."/../../model/Reserva/Reserva.php");
+$view = ViewManager::getInstance();
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
 $view->setVariable("title", "index");
+$datos=$view->getVariable("cosa");
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -18,7 +21,7 @@ $view->setVariable("title", "index");
         <a class="nav-link" href="index.php?controller=deportista&amp;action=reserva">Reservas<span class="sr-only"></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=deportista&amp;action=campeonato">Campeonatos</a>
+        <a class="nav-link" href="index.php?controller=reserva&amp;action=index">Campeonatos</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=deportista&amp;action=clases">Clases</a>
@@ -68,3 +71,34 @@ $view->setVariable("title", "index");
     </a>
   </div>
 </div>
+
+<?php
+  if(isset($datos)){
+
+    $i=0;?>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Pista</th>
+    </tr>
+  </thead>
+   <tbody>
+
+  <?php
+ 
+  foreach($datos as $id){
+    ?>
+    <tr>
+      <th scope="row"></th>
+      <td><?php echo $id["fecha"]?></td>
+      <td><?php echo $id["idPista"]?></td>
+    </tr>
+<?php
+  }?>
+</tbody>
+</table>
+ <?php }
+
+  ?>

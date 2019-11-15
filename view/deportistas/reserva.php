@@ -6,8 +6,36 @@ $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
 $view->setVariable("title", "index");
-$fies = "D, d M Y H:i:s";
-$fecha=date($fies ,time()); 
+
+$fies = "d M Y H i";
+$fieso = "Y-m-d ";
+
+$fecha = date($fies ,time());
+$Dfecha = explode(' ', $fecha);
+$HoraActual =$Dfecha[3];
+
+$fechas = array();
+$fechato = array();
+
+for($z = 0; $z < 7; $z++){
+  $fechatito = date($fieso ,time()+(86400*$z));
+
+  array_push($fechato, $fechatito);
+
+  $fecha=date($fies ,time()+(86400*$z));
+  $Dfecha = explode(' ', $fecha);
+  array_push($fechas, $Dfecha[0]);
+}
+
+function fondoHora(int $horis){
+  $fies = "d M Y H i";
+  $fecha = date($fies ,time());
+  $Dfecha = explode(' ', $fecha);
+  $HoraActual =$Dfecha[3];
+    if($horis<$HoraActual){
+      echo  "class='bg-dark'";
+  }
+}
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -38,30 +66,30 @@ $fecha=date($fies ,time());
 		<table class="table mt-5 text-center table-bordered ">
   <thead class="thead-dark">
     <tr>
-      <th scope="col"></th>
-      <th scope="col">Lunes</th>
-      <th scope="col">Martes</th>
-      <th scope="col">Miercoles</th>
-      <th scope="col">Jueves</th>
-      <th scope="col">Viernes</th>
-      <th scope="col">Sabado</th>
-      <th scope="col">Domingo</th>
+      <th scope="col">Horas</th>
+      <th scope="col"  <?php fondoHora(8);?> id="th1"><?= $fechas[0]?></th>
+      <th scope="col" id="th2"><?= $fechas[1]?></th>
+      <th scope="col" id="th3"><?= $fechas[2]?></th>
+      <th scope="col" id="th4"><?= $fechas[3]?></th>
+      <th scope="col" id="th5"><?= $fechas[4]?></th>
+      <th scope="col" id="th6"><?= $fechas[5]?></th>
+      <th scope="col" id="th7"><?= $fechas[6]?></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row" class="bg-dark text-light ">8:00/10:00</th>
-      <td id="1"  onclick="toinput('lunes-8:00/10:00', '1')"></td>
-      <td id="2"  onclick="toinput('martes-8:00/10:00', '2')"></td>
-      <td id="3"  onclick="toinput('miercoles-8:00/10:00', '3')"></td>
-      <td id="4"  onclick="toinput('jueves-8:00/10:00', '4')"></td>
-      <td id="5"  onclick="toinput('viernes-8:00/10:00', '5')"></td>
-      <td id="6"  onclick="toinput('sabado-8:00/10:00', '6')"></td>
-      <td id="7"  onclick="toinput('domingo-8:00/10:00', '7')"></td>
+      <td id="1"  onclick="toinput( '<?php echo($fechato[0]);?>08:00'  , '1')"></td>
+      <td id="2"  onclick="toinput( '<?php echo($fechato[1]);?>08:00'  , '2')"></td>
+      <td id="3"  onclick="toinput( '<?php echo($fechato[2]);?>08:00'  , '3')"></td>
+      <td id="4"  onclick="toinput( '<?php echo($fechato[3]);?>08:00'  , '4')"></td>
+      <td id="5"  onclick="toinput( '<?php echo($fechato[4]);?>08:00'  , '5')"></td>
+      <td id="6"  onclick="toinput( '<?php echo($fechato[5]);?>08:00'  , '6')"></td>
+      <td id="7"  onclick="toinput( '<?php echo($fechato[6]);?>08:00'  , '7')"></td>
     </tr>
     <tr>
       <th scope="row" class="bg-dark text-light ">10:00/12:00</th>
-      <td id="8"   class="bg-dark" onclick="toinput('lunes-10:00/12:00', '8')"></td>
+      <td id="8"    class="bg-dark" onclick="toinput('lunes-10:00/12:00', '8')"></td>
       <td id="9"    onclick="toinput('martes-10:00/12:00', '9')"></td>
       <td id="10"   onclick="toinput('miercoles-10:00/12:00', '10')"></td>
       <td id="11"   onclick="toinput('jueves-10:00/12:00', '11')"></td>
@@ -122,12 +150,23 @@ $fecha=date($fies ,time());
   </tbody>
 </table>
 
-<form class="text-center">
-  <input type="text" name="paco" id="input" >
+<form  action="index.php?controller=reserva&amp;action=addReserva" method="POST" class="text-center">
+  <input type="text" name="fecha" id="input" >
    <input type="submit" value="Realizar reserva" class="btn btn-yagami mx-auto" style="width: 200px;"></input>
 </form>
 	</div>
 <script type="text/javascript">
+  var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+var yyyy = today.getFullYear();
+var hh = today.getHours();
+var min = today.getMinutes();
+today = mm + '/' + dd + '/' + yyyy + ' ' +hh+':'+min ;
+document.getElementById("th1").value="asdasdas";
+for(z=1;z<7;z++){
+  document.getElementById("th"+z).value=dd+z-1;
+}
   function toinput(s, i){
     if(!document.getElementById(i).hasAttribute("class")){
       for(z = 1; z < 50; z++){

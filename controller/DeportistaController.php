@@ -5,6 +5,8 @@ require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../model/Deportista/Deportista.php");
 require_once(__DIR__."/../model/Deportista/DeportistaMapper.php");
 
+require_once(__DIR__."/../model/Reserva/ReservaMapper.php");
+
 require_once(__DIR__."/../controller/BaseController.php");
 
 
@@ -17,11 +19,19 @@ class DeportistaController extends BaseController {
 		parent::__construct();
 
 		$this->DeportistaMapper = new DeportistaMapper();
+		$this->ReservaMapper = new ReservaMapper();
 
 	}
 
 	public function index(){
 		$this->view->render("deportistas", "index");
+		$datos=$this->ReservaMapper->getHasReserva($_SESSION["currentuser"]);
+		$toret=array();
+		foreach ($datos as $key) {
+			array_push($toret,$this->ReservaMapper->getReserva($key));
+		}
+		$this->view->setVariable("cosa",$toret,true);			
+		
 	}
 
 	
