@@ -1,7 +1,6 @@
 <?php
 
 $view = ViewManager::getInstance();
-$user = $_SESSION["currentuser"];
 ?><!DOCTYPE html>
 <html>
 <head>

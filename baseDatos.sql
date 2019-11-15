@@ -27,7 +27,7 @@ GRANT ALL PRIVILEGES ON `ABP`.* TO `adminABP`@`localhost` WITH GRANT OPTION;
 -- -- TABLA DEPORTISTA
 CREATE OR REPLACE TABLE `DEPORTISTA` (
 
-	`login` 		varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+	`login` 		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 	`password` 		varchar(128) COLLATE latin1_spanish_ci NOT NULL,
 	`DNI` 			varchar(9) COLLATE latin1_spanish_ci NOT NULL,
 	`nombre` 		varchar(30) COLLATE latin1_spanish_ci  NOT NULL,
@@ -85,7 +85,7 @@ CREATE OR REPLACE TABLE `DEPORTISTA_HAS_CLASE` (
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_deportista_has_clase PRIMARY KEY (`idClase`, `login`),
 		-- CLAVES FORANEAS
-		CONSTRAINT FK_idclase_deportista_has_clase FOREIGN KEY (`idClase`) REFERENCES `CLASE` (`idClase`) ON DELETE CASCADE,
+		CONSTRAINT FK_idclase_deportista_has_clase FOREIGN KEY (`idClase`) REFERENCES `CLASE` (`idclase`) ON DELETE CASCADE,
 		CONSTRAINT FK_login_deportista_has_clase FOREIGN KEY (`login`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
@@ -125,26 +125,23 @@ CREATE OR REPLACE TABLE `LIGA_REGULAR` (
 CREATE OR REPLACE TABLE `GRUPO` (
 
 	`idGrupo`		int NOT NULL AUTO_INCREMENT,
-	`idCampeonato`	int, 	-- SUPER REDUNDANTE, ESTA INFORMACION YA LA CONSIGUES CON UN JOIN A LIGA REGULAR
 	`idLiga`		int,
-	`numeroParejas` int(11) COLLATE latin1_spanish_ci NOT NULL,
 	-- `categoria`		enum('FEMENINA', 'MIXTA', 'MASCULINA') COLLATE latin1_spanish_ci NOT NULL,
 	-- `nivel`			enum('1', '2', '3') COLLATE latin1_spanish_ci NOT NULL,
 
 
 		-- CLAVES PRIMARIAS
-		CONSTRAINT PK_grupo PRIMARY KEY (`idGrupo`,`idLiga`, `idCampeonato`),
+		CONSTRAINT PK_grupo PRIMARY KEY (`idGrupo`,`idLiga`),
 		-- CLAVES FORANEAS
-		CONSTRAINT FK_liga_grupo FOREIGN KEY (`idLiga`) REFERENCES `LIGA_REGULAR` (`idLiga`) ON DELETE CASCADE,
-		CONSTRAINT FK_campeonato_grupo FOREIGN KEY (`idCampeonato`) REFERENCES `CAMPEONATO` (`idCampeonato`) ON DELETE CASCADE
+		CONSTRAINT FK_liga_grupo FOREIGN KEY (`idLiga`) REFERENCES `LIGA_REGULAR` (`idLiga`) ON DELETE CASCADE
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- -- TABLA PAREJA
 CREATE OR REPLACE TABLE `PAREJA`(
 
-	`capitan`		varchar(15) COLLATE latin1_spanish_ci NOT NULL,
-	`pareja`		varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+	`capitan`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
+	`pareja`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 	`idCampeonato`  int NOT NULL,						-- CAMBIADO A NOT NULL
 	`categoria`		enum('FEMENINA', 'MIXTA', 'MASCULINA') COLLATE latin1_spanish_ci NOT NULL,
 	`nivel`			enum('1', '2', '3') COLLATE latin1_spanish_ci NOT NULL,
@@ -286,8 +283,8 @@ INSERT INTO `DEPORTISTA` (`login`, `password`, `DNI`, `nombre`, `apellidos`, `se
 																							('3illantasDeCoche', '4440000444', '14200008G', 'David', 'Illan X', 'MUJER'), ('7illantasDeCoche', '4444445444', '14255578G', 'David', 'Illan X', 'HOMBRE'),
 																							('4illantasDeCoche', '4444466444', '14253668G', 'David', 'Illan X', 'MUJER'), ('8illantasDeCoche', '4444447444', '14253677G', 'David', 'Illan X', 'HOMBRE'),
 																							('cuestaMucho', '0201030608', '99999999G', 'Pedro', 'Cuesta Morales', 'MUJER'), ('cuestaMucho1', '0201110608', '99991199G', 'Pedro', 'Cuesta Morales', 'MUJER'),
-																							('cuestaMucho2', '2201030608', '99299999G', 'Pedro', 'Cuesta Morales', 'HOMBRE'), ('cuestaMucho3', '0201033308', '99993399G', 'Pedro', 'Cuesta Morales', 'HOMBRE')
-																							('deportista1', 'deportista1', '76731597D', 'deportista1', 'deportista1', 'HOMBRE'),('deportista2', 'deportista2', '11111111G', 'deportista2', 'deportista2', 'MUJER'),;
+																							('cuestaMucho2', '2201030608', '99299999G', 'Pedro', 'Cuesta Morales', 'HOMBRE'), ('cuestaMucho3', '0201033308', '99993399G', 'Pedro', 'Cuesta Morales', 'HOMBRE'),
+																							('deportista1', 'deportista1', '76731597D', 'deportista1', 'deportista1', 'HOMBRE'),('deportista2', 'deportista2', '11111111G', 'deportista2', 'deportista2', 'MUJER');
  
 -- -- ENTRENADOR
 INSERT INTO `ENTRENADOR` (`login`, `password`, `DNI`, `NSS`, `nombre`, `apellidos`, `sexo`) VALUES 	('profe1', '0000000000', '16472834D', '123456789', 'profe', 'guay', 'HOMBRE'), ('profe3', '0000000001', '16472834F', '987654321', 'profe', 'donde esta profe2?', 'HOMBRE'), 
@@ -300,7 +297,7 @@ INSERT INTO `CLASE` (`idClase`, `maxAlumnos`, `login`, `reserva`) VALUES ('1', '
 -- -- RESERVA
 INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`) VALUES 	(NULL , '2019-04-23 18:00', '1'), (NULL, '2019-04-23 18:00', '2'), (NULL, '2019-04-23 18:00', '3'), (NULL, '2019-04-23 18:00', '4'), (NULL, '2019-04-23 18:00', '5'),
 																(NULL , '2019-04-24 18:00', '1'), (NULL , '2019-04-24 18:00', '2'), (NULL , '2019-04-24 18:00', '3'), (NULL , '2019-04-24 18:00', '4'), (NULL , '2019-04-24 18:00', '5'),
-																(NULL , '2019-04-21 18:00', '1'),;
+																(NULL , '2019-04-21 18:00', '1');
 
 -- -- DEPORTISTA_HAS_CLASE
 INSERT INTO `DEPORTISTA_HAS_CLASE` (`idClase`, `login`) VALUES 	('1', 'aglopez2'), ('1', 'aglopez3'), ('1', 'aglopez4'), ('1', 'aglopez5'), ('1', 'aglopez6'),
@@ -311,6 +308,18 @@ INSERT INTO `DEPORTISTA_HAS_CLASE` (`idClase`, `login`) VALUES 	('1', 'aglopez2'
 -- -- TABLA RESERVA_HAS_DEPORTISTA
 INSERT INTO `RESERVA_HAS_DEPORTISTA` (`idReserva`, `idDeportista`) VALUES ('1', 'aglopez2'), ('3', 'aglopez2');
 
+-- -- TABLA LIGA_REGULAR
+INSERT INTO `LIGA_REGULAR` (`idLiga`, `fechaInicio`, `fechaFin`, `categoria`, `nivel`, `idCampeonato`) VALUES ('1', '2019-11-15', '2020-01-15', 'MASCULINA', '1', '1');
+
+-- -- TABLA GRUPO
+INSERT INTO `GRUPO` (`idGrupo`,	`idLiga`) VALUES ('1', '1');
+
 -- -- TABLA PAREJA
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES 	('aglopez2', 'anacletillo', '1', 'MASCULINA', '1', '', ''), ('aglopez3', 'anacletillo1', '1', 'MASCULINA', '1', '', ''), ('aglopez4', 'anacletillo2', '1', 'FEMENINA', '1', '', ''),
-																									('2lordvile', '1illantasDeCoche', '1', 'FEMENINA', '1', '', ''), ('3lordvile', '3illantasDeCoche', '1', 'MIXTA', '1', '', ''), ('4lordvile', '4illantasDeCoche', '1', 'MIXTA', '1', '', '');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez2', 'anacletillo', '1', 'MASCULINA', '1', '1', '');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez3', 'anacletillo1', '1', 'MASCULINA', '1', '1', '');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez5', 'anacletillo3', '1', 'MASCULINA', '1', '1', '');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('cuestaMucho2', 'cuestaMucho3', '1', 'MASCULINA', '1', '1', '');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('8illantasDeCoche', '7illantasDeCoche', '1', 'MASCULINA', '1', '1', '');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('6illantasDeCoche', '5illantasDeCoche', '1', 'MASCULINA', '1', '1', '');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('deportista1', 'deportista2', '1', 'MASCULINA', '1', '1', '');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez6', 'aglopez7', '1', 'MASCULINA', '1', '1', '');																						
