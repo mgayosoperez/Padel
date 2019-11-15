@@ -4,7 +4,6 @@
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 
-require_once(__DIR__."/../model/User.php");
 
 /**
  * Class BaseController
@@ -38,19 +37,6 @@ class BaseController {
 		if (session_status() == PHP_SESSION_NONE) {
 			session_start();
 		}
-
-		if(isset($_SESSION["currentuser"])) {
-
-			$this->currentUser = new User($_SESSION["currentuser"]);
-			//add current user to the view, since some views require it
-			$this->view->setVariable("currentusername",
-					$this->currentUser->getUsername());
-			
-		}
-		if(!isset($_SESSION["currentPath"])&&isset($_SESSION["currentuser"])){
-			$actualuser= $_SESSION["currentuser"];
-			$uploads_dir = "uploads/$actualuser";
-			$_SESSION["currentPath"]=$uploads_dir;
-		}
 	}
+
 }

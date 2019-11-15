@@ -17,7 +17,7 @@ class DeportistaMapper {
 	}
 
 	public function loginExists($login) {
-		$stmt = $this->db->prepare("SELECT count(login) FROM DEPORTISTA where login=?");
+		$stmt = $this->db->prepare("SELECT count(login) FROM USUARIO where login=?");
 		$stmt->execute(array($login));
 
 		if ($stmt->fetchColumn() > 0) {
@@ -34,4 +34,5 @@ class DeportistaMapper {
 			return true;
 		}
 	}
+
 }

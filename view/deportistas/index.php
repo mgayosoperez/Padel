@@ -21,7 +21,7 @@ $datos=$view->getVariable("cosa");
         <a class="nav-link" href="index.php?controller=deportista&amp;action=reserva">Reservas<span class="sr-only"></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=reserva&amp;action=index">Campeonatos</a>
+        <a class="nav-link" href="index.php?controller=reserva&amp;action=campeonatos">Campeonatos</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=deportista&amp;action=clases">Clases</a>
@@ -30,7 +30,7 @@ $datos=$view->getVariable("cosa");
   </div>
   <form class="form-inline">
    	<div class="mr-5 text-light"><?= $user?></div>
-    <img src="icon/out.png" height="27" width="27">
+    <a 	href="index.php?controller=deportista&amp;action=logout"><img src="icon/out.png" height="27" width="27"></a>
   </form>
 </nav>
 
@@ -72,33 +72,25 @@ $datos=$view->getVariable("cosa");
   </div>
 </div>
 
-<?php
-  if(isset($datos)){
-
-    $i=0;?>
-    <table class="table">
-  <thead>
-    <tr>
-      <th scope="col"></th>
-      <th scope="col">Fecha</th>
-      <th scope="col">Pista</th>
-    </tr>
-  </thead>
-   <tbody>
-
-  <?php
- 
+<?php if(isset($datos)){
+  echo "<table class='table'>";
+  echo "<thead>";
+  echo "<tr>";
+  echo "<th scope='col'></th>";
+  echo "<th scope='col'>Fecha</th>";
+  echo "<th scope='col'>Pista</th>";
+  echo "</tr>";
+  echo "</thead>";
+  echo "<tbody>";
   foreach($datos as $id){
-    ?>
-    <tr>
-      <th scope="row"></th>
-      <td><?php echo $id["fecha"]?></td>
-      <td><?php echo $id["idPista"]?></td>
-    </tr>
-<?php
-  }?>
-</tbody>
-</table>
- <?php }
-
-  ?>
+   $manolo = $id['fecha'];
+   $paco = $id['idPista'];
+  echo "<tr>";
+  echo "<th scope='row'></th>";
+  echo "<td> $manolo</td>";
+  echo "<td> $paco</td>";
+  echo "</tr>";
+  }
+  echo "</tbody>";
+  echo "</table>"; 
+}?>

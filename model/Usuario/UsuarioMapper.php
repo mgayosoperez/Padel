@@ -12,7 +12,7 @@ class UsuarioMapper{
   public function add(Usuario $usuario){
     $sql = $this->db->prepare("INSERT INTO USUARIO (login, rol)
                                 VALUES (?,?)");
-    $sql->execute(array($usuario->getLogin(), $rol->getRol()));
+    $sql->execute(array($usuario->getLogin(), $usuario->getRol()));
     
     if(!$this->db->query($sql)){
     	return 'Error en la inserción';
@@ -42,17 +42,27 @@ class UsuarioMapper{
 
     $sql->execute(array($login));
 
-    $aux = $sql->fetchAll(PDO::FETCH_ASSOC);
+  	$toret = "";
 
-  	$toret = array();
-
-  	foreach ($aux as $re) {
-			array_push($toret, $re["login"]);
-		}
+  	$rol = $sql->fetch(PDO::FETCH_ASSOC);
+    if($rol!=NULL){
+      foreach ($rol as $key) {
+        $toret= $key;
+      }
+    }
 
 
   	return $toret;
 
+  }
+
+    public function loginExists($login) {
+    $stmt = $this->db->prepare("SELECT count(login) FROM USUARIO where login=?");
+    $stmt->execute(array($login));
+
+    if ($stmt->fetchColumn() > 0) {
+      return true;
+    }
   }
 }
  ?>

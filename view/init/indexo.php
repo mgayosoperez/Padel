@@ -15,7 +15,7 @@ $view = ViewManager::getInstance();
   </div>
   <form class="form-inline">
    	<div class="mr-5 text-light"></div>
-    <a href="index.php?controller=deportista&amp;action=login"><img src="icon/out.png" height="27" width="27"></a>
+    <a href="index.php?controller=deportista&amp;action=login"><img src="icon/in.png" height="27" width="27"></a>
   </form>
 </nav>
 
