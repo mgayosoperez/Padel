@@ -24,7 +24,7 @@ class DeportistaController extends BaseController {
 	}
 
 	public function index(){
-		$this->view->render("deportistas", "index");
+		
 		$datos=$this->ReservaMapper->getHasReserva($_SESSION["currentuser"]);
 		$toret=array();
 		foreach ($datos as $key) {
@@ -32,6 +32,7 @@ class DeportistaController extends BaseController {
 		}
 		$this->view->setVariable("cosa",$toret,true);			
 		
+		$this->view->render("deportistas", "index");
 	}
 
 	

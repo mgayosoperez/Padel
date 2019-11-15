@@ -24,6 +24,30 @@ GRANT ALL PRIVILEGES ON `ABP`.* TO `adminABP`@`localhost` WITH GRANT OPTION;
 -- Estructura de tabla para la tabla `datos`
 --
 
+-- -- TABLA USUARIO
+CREATE OR REPLACE TABLE `USUARIO` (
+	
+	`login` 		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
+	`rol`			enum('DEPORTISTA', 'ENTRENADOR', 'ADMIN') COLLATE latin1_spanish_ci NOT NULL,
+
+		-- CLAVES PRIMARIAS
+		CONSTRAINT PK_usuario PRIMARY KEY (`login`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- -- TABLA ADMIN
+CREATE OR REPLACE TABLE `ADMIN`(
+
+	`login` 		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
+	`password` 		varchar(128) COLLATE latin1_spanish_ci NOT NULL,
+
+		-- CLAVES PRIMARIAS
+		CONSTRAINT PK_admin PRIMARY KEY (`login`),
+		-- CLAVES FORANEAS
+		CONSTRAINT FK_login_admin FOREIGN KEY (`login`) REFERENCES `USUARIO` (`login`) ON DELETE CASCADE
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
 -- -- TABLA DEPORTISTA
 CREATE OR REPLACE TABLE `DEPORTISTA` (
 
@@ -36,6 +60,8 @@ CREATE OR REPLACE TABLE `DEPORTISTA` (
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_deportista PRIMARY KEY (`login`),
+		-- CLAVES FORANEAS
+		CONSTRAINT FK_login_deportista FOREIGN KEY (`login`) REFERENCES `USUARIO` (`login`) ON DELETE CASCADE,
 		-- CLAVES UNICAS
 		CONSTRAINT UQ_deportista_dni UNIQUE KEY `DNI` (`DNI`)
 
@@ -54,6 +80,8 @@ CREATE OR REPLACE TABLE `ENTRENADOR` (
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_entrenador PRIMARY KEY (`login`),
+		-- CLAVES FORANEAS
+		CONSTRAINT FK_login_entrenador FOREIGN KEY (`login`) REFERENCES `USUARIO` (`login`) ON DELETE CASCADE,
 		-- CLAVES UNICAS
 		CONSTRAINT UQ_entrenador_dni UNIQUE KEY `DNI` (`DNI`),
 		CONSTRAINT UQ_entrenador_nss UNIQUE KEY `NSS` (`NSS`)
@@ -261,6 +289,18 @@ CREATE OR REPLACE TABLE `PROMOCIONADO_HAS_DEPORTISTA` (
 
 -- -- INSERTS
 
+-- -- USUARIOS
+INSERT INTO `USUARIO` (`login`, `rol`) VALUES 	('admin', 'ADMIN'), ('aglopez2', 'DEPORTISTA'), ('aglopez3', 'DEPORTISTA'), ('aglopez4', 'DEPORTISTA'), ('aglopez5', 'DEPORTISTA'), ('aglopez6', 'DEPORTISTA'), ('aglopez7', 'DEPORTISTA'), 
+												('anacletillo1', 'DEPORTISTA'), ('anacletillo2', 'DEPORTISTA'), ('anacletillo3', 'DEPORTISTA'), ('anacletillo4', 'DEPORTISTA'), ('anacletillo5', 'DEPORTISTA'), ('anacletillo', 'DEPORTISTA'),
+												('lordvile', 'DEPORTISTA'), ('1lordvile', 'DEPORTISTA'), ('2lordvile', 'DEPORTISTA'), ('3lordvile', 'DEPORTISTA'), ('4lordvile', 'DEPORTISTA'), ('5lordvile', 'DEPORTISTA'), ('6lordvile', 'DEPORTISTA'),
+												('7lordvile', 'DEPORTISTA'), ('1illantasDeCoche', 'DEPORTISTA'), ('2illantasDeCoche', 'DEPORTISTA'), ('3illantasDeCoche', 'DEPORTISTA'), ('4illantasDeCoche', 'DEPORTISTA'), ('5illantasDeCoche', 'DEPORTISTA'),
+												('6illantasDeCoche', 'DEPORTISTA'), ('7illantasDeCoche', 'DEPORTISTA'), ('8illantasDeCoche', 'DEPORTISTA'), ('cuestaMucho', 'DEPORTISTA'), ('cuestaMucho1', 'DEPORTISTA'), ('cuestaMucho2', 'DEPORTISTA'),
+												('cuestaMucho3', 'DEPORTISTA'), ('deportista1', 'DEPORTISTA'), ('deportista2', 'DEPORTISTA'), ('profe1', 'ENTRENADOR'), ('profe3', 'ENTRENADOR'), ('profe4', 'ENTRENADOR'), ('profe5', 'ENTRENADOR'), 
+												('profe6', 'ENTRENADOR'), ('profe7', 'ENTRENADOR');
+
+-- -- ADMIN
+INSERT INTO `ADMIN` (`login`, `password`) VALUES ('admin', 'admin');
+
 -- -- PISTA
 INSERT INTO `PISTA` (`idPista`, `estado`, `superficie`) VALUES ('1', 'Exterior', 'Cesped'), ('2', 'Exterior', 'Cesped'), ('3', 'Interior', 'Madera'), ('4', 'Exterior', 'Cemento'), ('5', 'Interior', 'Cesped_artificial');
 
@@ -297,7 +337,9 @@ INSERT INTO `CLASE` (`idClase`, `maxAlumnos`, `login`, `reserva`) VALUES ('1', '
 -- -- RESERVA
 INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`) VALUES 	(NULL , '2019-04-23 18:00', '1'), (NULL, '2019-04-23 18:00', '2'), (NULL, '2019-04-23 18:00', '3'), (NULL, '2019-04-23 18:00', '4'), (NULL, '2019-04-23 18:00', '5'),
 																(NULL , '2019-04-24 18:00', '1'), (NULL , '2019-04-24 18:00', '2'), (NULL , '2019-04-24 18:00', '3'), (NULL , '2019-04-24 18:00', '4'), (NULL , '2019-04-24 18:00', '5'),
-																(NULL , '2019-04-21 18:00', '1');
+																(NULL , '2019-04-21 18:00', '1'), (NULL , '2019-11-17 20:00', '1'), (NULL , '2019-11-17 20:00', '2'), (NULL , '2019-11-17 20:00', '3'), (NULL , '2019-11-17 20:00', '4'),
+																(NULL , '2019-11-17 20:00', '5'), (NULL , '2019-11-21 18:00', '1'), (NULL , '2019-11-21 18:00', '2'), (NULL , '2019-11-21 18:00', '3'), (NULL , '2019-11-21 18:00', '4'),
+																(NULL , '2019-11-21 18:00', '5');
 
 -- -- DEPORTISTA_HAS_CLASE
 INSERT INTO `DEPORTISTA_HAS_CLASE` (`idClase`, `login`) VALUES 	('1', 'aglopez2'), ('1', 'aglopez3'), ('1', 'aglopez4'), ('1', 'aglopez5'), ('1', 'aglopez6'),
@@ -306,7 +348,8 @@ INSERT INTO `DEPORTISTA_HAS_CLASE` (`idClase`, `login`) VALUES 	('1', 'aglopez2'
 																('3', 'cuestaMucho'), ('3', 'cuestaMucho1'), ('3', 'cuestaMucho2'), ('3', 'cuestaMucho3');
 
 -- -- TABLA RESERVA_HAS_DEPORTISTA
-INSERT INTO `RESERVA_HAS_DEPORTISTA` (`idReserva`, `idDeportista`) VALUES ('1', 'aglopez2'), ('3', 'aglopez2');
+INSERT INTO `RESERVA_HAS_DEPORTISTA` (`idReserva`, `idDeportista`) VALUES 	('1', 'aglopez2'), ('3', 'aglopez2'), ('12', 'aglopez2'), ('13', 'aglopez2'), ('14', 'anacletillo'), ('15', 'anacletillo'), ('16', 'anacletillo'),
+																			('17', 'deportista1'), ('18', 'deportista1'), ('19', 'deportista1'), ('20', 'deportista1'), ('21', 'deportista1');
 
 -- -- TABLA LIGA_REGULAR
 INSERT INTO `LIGA_REGULAR` (`idLiga`, `fechaInicio`, `fechaFin`, `categoria`, `nivel`, `idCampeonato`) VALUES ('1', '2019-11-15', '2020-01-15', 'MASCULINA', '1', '1');
