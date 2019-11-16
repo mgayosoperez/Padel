@@ -31,10 +31,11 @@ $entrenador = $view->getVariable("entrenador");
           <label><?= i18n("Apellidos")?></label>
           <input type="text" class="form-control" name="apellidos" value="<?= $entrenador->getApellidos()?>">
       </div>
-      <div class="form-group">
-          <label><?= i18n("Sexo")?></label>
-          <input type="text" class="form-control" name="sexo" value="<?= $entrenador->getSexo()?>">
-      </div>
+      <div class="form-group text-light ml-3">
+       <h6>Gender:</h6>
+       <input type="radio" name="sexo" value="HOMBRE" checked> Male<br>
+       <input type="radio" name="sexo" value="MUJER"> Female<br>
+     </div>
 
 
       <div>

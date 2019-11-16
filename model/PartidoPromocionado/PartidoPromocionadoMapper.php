@@ -2,7 +2,7 @@
 require_once(__DIR__."/../../core/PDOConnection.php");
 
 
-class EntrenadorMapper{
+class PartidoPromocionadoMapper{
 
   private $db;
 
@@ -11,31 +11,26 @@ class EntrenadorMapper{
   }
 
   public function findAll(){
-    $stmt = $this->db->query("SELECT * FROM ENTRENADOR");
+    $stmt = $this->db->query("SELECT * FROM partido_promocionado");
 
-    $entrenadores_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $entrenadores = array();
-    foreach ($entrenadores_db as $entrenador) {
+    $pPromocionados_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $pPromocionados = array();
+    foreach ($pPromocionados_db as $pPromocionado) {
 
-      array_push($entrenadores, new Entrenador($entrenador["login"], $entrenador["password"],
-                $entrenador["DNI"], $entrenador["NSS"], $entrenador["nombre"], $entrenador["apellidos"],
-                $entrenador["sexo"]));
+      array_push($pPromocionados, new PartidoPromocionado($pPromocionado["idPromocionado"], $pPromocionado["fecha"],
+                $pPromocionado["idReserva"], $pPromocionado["numDeportista"]));
     }/*
     while($row = $stmt->fetch_object()){
       $entrenadores[] = $row;
     }*/
-    return $entrenadores;
+    return $pPromocionados;
   }
 
-  public function add(Entrenador $entrenador){
-    $stmt = $this->db->prepare("INSERT INTO ENTRENADOR(login, password, DNI, NSS,
-                                nombre, apellidos, sexo)
-                                values (?,?,?,?,?,?,?)");
+  public function add(PartidoPromocionado $partido){
+    $stmt = $this->db->prepare("INSERT INTO partido_promocionado(fecha, numDeportista)
+                                values (?,?)");
 
-    $stmt->execute(array($entrenador->getLogin(), $entrenador->getPasswd(),
-                          $entrenador->getDni(), $entrenador->getNss(),
-                          $entrenador->getNombre(),$entrenador->getApellidos(),
-                          $entrenador->getSexo()));
+    $stmt->execute(array($partido->getFecha(), $partido->getNumDeportista()));
 
     if(!$this->db->query($stmt)){
 
@@ -46,9 +41,9 @@ class EntrenadorMapper{
     }
   }
 
-  public function delete(Entrenador $entrenador){
-    $stmt = $this->db->prepare("DELETE from ENTRENADOR WHERE login=?");
-    $stmt->execute(array($entrenador->getLogin()));
+  public function delete(PartidoPromocionado $partido){
+    $stmt = $this->db->prepare("DELETE from partido_promocionado WHERE idPromocionado=?");
+    $stmt->execute(array($partido->getIdPromocionado()));
 
     if ($this->db->query($stmt)) {
 
@@ -74,9 +69,9 @@ class EntrenadorMapper{
 
 
 
-  public function entrenadorExiste($login) {
-		$stmt = $this->db->prepare("SELECT count(login) FROM ENTRENADOR where login=?");
-		$stmt->execute(array($login));
+  public function existePromocionado($idPromocionado) {
+		$stmt = $this->db->prepare("SELECT count(idPromocionado) FROM partido_promocionado where idPromocionado=?");
+		$stmt->execute(array($idPromocionado));
 
 		if ($stmt->fetchColumn() > 0) {
 			return true;

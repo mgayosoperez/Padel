@@ -26,9 +26,11 @@ $errors = $view->getVariable("errors");
       <div class="form-group">
           <input type="text" class="form-control" name="apellidos" placeholder="<?=i18n("Apellidos")?>">
       </div>
-      <div class="form-group">
-          <input type="text" class="form-control" name="sexo" placeholder="<?=i18n("Sexo")?>">
-      </div>
+      <div class="form-group text-light ml-3">
+       <h6>Gender:</h6>
+       <input type="radio" name="sexo" value="HOMBRE" checked> Male<br>
+<input type="radio" name="sexo" value="MUJER"> Female<br>
+     </div>
 
       <div>
         <br>

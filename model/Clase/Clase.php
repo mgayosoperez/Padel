@@ -1,23 +1,19 @@
 <?php
-/**
- *
- */
-
- require_once(__DIR__."/../core/ValidationException.php");
+ require_once(__DIR__."/../../core/ValidationException.php");
 
 
 class Clase{
 
   private $idClase;
-  private $numAlum;
-  private $hora;
+  private $maxAlum;
+  private $reserva;
   private $login;
 
 
-  function __construct($idClase = NULL, $numAlum = NULL, $hora = NULL, $login = NULL){
+  function __construct($idClase = NULL, $maxAlum = NULL, $login = NULL, $reserva = NULL){
     $this->idClase = $idClase;
-    $this->numAlum = $numAlum;
-    $this->hora = $hora;
+    $this->maxAlum = $maxAlum;
+    $this->reserva = $reserva;
     $this->login = $login;
   }
 
@@ -25,11 +21,11 @@ class Clase{
   public function getIdClase(){
     return $this->idClase;
   }
-  public function getNumAlum(){
-    return $this->numAlum;
+  public function getMaxAlum(){
+    return $this->maxAlum;
   }
-  public function getHora(){
-    return $this->hora;
+  public function getReserva(){
+    return $this->reserva;
   }
   public function getLogin(){
     return $this->login;
@@ -39,11 +35,11 @@ class Clase{
   public function setIdClase($idClase){
     $this->idClase = $idClase;
   }
-  public function setNumAlum($numAlum){
-    $this->numAlum = $numAlum;
+  public function setMaxAlum($maxAlum){
+    $this->maxAlum = $maxAlum;
   }
-  public function setHora($hora){
-    $this->hora = $numAlum;
+  public function setReserva($reserva){
+    $this->reserva = $reserva;
   }
   public function setLogin($login){
     $this->login = $login;
