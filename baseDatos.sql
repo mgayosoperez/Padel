@@ -181,7 +181,8 @@ CREATE OR REPLACE TABLE `PAREJA`(
 		-- CLAVES FORANEAS
 		CONSTRAINT FK_capitan_pareja FOREIGN KEY (`capitan`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE,
 		CONSTRAINT FK_pareja_pareja	FOREIGN KEY (`pareja`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE,
-		CONSTRAINT FK_grupo_pareja	FOREIGN KEY (`grupo`) REFERENCES `GRUPO` (`idGrupo`) ON DELETE CASCADE
+		CONSTRAINT FK_grupo_pareja	FOREIGN KEY (`grupo`) REFERENCES `GRUPO` (`idGrupo`) ON DELETE CASCADE,
+		CONSTRAINT FK_idCampeonato_pareja	FOREIGN KEY (`idCampeonato`) REFERENCES `CAMPEONATO` (`idCampeonato`) ON DELETE CASCADE
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
@@ -358,11 +359,11 @@ INSERT INTO `LIGA_REGULAR` (`idLiga`, `fechaInicio`, `fechaFin`, `categoria`, `n
 INSERT INTO `GRUPO` (`idGrupo`,	`idLiga`) VALUES ('1', '1');
 
 -- -- TABLA PAREJA
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez2', 'anacletillo', '1', 'MASCULINA', '1', '1', '');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez3', 'anacletillo1', '1', 'MASCULINA', '1', '1', '');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez5', 'anacletillo3', '1', 'MASCULINA', '1', '1', '');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('cuestaMucho2', 'cuestaMucho3', '1', 'MASCULINA', '1', '1', '');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('8illantasDeCoche', '7illantasDeCoche', '1', 'MASCULINA', '1', '1', '');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('6illantasDeCoche', '5illantasDeCoche', '1', 'MASCULINA', '1', '1', '');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('deportista1', 'deportista2', '1', 'MASCULINA', '1', '1', '');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez6', 'aglopez7', '1', 'MASCULINA', '1', '1', '');																						
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez2', 'anacletillo', '1', 'MASCULINA', '1', '1', '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez3', 'anacletillo1', '1', 'MASCULINA', '1', '1', '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez5', 'anacletillo3', '1', 'MASCULINA', '1', '1', '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('cuestaMucho2', 'cuestaMucho3', '1', 'MASCULINA', '1', '1', '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('8illantasDeCoche', '7illantasDeCoche', '1', 'MASCULINA', '1', '1', '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('6illantasDeCoche', '5illantasDeCoche', '1', 'MASCULINA', '1', '1', '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('deportista1', 'deportista2', '1', 'MASCULINA', '1', '1', '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez6', 'aglopez7', '1', 'MASCULINA', '1', '1', '0');																						
