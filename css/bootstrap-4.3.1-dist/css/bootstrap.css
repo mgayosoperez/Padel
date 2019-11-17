@@ -2696,6 +2696,40 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
 }
 
+.btn-yagami {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #000;
+}
+
+.btn-yagami:hover {
+  color: #000;
+  background-color: #aaa;
+  border-color: #1d2124;
+}
+
+.btn-yagami:focus, .btn-yagami.focus {
+  box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+}
+
+.btn-yagami.disabled, .btn-yagami:disabled {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+}
+
+.btn-yagami:not(:disabled):not(.disabled):active, .btn-yagami:not(:disabled):not(.disabled).active,
+.show > .btn-yagami.dropdown-toggle {
+  color: #fff;
+  background-color: #1d2124;
+  border-color: #171a1d;
+}
+
+.btn-yagami:not(:disabled):not(.disabled):active:focus, .btn-yagami:not(:disabled):not(.disabled).active:focus,
+.show > .btn-yagami.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+}
+
 .btn-outline-primary {
   color: #007bff;
   border-color: #007bff;
