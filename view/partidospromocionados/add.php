@@ -7,7 +7,7 @@ $errors = $view->getVariable("errors");
 //$user = $view->getVariable("user");
 ?>
 
-<form action="index.php?controller=partidopromocionado&amp;action=add" method="POST">
+<form action="index.php?controller=admin&amp;action=addPartidoPromocionado" method="POST">
 
       <div class="form-group">
           <input type="text" class="form-control" name="fecha" placeholder="<?=i18n("Fecha")?>">

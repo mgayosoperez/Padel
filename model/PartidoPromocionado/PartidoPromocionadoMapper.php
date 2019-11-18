@@ -18,37 +18,52 @@ class PartidoPromocionadoMapper{
     foreach ($pPromocionados_db as $pPromocionado) {
 
       array_push($pPromocionados, new PartidoPromocionado($pPromocionado["idPromocionado"], $pPromocionado["fecha"],
-                $pPromocionado["idReserva"], $pPromocionado["numDeportista"]));
+                $pPromocionado["idReserva"]));
     }
-
     return $pPromocionados;
   }
 
   public function add(PartidoPromocionado $partido){
-    $stmt = $this->db->prepare("INSERT INTO partido_promocionado(fecha, numDeportista)
-                                values (?,?)");
+    $stmt = $this->db->prepare("INSERT INTO partido_promocionado(fecha)
+                                values (?)");
 
-    $stmt->execute(array($partido->getFecha(), $partido->getNumDeportista()));
+    $stmt->execute(array($partido->getFecha()));
   }
 
-  public function delete($id){
+  public function delete(PartidoPromocionado $partido){
     $stmt = $this->db->prepare("DELETE from partido_promocionado WHERE idPromocionado=?");
-    $stmt->execute(array($id));
+    $stmt->execute(array($partido->getIdPromocionado()));
+
+    if ($this->db->query($stmt)) {
+
+        return "Borrado realizado con exito";
+
+    } else {
+        return "Error en el borrado";
+    }
   }
 
 
-  public function update(Entrenador $entrenador){
-    $stmt = $this->db->prepare("UPDATE ENTRENADOR SET
-                              password = ?, DNI = ?,
-                              NSS = ?, nombre = ?,
-                              apellidos = ?, sexo = ? WHERE login =?");
+  public function inscribirse($login, $idPromocionado){
+    $stmt = $this->db->prepare("INSERT INTO PROMOCIONADO_HAS_DEPORTISTA (idPromocionado, deportista) VALUES (?,?)");
 
-    $stmt->execute(array($entrenador->getPasswd(),
-                    $entrenador->getDni(), $entrenador->getNss(),
-                    $entrenador->getNombre(),$entrenador->getApellidos(),
-                    $entrenador->getSexo(), $entrenador->getLogin()));
+    $stmt->execute(array($idPromocionado, $login));
+
+    if ($this->db->query($stmt)){
+      return "Inscrito."
+    }else{
+      return "Error";
+    }
   }
 
+  public function numDeportistas($idPromocionado){
+    $stmt = $this->db->prepare("SELECT count(deportista) FROM PROMOCIONADO_HAS_DEPORTISTA WHERE idPromocionado = ?");
+
+    $stmt->execute(array($idPromocionado));
+
+    return $stmt->fechColumn();
+
+  }
 
 
   public function existePromocionado($idPromocionado) {
@@ -60,15 +75,16 @@ class PartidoPromocionadoMapper{
 		}
   }
 
-  public function findByUsername($username) {
-    $stmt = $this->db->prepare("SELECT * FROM ENTRENADOR where login=?");
-		$stmt->execute(array($username));
-    $entrenador = $stmt->fetch(PDO::FETCH_ASSOC);
-    $toret = new Entrenador($entrenador["login"], $entrenador["password"],
-              $entrenador["DNI"], $entrenador["NSS"], $entrenador["nombre"], $entrenador["apellidos"],
-              $entrenador["sexo"]);
-
-    return $toret;
+  public function findByIdPromocionado($idPromocionado) {
+    $stmt = $this->db->prepare("SELECT * FROM PARTIDO_PROMOCIONADO where idPromocionado = ?");
+		$stmt->execute(array($idPromocionado));
+    $promocionado = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if($promocionado != null) {
+      return $promocionado;
+    } else {
+      return NULL;
+    }
   }
 
   public function countPartidos($fecha){
@@ -76,6 +92,7 @@ class PartidoPromocionadoMapper{
       $stmt->execute(array($fecha));
       $toret="0";
       $numPartidos = $stmt->fetch(PDO::FETCH_ASSOC);
+
     if($numPartidos!=NULL){
       foreach ($numPartidos as $key) {
         $toret= $key;
