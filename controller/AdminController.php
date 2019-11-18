@@ -22,12 +22,12 @@ class AdminController extends BaseController {
 
 	public function index(){
 
-		$this->view->render("admin", "index");			
+		$this->view->render("admin", "index");
 	}
 	public function partidoPromocionado(){
 
 		$this->view->render("admin", "promocionado");
-	}	
+	}
 
 	public function addPartidoPromocionado(){
 		$partidoPromocionado = new PartidoPromocionado();
@@ -38,7 +38,7 @@ class AdminController extends BaseController {
 	}
 	public function showPartidos(){
 		$datos = $this->PartidoPromocionadoMapper->findAll();
-		$this->view->setVariable("datos",$datos,true);	
+		$this->view->setVariable("datos",$datos,true);
 		$this->view->render("admin", "showPartidos");
 	}
 
@@ -57,7 +57,7 @@ class AdminController extends BaseController {
 	}
 
 	public function entrenadores(){
-
+// EntrenadorController action index
 	}
 
 	public function logout(){
@@ -66,6 +66,6 @@ class AdminController extends BaseController {
 		$this->view->redirect("init", "index");
 	}
 
-	
+
 
 }
