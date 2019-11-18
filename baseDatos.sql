@@ -70,7 +70,7 @@ CREATE OR REPLACE TABLE `DEPORTISTA` (
 -- -- TABLA ENTRENADOR
 CREATE OR REPLACE TABLE `ENTRENADOR` (
 
-	`login` 		varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+	`login` 		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 	`password` 		varchar(128) COLLATE latin1_spanish_ci NOT NULL,
 	`DNI` 			varchar(9) COLLATE latin1_spanish_ci NOT NULL,
 	`NSS`			varchar(11) COLLATE latin1_spanish_ci NOT NULL,
@@ -91,30 +91,58 @@ CREATE OR REPLACE TABLE `ENTRENADOR` (
 -- -- TABLA CLASE
 CREATE OR REPLACE TABLE `CLASE` (
 
-	`idclase`		int(10) COLLATE latin1_spanish_ci NOT NULL AUTO_INCREMENT,
-	`maxAlumnos`	int(10) NOT NULL,
-	`login`			varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+	`idClase`		int COLLATE latin1_spanish_ci NOT NULL AUTO_INCREMENT,
+	`login`			varchar(30) COLLATE latin1_spanish_ci NOT NULL,
+	`rol`			enum('PARTICULAR', 'GRUPAL') COLLATE latin1_spanish_ci NOT NULL,
 	`reserva`		int,
 
 
 		-- CLAVES PRIMARIAS
-		CONSTRAINT PK_clase PRIMARY KEY (`idclase`),
+		CONSTRAINT PK_clase PRIMARY KEY (`idClase`),
 		-- CLAVES FORANEAS
 		CONSTRAINT FK_entrenador_clase FOREIGN KEY (`login`) REFERENCES `ENTRENADOR` (`login`) ON DELETE CASCADE
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
--- -- TABLA DEPORTISTA_HAS_CLASE
-CREATE OR REPLACE TABLE `DEPORTISTA_HAS_CLASE` (
+-- -- TABLA CLASE_PARTICULAR
+CREATE OR REPLACE TABLE `CLASE_PARTICULAR` (
+
+	`idClase`		int NOT NULL,
+	`deportista`	varchar(30) COLLATE latin1_spanish_ci NOT NULL,
+
+		-- CLAVES PRIMARIAS
+		CONSTRAINT PK_clase_particular PRIMARY KEY (`idClase`),
+		-- CLAVES FORANEAS
+		CONSTRAINT FK_idclase_clase_particular FOREIGN KEY (`idClase`) REFERENCES `CLASE` (`idClase`) ON DELETE CASCADE,
+		CONSTRAINT FK_deportista_clase_particular FOREIGN KEY (`deportista`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- -- TABLA CLASE_GRUPAL
+CREATE OR REPLACE TABLE `CLASE_GRUPAL` (
+
+	`idClase`		int NOT NULL,
+	`maxAlumnos`	int COLLATE latin1_spanish_ci NOT NULL,
+	`descripcion`	varchar(500) COLLATE latin1_spanish_ci NOT NULL, 
+
+		-- CLAVES PRIMARIAS
+		CONSTRAINT PK_clase_grupal PRIMARY KEY (`idClase`),
+		-- CLAVES FORANEAS
+		CONSTRAINT FK_idclase_clase_grupal FOREIGN KEY (`idClase`) REFERENCES `CLASE` (`idClase`) ON DELETE CASCADE
+		
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- -- TABLA DEPORTISTA_HAS_CLASE_GRUPAL
+CREATE OR REPLACE TABLE `DEPORTISTA_HAS_CLASE_GRUPAL` (
 
 	`idClase`	int NOT NULL,	
 	`login`		varchar(15) COLLATE latin1_spanish_ci NOT NULL,	
 
 		-- CLAVES PRIMARIAS
-		CONSTRAINT PK_deportista_has_clase PRIMARY KEY (`idClase`, `login`),
+		CONSTRAINT PK_deportista_has_clase_grupal PRIMARY KEY (`idClase`, `login`),
 		-- CLAVES FORANEAS
-		CONSTRAINT FK_idclase_deportista_has_clase FOREIGN KEY (`idClase`) REFERENCES `CLASE` (`idclase`) ON DELETE CASCADE,
-		CONSTRAINT FK_login_deportista_has_clase FOREIGN KEY (`login`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE
+		CONSTRAINT FK_idclase_deportista_has_clase_grupal FOREIGN KEY (`idClase`) REFERENCES `CLASE_GRUPAL` (`idClase`) ON DELETE CASCADE,
+		CONSTRAINT FK_login_deportista_has_clase_grupal FOREIGN KEY (`login`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
@@ -333,7 +361,10 @@ INSERT INTO `ENTRENADOR` (`login`, `password`, `DNI`, `NSS`, `nombre`, `apellido
 																									('profe6', '0000000F00', '16472834A', '126789', 'profe', 'malvado', 'HOMBRE'), ('profe7', '000000S000', '16472834G', '098321', 'ultimo', 'profe', 'HOMBRE');
 
 -- -- CLASE
-INSERT INTO `CLASE` (`idClase`, `maxAlumnos`, `login`, `reserva`) VALUES ('1', '5', 'profe1', NULL), ('2', '10', 'profe4', NULL), ('3', '7', 'profe3', NULL);
+INSERT INTO `CLASE` (`idClase`, `login`, `rol`, `reserva`) VALUES ('1', 'profe1', 'GRUPAL', NULL), ('2', 'profe4', 'GRUPAL', NULL), ('3', 'profe3', 'GRUPAL', NULL);
+
+-- -- CLASE_GRUPAL
+INSERT INTO `CLASE_GRUPAL` (`idClase`, `maxAlumnos`, `descripcion`) VALUES ('1', '20', 'Clase orientada en mejora de saque.'), ('2', '20', 'Clase orientada en mejora de recepción.'), ('3', '20', 'Clase orientada en mejora de ataque.');
 
 -- -- RESERVA
 INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`) VALUES 	(NULL , '2019-04-23 18:00', '1'), (NULL, '2019-04-23 18:00', '2'), (NULL, '2019-04-23 18:00', '3'), (NULL, '2019-04-23 18:00', '4'), (NULL, '2019-04-23 18:00', '5'),
@@ -342,11 +373,11 @@ INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`) VALUES 	(NULL , '2019-04
 																(NULL , '2019-11-17 20:00', '5'), (NULL , '2019-11-21 18:00', '1'), (NULL , '2019-11-21 18:00', '2'), (NULL , '2019-11-21 18:00', '3'), (NULL , '2019-11-21 18:00', '4'),
 																(NULL , '2019-11-21 18:00', '5');
 
--- -- DEPORTISTA_HAS_CLASE
-INSERT INTO `DEPORTISTA_HAS_CLASE` (`idClase`, `login`) VALUES 	('1', 'aglopez2'), ('1', 'aglopez3'), ('1', 'aglopez4'), ('1', 'aglopez5'), ('1', 'aglopez6'),
-																('2', 'anacletillo'), ('2', 'anacletillo1'), ('2', 'anacletillo2'), ('2', 'anacletillo3'), ('2', 'anacletillo4'),
-																('2', 'lordvile'), ('2', '1lordvile'), ('2', '2lordvile'), ('2', '3lordvile'), ('2', '4lordvile'),
-																('3', 'cuestaMucho'), ('3', 'cuestaMucho1'), ('3', 'cuestaMucho2'), ('3', 'cuestaMucho3');
+-- -- DEPORTISTA_HAS_CLASE_GRUPAL
+INSERT INTO `DEPORTISTA_HAS_CLASE_GRUPAL` (`idClase`, `login`) VALUES 	('1', 'aglopez2'), ('1', 'aglopez3'), ('1', 'aglopez4'), ('1', 'aglopez5'), ('1', 'aglopez6'),
+																		('2', 'anacletillo'), ('2', 'anacletillo1'), ('2', 'anacletillo2'), ('2', 'anacletillo3'), ('2', 'anacletillo4'),
+																		('2', 'lordvile'), ('2', '1lordvile'), ('2', '2lordvile'), ('2', '3lordvile'), ('2', '4lordvile'),
+																		('3', 'cuestaMucho'), ('3', 'cuestaMucho1'), ('3', 'cuestaMucho2'), ('3', 'cuestaMucho3');
 
 -- -- TABLA RESERVA_HAS_DEPORTISTA
 INSERT INTO `RESERVA_HAS_DEPORTISTA` (`idReserva`, `idDeportista`) VALUES 	('1', 'aglopez2'), ('3', 'aglopez2'), ('12', 'aglopez2'), ('13', 'aglopez2'), ('14', 'anacletillo'), ('15', 'anacletillo'), ('16', 'anacletillo'),
