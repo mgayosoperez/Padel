@@ -2,6 +2,7 @@
 //file: view/users/register.php
 require_once(__DIR__."/../../model/Reserva/ReservaMapper.php");
 require_once(__DIR__."/../../core/ViewManager.php");
+require_once(__DIR__."/../../model/PartidoPromocionado/PartidoPromocionadoMapper.php");
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
@@ -28,11 +29,16 @@ for($z = 0; $z < 7; $z++){
 }
 function horaOcupada($fecha){
   $ReservaMapper = new ReservaMapper();
+  $PartidoPromocionadoMapper = new PartidoPromocionadoMapper();
   if($ReservaMapper->pistasOcupadas($fecha)>=5){
       echo  "class='bg-dark'";
+  }else{
+    if($PartidoPromocionadoMapper->countPartidos($fecha)>=1){
+      echo  "class='bg-dark'";
+    }
   }
-}
 
+}
 
 function fondoHora(int $horis){
   $fies = "d M Y H i";
@@ -46,25 +52,25 @@ function fondoHora(int $horis){
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="index.php?controller=deportista&amp;action=index"><img src="icon/padel.png" height="50" width="50" class="mr-2">Padelo</a>
+  <a class="navbar-brand" href="#"><img src="icon/padel.png" height="50" width="50" class="mr-2">Padelo</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="">Reservas<span class="sr-only"></a>
+        <a class="nav-link" href="index.php?controller=admin&amp;action=partidoPromocionado">Partidos Promocionados<span class="sr-only"></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=deportista&amp;action=campeonatos">Campeonatos</a>
+        <a class="nav-link" href="index.php?controller=admin&amp;action=campeonatos">Campeonatos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=clase&amp;action=clases">Clases</a>
+        <a class="nav-link" href="index.php?controller=admin&amp;action=entrenadores">Entrenadores</a>
       </li>
     </ul>
   </div>
   <form class="form-inline">
-   	<div class="mr-5 text-light"><?= $user?>	</div>
-    <a  href="index.php?controller=deportista&amp;action=logout"><img src="icon/out.png" height="27" width="27"></a>
+    <div class="mr-5 text-light"><?= $user?></div>
+    <a  href="index.php?controller=admin&amp;action=logout"><img src="icon/out.png" height="27" width="27"></a>
   </form>
 </nav>
 
@@ -157,7 +163,7 @@ function fondoHora(int $horis){
   </tbody>
 </table>
 
-<form  action="index.php?controller=reserva&amp;action=addReserva" method="POST" class="text-center">
+<form  action="index.php?controller=admin&amp;action=addPartidoPromocionado" method="POST" class="text-center">
   <input hidden type="text" name="fecha" id="input" >
    <input type="submit" value="Realizar reserva" class="btn btn-yagami mx-auto" style="width: 200px;"></input>
 </form>

@@ -31,14 +31,6 @@ class PartidoPromocionadoMapper{
                                 values (?,?)");
 
     $stmt->execute(array($partido->getFecha(), $partido->getNumDeportista()));
-
-    if(!$this->db->query($stmt)){
-
-      return 'Error en la inserción';
-    }
-    else{
-      return 'Inserción realizada con éxito';
-    }
   }
 
   public function delete(PartidoPromocionado $partido){
@@ -86,6 +78,19 @@ class PartidoPromocionadoMapper{
               $entrenador["DNI"], $entrenador["NSS"], $entrenador["nombre"], $entrenador["apellidos"],
               $entrenador["sexo"]);
 
+    return $toret;
+  }
+
+  public function countPartidos($fecha){
+      $stmt = $this->db->prepare("SELECT count(idPromocionado) FROM partido_promocionado where fecha=?");
+      $stmt->execute(array($fecha));
+      $toret="0";
+      $numPartidos = $stmt->fetch(PDO::FETCH_ASSOC);
+    if($numPartidos!=NULL){
+      foreach ($numPartidos as $key) {
+        $toret= $key;
+      }
+    }
     return $toret;
   }
 
