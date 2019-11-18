@@ -292,6 +292,7 @@ CREATE OR REPLACE TABLE `PARTIDO_PROMOCIONADO` (
 	`idPromocionado`	int NOT NULL AUTO_INCREMENT,
 	`fecha`			    datetime NOT NULL,
 	`idReserva`			int,
+	`numDeportista`		int,
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_partido_promocionado PRIMARY KEY (`idPromocionado`),

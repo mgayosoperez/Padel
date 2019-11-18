@@ -63,7 +63,7 @@ function fondoHora(int $horis){
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="index.php?controller=admin&amp;action=partidoPromocionado">Crear un Partido Promocionado</a> 
-          <a class="dropdown-item" href="#">Modificar un Partido Promocionado</a>
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=showPartidos">Partidos Promocionados</a>
         </div>
       </li>
            <li class="nav-item dropdown">
@@ -177,7 +177,7 @@ function fondoHora(int $horis){
 
 <form  action="index.php?controller=admin&amp;action=addPartidoPromocionado" method="POST" class="text-center">
   <input hidden type="text" name="fecha" id="input" >
-   <input type="submit" value="Realizar reserva" class="btn btn-yagami mx-auto" style="width: 200px;"></input>
+   <input type="submit" value="Promocionar partido" class="btn btn-yagami mx-auto" style="width: 200px;"></input>
 </form>
 	</div>
 <script type="text/javascript">

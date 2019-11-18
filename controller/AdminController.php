@@ -36,6 +36,16 @@ class AdminController extends BaseController {
 		$this->PartidoPromocionadoMapper->add($partidoPromocionado);
 		$this->view->render("admin", "index");
 	}
+	public function showPartidos(){
+		$datos = $this->PartidoPromocionadoMapper->findAll();
+		$this->view->setVariable("datos",$datos,true);	
+		$this->view->render("admin", "showPartidos");
+	}
+
+	public function borrarPartido(){
+		$this->PartidoPromocionadoMapper->delete($_GET["idPartido"]);
+		$this->view->render("admin", "index");
+	}
 
 	public function campeonatos(){
 

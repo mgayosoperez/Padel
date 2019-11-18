@@ -1,14 +1,14 @@
 <?php
-//file: view/users/register.php
 
 require_once(__DIR__."/../../core/ViewManager.php");
 require_once(__DIR__."/../../model/Reserva/Reserva.php");
-$view = ViewManager::getInstance();
+require_once(__DIR__."/../../model/PartidoPromocionado/PartidoPromocionado.php");
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
-$view->setVariable("title", "index");
-$datos=$view->getVariable("cosa");
+
+$partidos = $view->getVariable("datos");
+
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -46,32 +46,30 @@ $datos=$view->getVariable("cosa");
   </form>
 </nav>
 
-<div class="h-20 container mt-5 mb-5">
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="icon/p1.jpg" alt="First slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/p2.jpg" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/bola_red.jpg" alt="Third slide">
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-</div>
 
+<?php if(isset($partidos)){
+  echo "<table class='table'>";
+  echo "<thead>";
+  echo "<tr>";
+  echo "<th scope='col'></th>";
+  echo "<th scope='col'>ID</th>";
+  echo "<th scope='col'>Fecha</th>";
+  echo "<th scope='col'>Opciones</th>";
+  echo "</tr>";
+  echo "</thead>";
+  echo "<tbody>";
+  $partidoPromocionado = new PartidoPromocionado();
+  foreach($partidos as $id){
+    $partidoPromocionado = $id;
+   $nombre = $partidoPromocionado->getIdPromocionado();
+   $fecha = $partidoPromocionado->getFecha();
+  echo "<tr>";
+  echo "<th scope='row'></th>";
+  echo "<td> $nombre</td>";
+  echo "<td> $fecha</td>";
+  echo "<td> <a href='index.php?controller=admin&amp;action=borrarPartido&amp;idPartido=$nombre'> <button class='btn btn-yagami'>Borrar</button> </a> </td>";
+  echo "</tr>";
+  }
+  echo "</tbody>";
+  echo "</table>"; 
+}?>
