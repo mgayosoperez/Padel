@@ -9,26 +9,71 @@ class ClaseMapper{
     $this->db = PDOConnection::getInstance();
   }
 
-  public function findAll(){
-    $stmt = $this->db->query("SELECT * from CLASE");
+  public function findAllGrupales(){
+    $stmt = $this->db->query("SELECT * from CLASE_GRUPAL");
     $clases_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $clases = array();
     foreach ($clases_db as $clase) {
-
-      array_push($clases, new Clase($clase["idclase"], $clase["maxAlumnos"],
-                $clase["login"], $clase["reserva"]));
+      $claseGrupal = new ClaseGrupal();
+      $claseGrupal->setIdClase($clase["idClase"]);
+      $claseGrupal->setMaxAlum($clase["maxAlumnos"]);
+      $claseGrupal->setDescripcion($clase["descripcion"]);
+      $claseGrupal->setLogin($this->db->query("SELECT login from CLASE WHERE idClase = $clase[idClase]"));
+      $claseGrupal->setReserva($this->db->query("SELECT reserva from CLASE WHERE idClase = $clase[idClase]"));
+      array_push($clases, $claseGrupal);
     }
 
     return $clases;
   }
+  public function findAllParticulares(){
+    $stmt = $this->db->query("SELECT * from CLASE WHERE CLASE.rol = 'PARTICULAR'");
+    $clases_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $clases = array();
+    foreach ($clases_db as $clase) {
+
+      array_push($clases, new Clase($clase["idClase"], $clase["login"],
+                $clase["rol"], $clase["reserva"]));
+    }
+
+    return $clases;
+  }
+
+
+
   public function findAllById($loginEntrenador){
     $stmt = $this->db->query("SELECT * from CLASE WHERE login= '$loginEntrenador'");
     $clases_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $clases = array();
     foreach ($clases_db as $clase) {
 
-      array_push($clases, new Clase($clase["idclase"], $clase["maxAlumnos"],
-                $clase["login"], $clase["reserva"]));
+      array_push($clases, new Clase($clase["idClase"], $clase["login"],
+                $clase["rol"], $clase["reserva"]));
+    }
+
+    return $clases;
+  }
+  public function misClasesGrupales($loginDeportista){
+    $stmt = $this->db->query("SELECT * from CLASE_GRUPAL, DEPORTISTA_HAS_CLASE_GRUPAL WHERE Clase_Grupal.idClase = DEPORTISTA_HAS_CLASE_GRUPAL.idClase AND DEPORTISTA_HAS_CLASE_GRUPAL.login = '$loginDeportista' ");
+    $clases_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $clases = array();
+    foreach ($clases_db as $clase) {
+      $claseGrupal = new ClaseGrupal();
+      $claseGrupal->setIdClase($clase["idClase"]);
+      $claseGrupal->setMaxAlum($clase["maxAlumnos"]);
+      $claseGrupal->setDescripcion($clase["descripcion"]);
+      array_push($clases, $claseGrupal);
+    }
+
+    return $clases;
+  }
+  public function misClasesParticulares($loginDeportista){
+    $stmt = $this->db->query("SELECT * from CLASE, CLASE_PARTICULAR WHERE CLASE.idClase = CLASE_PARTICULAR.idClase AND CLASE_PARTICULAR.deportista = '$loginDeportista' ");
+    $clases_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $clases = array();
+    foreach ($clases_db as $clase) {
+
+      array_push($clases, new Clase($clase["idClase"], $clase["login"],
+                $clase["rol"], $clase["reserva"]));
     }
 
     return $clases;
@@ -36,8 +81,15 @@ class ClaseMapper{
 
 
   public function crear(Clase $clase){
-    $stmt = $this->db->prepare("INSERT INTO CLASE(maxAlumnos, login) values (?, ?)");
-		$stmt->execute(array($clase->getMaxAlum(),$clase->getLogin()));
+    $stmt = $this->db->prepare("INSERT INTO CLASE(rol, login) values (?, ?)");
+		$stmt->execute(array($clase->getRol(),$clase->getLogin()));
+
+        return $this->db->lastInsertId();
+  }
+
+  public function crearGrupal($idClase, $maxAlumnos, $descripcion){
+    $stmt = $this->db->prepare("INSERT INTO CLASE_GRUPAL(idClase, maxAlumnos, descripcion) values (?, ?, ?)");
+    $stmt->execute(array($idClase ,$maxAlumnos, $descripcion));
 
       if(!$this->db->query($stmt)){
 
@@ -47,6 +99,19 @@ class ClaseMapper{
         return 'Inserción realizada con éxito';
       }
   }
+
+  /*public function crearParticular($idClase, $deportista){
+    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista) values (?, ?)");
+    $stmt->execute(array($idClase ,$deportista));
+
+      if(!$this->db->query($stmt)){
+
+        return 'Error en la inserción';
+      }
+      else{
+        return 'Inserción realizada con éxito';
+      }
+  }*/
 
   public function delete(Clase $clase) {
     $stmt = $this->db->prepare("DELETE from CLASE WHERE idClase=?");
@@ -60,6 +125,8 @@ class ClaseMapper{
         return "Error en el borrado";
     }
   }
+
+
 
 
 
@@ -85,9 +152,47 @@ class ClaseMapper{
     }
   }
 
-  public function inscribir($idClase, $deportista){
-    $stmt = $this->db->prepare("INSERT INTO DEPORTISTA_HAS_CLASE VALUES(?, ?)");
+  public function inscribir($idClase, $deportista, $rol){
+    if($rol == "GRUPAL"){
+      $stmt = $this->db->prepare("INSERT INTO DEPORTISTA_HAS_CLASE_GRUPAL VALUES (?, ?)");
+
+    }else if($rol == "PARTICULAR") {
+      $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR VALUES(?, ?)");
+    }
     $stmt->execute(array($idClase, $deportista));
+
+    if(!$this->db->query($stmt)){
+
+      return 'Error en la inserción';
+    }
+    else{
+      return 'Inserción realizada con éxito';
+    }
+  }
+
+  public function desinscribir($idClase, $deportista, $rol){
+    if($rol == "GRUPAL"){
+      $stmt = $this->db->prepare("DELETE FROM DEPORTISTA_HAS_CLASE_GRUPAL WHERE idClase = ? AND login = ?");
+
+    }else if($rol == "PARTICULAR"){
+      $stmt = $this->db->prepare("DELETE FROM CLASE_PARTICULAR WHERE idClase = ? AND deportista = ?");
+    }
+    $stmt->execute(array($idClase, $deportista));
+    if ($this->db->query($stmt)) {
+
+        return "Borrado realizado con exito";
+
+    } else {
+        return "Error en el borrado";
+    }
+
+  }
+
+
+  public function getRol($idClase){
+    $stmt = $this->db->prepare("SELECT rol FROM CLASE WHERE idClase = ?");
+
+    return $stmt->execute(array($idClase));
   }
 
 

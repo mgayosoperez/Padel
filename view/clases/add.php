@@ -9,7 +9,10 @@ $errors = $view->getVariable("errors");
 
 <form action="index.php?controller=clase&amp;action=add" method="POST">
       <div class="form-group">
-          <input type="text" class="form-control" name="maxAlum" placeholder="<?=i18n("Maximo de Alumnos")?>">
+          <input type="number" class="form-control" name="maxAlum" placeholder="<?=i18n("Maximo de Alumnos")?>">
+      </div>
+      <div class="form-group">
+          <input type="text" class="form-control" name="descripcion" placeholder="<?=i18n("Descripcion de la clase")?>">
       </div>
 
         <br>

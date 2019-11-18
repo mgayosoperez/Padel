@@ -38,17 +38,17 @@ class DeportistaController extends BaseController {
 		}
 		$this->view->setVariable("cosa",$toret,true);
 
-		$this->view->render("deportistas", "index");			
+		$this->view->render("deportistas", "index");
 	}
 
-	
+
 	public function login() {
 		if (isset($_POST["login"])){
 			$rol = $this->UsuarioMapper->checkRol($_POST["login"]);
 			switch ($rol) {
 				case 'DEPORTISTA':
 					if ($this->DeportistaMapper->isValidDeportista($_POST["login"], $_POST["passwd"])) {
-						$_SESSION["currentuser"]=$_POST["login"];	
+						$_SESSION["currentuser"]=$_POST["login"];
 						$this->view->redirect("deportista", "index");
 
 					}else{
@@ -63,9 +63,9 @@ class DeportistaController extends BaseController {
 					break;
 				case 'ENTRENADOR':
 					$_SESSION["currentuser"]=$_POST["login"];
-					$this->view->redirect("entrenador", "index");
+					$this->view->redirect("clase", "index");
 					break;
-				
+
 				default:
 					$errors = array();
 					$errors["general"] = "No hay ningun usuario valido";
@@ -77,13 +77,13 @@ class DeportistaController extends BaseController {
 		$this->view->render("deportistas", "login");
 	}
 
-	
+
 	public function register() {
 
 		$deportista = new Deportista();
 		$usuario = new Usuario();
-		if (isset($_POST["login"])){ 
-			$usuario->setLogin($_POST["login"]);	
+		if (isset($_POST["login"])){
+			$usuario->setLogin($_POST["login"]);
 			$usuario->setRol("DEPORTISTA");
 
 			$deportista->setLogin($_POST["login"]);
@@ -94,16 +94,16 @@ class DeportistaController extends BaseController {
 			$deportista->setDni($_POST["dni"]);
 
 			try{
-				$deportista->checkIsValidForRegister(); 
+				$deportista->checkIsValidForRegister();
 
 				if (!($this->UsuarioMapper->loginExists($_POST["login"]))){
 					$this->UsuarioMapper->add($usuario);
 					$this->DeportistaMapper->save($deportista);
 
-					
+
 					$this->view->setFlash("Login ".$deportista->getNombre()." successfully added. Please login now");
 
-					
+
 					$this->view->redirect("deportista", "login");
 				} else {
 					$errors = array();
@@ -111,7 +111,7 @@ class DeportistaController extends BaseController {
 					$this->view->setVariable("errors", $errors);
 				}
 			}catch(ValidationException $ex) {
-				
+
 				$errors = $ex->getErrors();
 
 				$this->view->setVariable("errors", $errors);
