@@ -6,6 +6,7 @@ $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $view->getVariable("user");
 $view->setVariable("title", "Register");
+
 ?>
 	<div class="container">
         <div class="row justify-content-center align-items-center" style="height:100vh">
@@ -48,7 +49,7 @@ $view->setVariable("title", "Register");
 								</h8>
 								<br>
                             </div>
-
+                            
                             <input type="submit" id="sendlogin" class="btn btn-dark" value="Register"></input>
 
                     	</form >

@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__."/../core/PDOConnection.php");
+require_once(__DIR__."/../../core/PDOConnection.php");
 
 class CampeonatoMapper{
 
@@ -36,5 +36,27 @@ class CampeonatoMapper{
         return "Error en el borrado";
     }
   }
+
+    public function campeonatoActivo(){
+    $sql = $this->db->prepare("SELECT * FROM campeonato WHERE ? BETWEEN campeonato.fechaInicio AND campeonato.fechaFin");
+    $fecha = date("Y-m-d H:i" ,time());
+    $sql->execute(array($fecha));
+
+    $campeonato = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+    //  $toret = array();
+
+    // foreach ($campeonato as $re) {
+      
+    //   $campeonatoDevolver = new Campeonato();
+    //   $campeonatoDevolver->setIdCampeonato($re["idCampeonato"]);
+
+    //   array_push($toret, $re["idCampeonato"]);
+    // }
+
+
+     return $campeonato;
+  }
+
 }
  ?>

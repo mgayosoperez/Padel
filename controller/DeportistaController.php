@@ -10,6 +10,8 @@ require_once(__DIR__."/../model/Usuario/Usuario.php");
 
 require_once(__DIR__."/../model/Reserva/ReservaMapper.php");
 
+require_once(__DIR__."/../model/Campeonato/CampeonatoMapper.php");
+
 require_once(__DIR__."/../controller/BaseController.php");
 
 
@@ -23,6 +25,7 @@ class DeportistaController extends BaseController {
 		$this->UsuarioMapper = new UsuarioMapper();
 		$this->DeportistaMapper = new DeportistaMapper();
 		$this->ReservaMapper = new ReservaMapper();
+		$this->CampeonatoMapper = new CampeonatoMapper();
 
 	}
 
@@ -130,6 +133,15 @@ class DeportistaController extends BaseController {
 		session_destroy();
 		$this->view->redirect("init", "index");
 
+	}
+
+	public function campeonatos(){
+
+		$campeonato = $this->CampeonatoMapper->campeonatoActivo();
+
+		$this->view->setVariable("campeonato", $campeonato, true);
+
+		$this->view->render("campeonato", "showAll");
 	}
 
 }

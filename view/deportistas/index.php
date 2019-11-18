@@ -21,7 +21,7 @@ $datos=$view->getVariable("cosa");
         <a class="nav-link" href="index.php?controller=deportista&amp;action=reserva">Reservas<span class="sr-only"></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=reserva&amp;action=campeonatos">Campeonatos</a>
+        <a class="nav-link" href="index.php?controller=deportista&amp;action=campeonatos">Campeonatos</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=deportista&amp;action=clases">Clases</a>

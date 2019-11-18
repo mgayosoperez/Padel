@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__."/../core/ValidationException.php");
+require_once(__DIR__."/../../core/ValidationException.php");
 
 
 class Campeonato{
@@ -27,7 +27,7 @@ class Campeonato{
  public function getNombre(){
    return $this->nombre;
  }
- public function getFecahInicio(){
+ public function getFechaInicio(){
    return $this->fechaInicio;
  }
  public function getFechaFin(){

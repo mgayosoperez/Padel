@@ -180,7 +180,7 @@ class ViewManager {
 			if (isset($_SESSION["viewmanager__flasharray__"])
 			&& isset($_SESSION["viewmanager__flasharray__"][$varname])){
 				$toret=$_SESSION["viewmanager__flasharray__"][$varname];
-				unset($_SESSION["viewmanager__flasharray__"][$varname]);
+				//unset($_SESSION["viewmanager__flasharray__"][$varname]);
 				return $toret;
 			}
 			return $default;

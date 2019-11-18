@@ -35,4 +35,17 @@ class DeportistaMapper {
 		}
 	}
 
+	public function getSexo($login){
+		$stmt = $this->db->prepare("SELECT deportista.sexo FROM deportista WHERE deportista.login = ?");
+		$stmt->execute(array($login));
+		$toret="";
+ 		$sexo = $stmt->fetch(PDO::FETCH_ASSOC);
+ 		if($sexo!=NULL){
+ 			foreach ($sexo as $key) {
+				$toret= $key;
+			}
+		}
+ 		return $toret;
+	}
+
 }
