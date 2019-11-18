@@ -7,14 +7,13 @@ class PartidoPromocionado{
   private $idPromocionado;
   private $fecha;
   private $reserva;
-  private $numDeportista;
+  
 
 
-  function __construct($idPromocionado = NULL, $fecha = NULL, $reserva = NULL, $numDeportista = NULL){
+  function __construct($idPromocionado = NULL, $fecha = NULL, $reserva = NULL){
     $this->idPromocionado = $idPromocionado;
     $this->fecha = $fecha;
     $this->reserva = $reserva;
-    $this->numDeportista = $numDeportista;
   }
 
   //Getters
@@ -27,9 +26,6 @@ class PartidoPromocionado{
     public function getReserva(){
       return $this->reserva;
     }
-    public function getNumDeportista(){
-      return $this->numDeportista;
-    }
 
   //Setters
     public function setIdPromocionado($idPromocionado){
@@ -41,7 +37,5 @@ class PartidoPromocionado{
     public function setReserva($reserva){
       $this->reserva = $reserva;
     }
-    public function setNumDeportista($numDeportista){
-      $this->numDeportista = $numDeportista;
-    }
+    
 }
