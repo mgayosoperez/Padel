@@ -24,7 +24,7 @@ class PartidoPromocionadoMapper{
 
     foreach ($pPromocionados as $key) {
 
-      array_push($toRet, new PartidoPromocionado($key["idPromocionado"], $key["fecha"], $key["reserva"]));
+      array_push($toRet, new PartidoPromocionado($key["idPromocionado"], $key["fecha"]));
     }
     return $toRet;
   }
@@ -49,9 +49,25 @@ class PartidoPromocionadoMapper{
     return $toRet;
   }
 
-  public function verInscritos(){
+  public function verInscritos($login){
 
-    $stmt = $this->db->prepare()
+    $stmt = $this->db->prepare("SELECT * FROM partido_promocionado, promocionado_has_deportista WHERE
+                                partido_promocionado.idPromocionado = promocionado_has_deportista.idPromocionado AND
+                                partido_promocionado.fecha > ? AND promocionado_has_deportista.deportista = ?");
+    
+    $fecha = date("Y-m-d H:i" ,time());
+
+    $stmt->execute(array($fecha, $login));
+
+    $pPromocionados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $toRet = array();
+
+    foreach ($pPromocionados as $key) {
+
+      array_push($toRet, new PartidoPromocionado($key["idPromocionado"], $key["fecha"], $key["reserva"]));
+    }
+    return $toRet;
 
   }
 

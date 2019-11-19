@@ -32,12 +32,11 @@ class AdminController extends BaseController {
 	public function addPartidoPromocionado(){
 		$partidoPromocionado = new PartidoPromocionado();
 		$partidoPromocionado->setFecha($_POST["fecha"]);
-		$partidoPromocionado->setNumDeportista("0");
 		$this->PartidoPromocionadoMapper->add($partidoPromocionado);
 		$this->view->render("admin", "index");
 	}
 	public function showPartidos(){
-		$datos = $this->PartidoPromocionadoMapper->findAll();
+		$datos = $this->PartidoPromocionadoMapper->verDisponiblesAdmin();
 		$this->view->setVariable("datos",$datos,true);	
 		$this->view->render("admin", "showPartidos");
 	}
