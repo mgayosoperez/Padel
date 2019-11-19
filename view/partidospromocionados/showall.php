@@ -1,42 +1,69 @@
 <?php
-//file: view/posts/view.php
+
 require_once(__DIR__."/../../core/ViewManager.php");
+require_once(__DIR__."/../../model/PartidoPromocionado/PartidoPromocionado.php");
+
+
 $view = ViewManager::getInstance();
-$listaPartidos = $view->getVariable("partidos");
 $errors = $view->getVariable("errors");
+$user = $_SESSION["currentuser"];
+
+$campeonatos = $view->getVariable("campeonato");
+
 ?>
 
-  <table class="table" border=1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="index.php?controller=deportista&amp;action=index"><img src="icon/padel.png" height="50" width="50" class="mr-2">Padelo</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?controller=deportista&amp;action=reserva">Reservas<span class="sr-only"></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="index.php?controller=deportista&amp;action=campeonatos">Campeonatos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?controller=deportista&amp;action=clases">Clases</a>
+      </li>
+    </ul>
+  </div>
+  <form class="form-inline">
+   	<div class="mr-5 text-light"><?= $user?></div>
+    <a 	href="index.php?controller=deportista&amp;action=logout"><img src="icon/out.png" height="27" width="27"></a>
+  </form>
+</nav>
 
-          <tr>
-              <!-- Títulos de la -->
-              <th>
-                  IdPromocionado
-              </th>
-              <th>
-                  Fecha
-              </th>
-              <th>
-                  Reserva
-              </th>
-              <th>
-                  Numero Deportistas
-              </th>
-              <th>
-                  <button type="button" class="btn"> <a href="index.php?controller=partidopromocionado&amp;action=add">Añadir</a> </button>
-              </th>
 
-          </tr>
-        <?php foreach ($listaPartidos as $partido){?>
-          <tr>
-              <td><?= $partido->getIdPromocionado()?></td>
-              <td><?= $partido->getFecha()?></td>
-              <td><?= $partido->getReserva()?></td>
-              <td><?= $partido->getNumDeportista()?></td>
-              <td><!--OjO BOTONES-->
-                <button type="button" name="button"><a href="index.php?controller=partidopromocionado&amp;action=delete&amp;idPromocionado=<?= $partido->getIdPromocionado()?>">Borrar</a></button>
-              </td>
+<?php if(isset($campeonatos)){
+  echo "<table class='table'>";
+  echo "<thead>";
+  echo "<tr>";
+  echo "<th scope='col'></th>";
+  echo "<th scope='col'>Nombre</th>";
+  echo "<th scope='col'>Fecha de Inicio</th>";
+  echo "<th scope='col'>Fecha de Fin</th>";
+  echo "<th scope='col'>Opciones</th>";
+  echo "</tr>";
+  echo "</thead>";
+  echo "<tbody>";
+  foreach($campeonatos as $id){
+   $nombre = $id["nombre"];
+   $fechaInicio = $id["fechaInicio"];
+   $fechaFin = $id["fechaFin"];
+   $idC=$id["idCampeonato"]; 
+  echo "<tr>";
+  echo "<th scope='row'></th>";
+  echo "<td> $nombre</td>";
+  echo "<td> $fechaInicio</td>";
+  echo "<td> $fechaFin</td>";
+  echo "<td> <a href='index.php?controller=campeonato&amp;action=inscribirse&amp;idCampeonato=$idC'> <button class='btn btn-yagami'>Incribirse</button> </a> </td>";
+  echo "</tr>";
+  }
+  echo "</tbody>";
+  echo "</table>"; 
+}?>
 
-          </tr>
-        <?php } ?>
-      </table>
+
+

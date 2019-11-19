@@ -12,6 +12,23 @@ class PartidoPromocionadoMapper{
     $this->db = PDOConnection::getInstance();
   }
 
+  public function verDisponiblesAdmin(){
+
+    $stmt = $this->db->prepare("SELECT * FROM partido_promocionado WHERE partido_promocionado.fecha > ? ");
+    $fecha = date("Y-m-d H:i" ,time());
+    $stmt->execute(array($fecha));
+
+    $pPromocionados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $toRet = array();
+
+    foreach ($pPromocionados as $key) {
+
+      array_push($toRet, new PartidoPromocionado($key["idPromocionado"], $key["fecha"], $key["reserva"]));
+    }
+    return $toRet;
+  }
+
   public function verDisponibles($login){
     $stmt = $this->db->prepare("SELECT * FROM partido_promocionado, promocionado_has_deportista WHERE
                               partido_promocionado.idPromocionado = promocionado_has_deportista.idPromocionado AND
@@ -33,6 +50,8 @@ class PartidoPromocionadoMapper{
   }
 
   public function verInscritos(){
+
+    $stmt = $this->db->prepare()
 
   }
 
