@@ -17,11 +17,24 @@ $campeonatos = $view->getVariable("campeonato");
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-     <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=admin&amp;action=partidoPromocionado">Partidos Promocionados<span class="sr-only"></a>
+     <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Partidos Promocionados
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=partidoPromocionado">Crear un Partido Promocionado</a> 
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=showPartidos">Partidos Promocionados</a>
+        </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=admin&amp;action=campeonatos">Campeonatos</a>
+           <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Campeonatos
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=campeonatos">Lista de Campeonatos</a>
+          <a class="dropdown-item" href="#">Crear un Campeonato</a> 
+          <a class="dropdown-item" href="#">Modificar un Campeonato</a>
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=admin&amp;action=entrenadores">Entrenadores</a>

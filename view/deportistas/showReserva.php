@@ -1,13 +1,14 @@
 <?php
+//file: view/users/register.php
 
 require_once(__DIR__."/../../core/ViewManager.php");
 require_once(__DIR__."/../../model/Reserva/Reserva.php");
 $view = ViewManager::getInstance();
+$view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
-
-$campeonatos = $view->getVariable("campeonato");
-
+$view->setVariable("title", "index");
+$datos=$view->getVariable("cosa");
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -16,7 +17,7 @@ $campeonatos = $view->getVariable("campeonato");
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-            <li class="nav-item dropdown">
+      <li class="nav-item dropdown">
        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Reservas
         </a>
@@ -25,11 +26,11 @@ $campeonatos = $view->getVariable("campeonato");
           <a class="dropdown-item" href="index.php?controller=deportista&amp;action=showReservas">Ver reservas</a>
         </div>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="index.php?controller=deportista&amp;action=campeonatos">Campeonatos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=deportista&amp;action=clases">Clases</a>
+        <a class="nav-link" href="index.php?controller=clase&amp;action=clases">Clases</a>
       </li>
     </ul>
   </div>
@@ -40,34 +41,28 @@ $campeonatos = $view->getVariable("campeonato");
 </nav>
 
 
-<?php if(isset($campeonatos)){
+<?php if(isset($datos)){
   echo "<table class='table'>";
   echo "<thead>";
   echo "<tr>";
   echo "<th scope='col'></th>";
-  echo "<th scope='col'>Nombre</th>";
-  echo "<th scope='col'>Fecha de Inicio</th>";
-  echo "<th scope='col'>Fecha de Fin</th>";
+  echo "<th scope='col'>Fecha</th>";
+  echo "<th scope='col'>Pista</th>";
   echo "<th scope='col'>Opciones</th>";
   echo "</tr>";
   echo "</thead>";
   echo "<tbody>";
-  foreach($campeonatos as $id){
-   $nombre = $id["nombre"];
-   $fechaInicio = $id["fechaInicio"];
-   $fechaFin = $id["fechaFin"];
-   $idC=$id["idCampeonato"]; 
+  foreach($datos as $id){
+   $manolo = $id['fecha'];
+   $paco = $id['idPista'];
+   $jose = $id['idReserva'];
   echo "<tr>";
   echo "<th scope='row'></th>";
-  echo "<td> $nombre</td>";
-  echo "<td> $fechaInicio</td>";
-  echo "<td> $fechaFin</td>";
-  echo "<td> <a href='index.php?controller=campeonato&amp;action=inscribirse&amp;idCampeonato=$idC'> <button class='btn btn-yagami'>Incribirse</button> </a> </td>";
+  echo "<td> $manolo</td>";
+  echo "<td> $paco</td>";
+  echo "<td> <a href='index.php?controller=reserva&amp;action=deleteReserva&amp;idReserva=$jose'> <button class='btn btn-yagami'>Borrar</button> </a> </td>";
   echo "</tr>";
   }
   echo "</tbody>";
   echo "</table>"; 
 }?>
-
-
-

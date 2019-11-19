@@ -14,8 +14,14 @@ $user = $_SESSION["currentuser"];
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=deportista&amp;action=reserva">Reservas<span class="sr-only"></a>
+            <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Reservas
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="index.php?controller=deportista&amp;action=reserva">Crear reserva</a> 
+          <a class="dropdown-item" href="index.php?controller=deportista&amp;action=showReservas">Ver reservas</a>
+        </div>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="index.php?controller=deportista&amp;action=campeonatos">Campeonatos</a>
@@ -49,6 +55,12 @@ $user = $_SESSION["currentuser"];
                               <input type="radio" name="nivel" value="2"> 2<br>
                               <input type="radio" name="nivel" value="3"> 3<br>
                          </div>
+                            <div>
+                              <h8 class="text-light"><?php if(isset($errors["cam"])){echo $errors["cam"];}
+                              if(isset($errors["login"])){echo $errors["login"];}?></h8>
+                              <br>
+                              <br>
+                            </div>
                             <input type="submit" id="sendlogin" class="btn btn-dark" value="Register"></input>
 
                       </form >

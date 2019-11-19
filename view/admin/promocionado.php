@@ -117,7 +117,7 @@ function fondoHora(int $horis){
       <td id="8"    <?php fondoHora(10);?> <?php horaOcupada("$fechato[0] 10:00");?> onclick="toinput('<?php echo($fechato[0]);?>10:00', '8')"></td>
       <td id="9"    <?php horaOcupada("$fechato[1] 10:00");?> onclick="toinput('<?php echo($fechato[1]);?>10:00', '9')"></td>
       <td id="10"   <?php horaOcupada("$fechato[2] 10:00");?> onclick="toinput('<?php echo($fechato[2]);?>10:00', '10')"></td>
-      <td id="11"   <?php horaOcupada("$fechato[3] 10:00");?> onclick="toiput('<?php echo($fechato[3]);?>10:00', '11')"></td>
+      <td id="11"   <?php horaOcupada("$fechato[3] 10:00");?> onclick="toinput('<?php echo($fechato[3]);?>10:00', '11')"></td>
       <td id="12"   <?php horaOcupada("$fechato[4] 10:00");?> onclick="toinput('<?php echo($fechato[4]);?>10:00', '12')"></td>
       <td id="13"   <?php horaOcupada("$fechato[5] 10:00");?> onclick="toinput('<?php echo($fechato[5]);?>10:00', '13')"></td>
       <td id="14"   <?php horaOcupada("$fechato[6] 10:00");?> onclick="toinput('<?php echo($fechato[6]);?>10:00', '14')"></td>

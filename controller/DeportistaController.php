@@ -2,18 +2,15 @@
 
 require_once(__DIR__."/../core/ViewManager.php");
 
-require_once(__DIR__."/../../model/Deportista/Deportista.php");
-require_once(__DIR__."/../../model/Deportista/DeportistaMapper.php");
+require_once(__DIR__."/../model/Deportista/Deportista.php");
+require_once(__DIR__."/../model/Deportista/DeportistaMapper.php");
 
-require_once(__DIR__."/../../model/Usuario/UsuarioMapper.php");
-require_once(__DIR__."/../../model/Usuario/Usuario.php");
+require_once(__DIR__."/../model/Usuario/UsuarioMapper.php");
+require_once(__DIR__."/../model/Usuario/Usuario.php");
 
-require_once(__DIR__."/../../model/PartidoPromocionado/PartidoPromocionadoMapper.php");
-require_once(__DIR__."/../../model/PartidoPromocionado/PartidoPromocionado.php");
+require_once(__DIR__."/../model/Reserva/ReservaMapper.php");
 
-require_once(__DIR__."/../../model/Reserva/ReservaMapper.php");
-
-require_once(__DIR__."/../../model/Campeonato/CampeonatoMapper.php");
+require_once(__DIR__."/../model/Campeonato/CampeonatoMapper.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
 
@@ -29,18 +26,10 @@ class DeportistaController extends BaseController {
 		$this->DeportistaMapper = new DeportistaMapper();
 		$this->ReservaMapper = new ReservaMapper();
 		$this->CampeonatoMapper = new CampeonatoMapper();
-		$this->PartidoPromocionadoMapper = new PartidoPromocionadoMapper();
 
 	}
 
 	public function index(){
-
-		$datos=$this->ReservaMapper->getHasReserva($_SESSION["currentuser"]);
-		$toret=array();
-		foreach ($datos as $key) {
-			array_push($toret,$this->ReservaMapper->getReserva($key));
-		}
-		$this->view->setVariable("cosa",$toret,true);
 
 		$this->view->render("deportistas", "index");			
 	}
@@ -103,7 +92,11 @@ class DeportistaController extends BaseController {
 				if (!($this->UsuarioMapper->loginExists($_POST["login"]))){
 					$this->UsuarioMapper->add($usuario);
 					$this->DeportistaMapper->save($deportista);
-			
+
+					
+					$this->view->setFlash("Login ".$deportista->getNombre()." successfully added. Please login now");
+
+					
 					$this->view->redirect("deportista", "login");
 				} else {
 					$errors = array();
@@ -125,6 +118,16 @@ class DeportistaController extends BaseController {
 
 	}
 
+	public function showReservas(){
+		$datos=$this->ReservaMapper->getHasReserva($_SESSION["currentuser"]);
+		$toret=array();
+		foreach ($datos as $key) {
+			array_push($toret,$this->ReservaMapper->getReserva($key));
+		}
+		$this->view->setVariable("cosa",$toret,true);
+		$this->view->render("deportistas", "showReserva");
+	}
+
 	public function reserva(){
 		$this->view->render("deportistas", "reserva");
 	}
@@ -144,7 +147,7 @@ class DeportistaController extends BaseController {
 		$this->view->render("campeonato", "showAll");
 	}
 
-	public function inscribirsePromocionado(){
+		public function inscribirsePromocionado(){
 
 		if (isset($_GET["idPromocionado"])){
 			
@@ -160,4 +163,5 @@ class DeportistaController extends BaseController {
 		}
 
 	}
+
 }

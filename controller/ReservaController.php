@@ -46,6 +46,11 @@ class ReservaController extends BaseController {
 		}
 	}
 
+	public function deleteReserva(){
+		$this->ReservaMapper->delete($_GET["idReserva"]);
+		$this->view->redirect("deportista", "showReservas");
+	}
+
 
 
 

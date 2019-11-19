@@ -60,13 +60,14 @@ class CampeonatoController extends BaseController {
 						$this->view->redirect("deportista", "index");
 					} else {
 						$errors = array();
-						$errors["login"] = "cosas malas";
+						$errors["login"] = "El login es incorrecto";
 						$this->view->setVariable("errors", $errors);
 					}
 
 				}else {
+						$auser=$_SESSION["currentuser"];
 						$errors = array();
-						$errors["cam"] = "id problematico ";
+						$errors["cam"] = "$auser ya esta inscrito es este campeonato";
 						$this->view->setVariable("errors", $errors);
 					}
 			}catch(ValidationException $ex) {
