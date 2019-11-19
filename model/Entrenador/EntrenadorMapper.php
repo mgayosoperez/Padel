@@ -94,6 +94,15 @@ class EntrenadorMapper{
     return $toret;
   }
 
+  public function isValidEntrenador($login, $passwd) {
+    $stmt = $this->db->prepare("SELECT count(login) FROM ENTRENADOR where login=? and password=?");
+    $stmt->execute(array($login, $passwd));
+
+    if ($stmt->fetchColumn() > 0) {
+      return true;
+    }
+  }
+
 
 
 

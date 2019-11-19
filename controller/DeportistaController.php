@@ -17,6 +17,9 @@ require_once(__DIR__."/../model/Campeonato/CampeonatoMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
 
+require_once(__DIR__."/../model/Entrenador/EntrenadorMapper.php");
+require_once(__DIR__."/../model/Admin/AdminMapper.php");
+
 class DeportistaController extends BaseController {
 
 
@@ -29,6 +32,8 @@ class DeportistaController extends BaseController {
 		$this->ReservaMapper = new ReservaMapper();
 		$this->CampeonatoMapper = new CampeonatoMapper();
 		$this->PartidoPromocionadoMapper = new PartidoPromocionadoMapper();
+		$this->AdminMapper = new AdminMapper();
+		$this->EntrenadorMapper = new EntrenadorMapper();
 
 	}
 
@@ -54,12 +59,16 @@ class DeportistaController extends BaseController {
 					}
 					break;
 				case 'ADMIN':
-					$_SESSION["currentuser"]=$_POST["login"];
-					$this->view->redirect("admin", "index");
+					if($this->AdminMapper->isValidAdmin($_POST["login"], $_POST["passwd"])) {
+						$_SESSION["currentuser"]=$_POST["login"];
+						$this->view->redirect("admin", "index");
+					}
 					break;
 				case 'ENTRENADOR':
-					$_SESSION["currentuser"]=$_POST["login"];
-					$this->view->redirect("clase", "index");
+					if($this->EntrenadorMapper->isValidEntrenador($_POST["login"], $_POST["passwd"])) {
+						$_SESSION["currentuser"]=$_POST["login"];
+						$this->view->redirect("clase", "index");
+					}
 					break;
 
 				default:

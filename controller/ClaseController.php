@@ -3,7 +3,7 @@ require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 
 require_once(__DIR__."/../model/Clase/Clase.php");
-require_once(__DIR__."/../model/Clase/Clase_Grupal.php");
+//require_once(__DIR__."/../model/Clase/Clase_Grupal.php");
 require_once(__DIR__."/../model/Clase/ClaseMapper.php");
 
 require_once(__DIR__."/../model/Reserva/Reserva.php");

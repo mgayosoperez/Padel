@@ -1,6 +1,6 @@
 <?php
 require_once(__DIR__."/../../core/PDOConnection.php");
-
+require_once(__DIR__."/../Clase/ClaseGrupal.php");
 class ClaseMapper{
 
   private $db;
