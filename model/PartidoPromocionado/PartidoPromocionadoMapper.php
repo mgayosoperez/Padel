@@ -1,6 +1,8 @@
 <?php
 require_once(__DIR__."/../../core/PDOConnection.php");
 
+require_once(__DIR__."/../../model/PartidoPromocionado.php");
+
 
 class PartidoPromocionadoMapper{
 
@@ -10,17 +12,28 @@ class PartidoPromocionadoMapper{
     $this->db = PDOConnection::getInstance();
   }
 
-  public function findAll(){
-    $stmt = $this->db->query("SELECT * FROM partido_promocionado");
+  public function verDisponibles($login){
+    $stmt = $this->db->prepare("SELECT * FROM partido_promocionado, promocionado_has_deportista WHERE 
+                              partido_promocionado.idPromocionado = promocionado_has_deportista.idPromocionado AND
+                              partido_promocionado.fecha > ? AND NOT promocionado_has_deportista.deportista = ?");
 
-    $pPromocionados_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $pPromocionados = array();
-    foreach ($pPromocionados_db as $pPromocionado) {
+    $fecha = date("Y-m-d H:i" ,time());
 
-      array_push($pPromocionados, new PartidoPromocionado($pPromocionado["idPromocionado"], $pPromocionado["fecha"],
-                $pPromocionado["idReserva"]));
+    $stmt->execute(array($fecha, $login));
+
+    $pPromocionados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $toRet = array();
+
+    foreach ($pPromocionados as $key) {
+
+      array_push($toRet, new PartidoPromocionado($key["idPromocionado"], $key["fecha"], $key["reserva"]));
     }
-    return $pPromocionados;
+    return $toRet;
+  }
+
+  public function verInscritos(){
+
   }
 
   public function add(PartidoPromocionado $partido){
@@ -100,9 +113,6 @@ class PartidoPromocionadoMapper{
     }
     return $toret;
   }
-
-
-
 
 }
  ?>
