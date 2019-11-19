@@ -10,6 +10,8 @@ require_once(__DIR__."/../model/Usuario/Usuario.php");
 
 require_once(__DIR__."/../model/Reserva/ReservaMapper.php");
 
+require_once(__DIR__."/../model/PartidoPromocionado/PartidoPromocionadoMapper.php");
+
 require_once(__DIR__."/../model/Campeonato/CampeonatoMapper.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
@@ -26,6 +28,7 @@ class DeportistaController extends BaseController {
 		$this->DeportistaMapper = new DeportistaMapper();
 		$this->ReservaMapper = new ReservaMapper();
 		$this->CampeonatoMapper = new CampeonatoMapper();
+		$this->PartidoPromocionadoMapper = new PartidoPromocionadoMapper();
 
 	}
 
@@ -94,9 +97,6 @@ class DeportistaController extends BaseController {
 					$this->DeportistaMapper->save($deportista);
 
 
-					$this->view->setFlash("Login ".$deportista->getNombre()." successfully added. Please login now");
-
-
 					$this->view->redirect("deportista", "login");
 				} else {
 					$errors = array();
@@ -147,8 +147,7 @@ class DeportistaController extends BaseController {
 		$this->view->render("campeonato", "showAll");
 	}
 
-		public function inscribirsePromocionado(){
-
+	public function inscribirsePromocionado(){
 		if (isset($_GET["idPromocionado"])){
 
 			$numDeportistas = $this->PartidoPromocionadoMapper->numDeportistas($_GET["idPromocionado"]);
@@ -158,10 +157,19 @@ class DeportistaController extends BaseController {
 			}else{
 
 				$this->PartidoPromocionadoMapper->inscribirse($_SESSION["currentuser"],$_GET["idPromocionado"]);
+				// aqui hacer la comprobacion de si hay 4 hacer reservas
 			}
-			$this->view->render("partidospromocionados", "showAll");
+			$this->view->redirect("deportista", "showPromocionados");
 		}
 
+	}
+
+	public function showPromocionados(){
+		
+		$datos = $this->PartidoPromocionadoMapper->verDisponibles($_SESSION["currentuser"]);
+		
+		$this->view->setVariable("pPromocionado",$datos,true);
+		$this->view->render("deportistas", "partidoPromocionado");
 	}
 
 }

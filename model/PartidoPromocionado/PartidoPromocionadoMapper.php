@@ -30,21 +30,23 @@ class PartidoPromocionadoMapper{
   }
 
   public function verDisponibles($login){
-    $stmt = $this->db->prepare("SELECT * FROM partido_promocionado, promocionado_has_deportista WHERE
-                              partido_promocionado.idPromocionado = promocionado_has_deportista.idPromocionado AND
-                              partido_promocionado.fecha > ? AND NOT promocionado_has_deportista.deportista = ?");
+      $stmt = $this->db->prepare("SELECT PP.idPromocionado, PP.fecha
+                                  FROM partido_promocionado PP
+                                  LEFT JOIN promocionado_has_deportista PHD
+                                  ON PP.idPromocionado = PHD.idPromocionado
+                                WHERE (PHD.deportista NOT LIKE ? OR PHD.deportista IS NULL) AND
+                                      PP.fecha > NOW()");
 
-    $fecha = date("Y-m-d H:i" ,time());
-
-    $stmt->execute(array($fecha, $login));
-
+    $stmt->execute(array($login));
+    
     $pPromocionados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    var_dump($pPromocionados);
 
     $toRet = array();
 
     foreach ($pPromocionados as $key) {
-
-      array_push($toRet, new PartidoPromocionado($key["idPromocionado"], $key["fecha"], $key["reserva"]));
+     
+      array_push($toRet, new PartidoPromocionado($key["idPromocionado"], $key["fecha"]));
     }
     return $toRet;
   }
@@ -89,11 +91,6 @@ class PartidoPromocionadoMapper{
 
     $stmt->execute(array($idPromocionado, $login));
 
-    if ($this->db->query($stmt)){
-      return "Inscrito.";
-    }else{
-      return "Error";
-    }
   }
 
   public function numDeportistas($idPromocionado){
@@ -101,7 +98,7 @@ class PartidoPromocionadoMapper{
 
     $stmt->execute(array($idPromocionado));
 
-    return $stmt->fechColumn();
+    return $stmt->fetchColumn();
 
   }
 

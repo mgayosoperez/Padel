@@ -10,7 +10,7 @@ class PartidoPromocionado{
   
 
 
-  function __construct($idPromocionado = NULL, $fecha = NULL, $reserva = NULL){
+  function __construct($idPromocionado = "", $fecha = "", $reserva = ""){
     $this->idPromocionado = $idPromocionado;
     $this->fecha = $fecha;
     $this->reserva = $reserva;
