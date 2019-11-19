@@ -38,18 +38,11 @@ class ReservaMapper{
 
   }
 
-  public function delete(Reserva $reserva){
+  public function delete($reserva){
     $sql = $this->db->prepare("DELETE FROM RESERVA WHERE idReserva = ?");
 
-    $sql->execute(array($reserva->getIdReserva()));
+    $sql->execute(array($reserva));
 
-    if ($this->mysqli->query($sql)) {
-
-        return "Borrado realizado con exito";
-
-    } else {
-        return "Error en el borrado";
-    }
   }
 
   public function getHasReserva($id){

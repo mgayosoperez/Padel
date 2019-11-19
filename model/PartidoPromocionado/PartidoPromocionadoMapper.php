@@ -78,17 +78,9 @@ class PartidoPromocionadoMapper{
     $stmt->execute(array($partido->getFecha()));
   }
 
-  public function delete(PartidoPromocionado $partido){
+  public function delete($partido){
     $stmt = $this->db->prepare("DELETE from partido_promocionado WHERE idPromocionado=?");
-    $stmt->execute(array($partido->getIdPromocionado()));
-
-    if ($this->db->query($stmt)) {
-
-        return "Borrado realizado con exito";
-
-    } else {
-        return "Error en el borrado";
-    }
+    $stmt->execute(array($partido));
   }
 
 
