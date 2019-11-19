@@ -15,11 +15,13 @@ class ClaseMapper{
     $clases = array();
     foreach ($clases_db as $clase) {
       $claseGrupal = new ClaseGrupal();
+      $stmt2 = $this->db->query("SELECT login, reserva from CLASE WHERE idClase = $clase[idClase]");
+      $row = $stmt2->fetch();
       $claseGrupal->setIdClase($clase["idClase"]);
       $claseGrupal->setMaxAlum($clase["maxAlumnos"]);
       $claseGrupal->setDescripcion($clase["descripcion"]);
-      $claseGrupal->setLogin($this->db->query("SELECT login from CLASE WHERE idClase = $clase[idClase]"));
-      $claseGrupal->setReserva($this->db->query("SELECT reserva from CLASE WHERE idClase = $clase[idClase]"));
+      $claseGrupal->setLogin($row["login"]);
+      $claseGrupal->setReserva($row["reserva"]);
       array_push($clases, $claseGrupal);
     }
 
@@ -58,9 +60,13 @@ class ClaseMapper{
     $clases = array();
     foreach ($clases_db as $clase) {
       $claseGrupal = new ClaseGrupal();
+      $stmt2 = $this->db->query("SELECT login, reserva from CLASE WHERE idClase = $clase[idClase]");
+      $row = $stmt2->fetch();
       $claseGrupal->setIdClase($clase["idClase"]);
       $claseGrupal->setMaxAlum($clase["maxAlumnos"]);
       $claseGrupal->setDescripcion($clase["descripcion"]);
+      $claseGrupal->setLogin($row["login"]);
+      $claseGrupal->setReserva($row["reserva"]);
       array_push($clases, $claseGrupal);
     }
 
@@ -153,11 +159,11 @@ class ClaseMapper{
   }
 
   public function inscribir($idClase, $deportista, $rol){
-    if($rol == "GRUPAL"){
-      $stmt = $this->db->prepare("INSERT INTO DEPORTISTA_HAS_CLASE_GRUPAL VALUES (?, ?)");
+    if($rol == 'GRUPAL'){
+      $stmt = $this->db->prepare("INSERT INTO DEPORTISTA_HAS_CLASE_GRUPAL(idClase, login) VALUES (?, ?)");
 
-    }else if($rol == "PARTICULAR") {
-      $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR VALUES(?, ?)");
+    }elseif($rol == 'PARTICULAR') {
+      $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista) VALUES(?, ?)");
     }
     $stmt->execute(array($idClase, $deportista));
 
@@ -171,10 +177,10 @@ class ClaseMapper{
   }
 
   public function desinscribir($idClase, $deportista, $rol){
-    if($rol == "GRUPAL"){
+    if($rol == 'GRUPAL'){
       $stmt = $this->db->prepare("DELETE FROM DEPORTISTA_HAS_CLASE_GRUPAL WHERE idClase = ? AND login = ?");
 
-    }else if($rol == "PARTICULAR"){
+    }elseif($rol == 'PARTICULAR'){
       $stmt = $this->db->prepare("DELETE FROM CLASE_PARTICULAR WHERE idClase = ? AND deportista = ?");
     }
     $stmt->execute(array($idClase, $deportista));
@@ -189,10 +195,11 @@ class ClaseMapper{
   }
 
 
-  public function getRol($idClase){
-    $stmt = $this->db->prepare("SELECT rol FROM CLASE WHERE idClase = ?");
+  public function getClase($idClase){
+    $stmt = $this->db->prepare("SELECT * FROM CLASE WHERE idClase = ?");
+    $stmt->execute(array($idClase));
 
-    return $stmt->execute(array($idClase));
+    return $stmt->fetch();
   }
 
 

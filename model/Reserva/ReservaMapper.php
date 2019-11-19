@@ -18,12 +18,24 @@ class ReservaMapper{
     $auxiliar =  $this->db->lastInsertId();
 
 
-    
+
 
     $sql = $this->db->prepare("INSERT INTO RESERVA_HAS_DEPORTISTA(idReserva, idDeportista)
                                 VALUES (?,?)");
     $sql->execute(array($auxiliar, $_SESSION["currentuser"]));
-    
+
+
+  }
+
+  public function addClase(Reserva $reserva){
+    $sql = $this->db->prepare("INSERT INTO RESERVA(fecha, idPista)
+                                VALUES (?,?)");
+    $sql->execute(array($reserva->getFecha(), $reserva->getIdPista()));
+
+    $auxiliar =  $this->db->lastInsertId();
+
+    return $auxiliar;
+
   }
 
   public function delete(Reserva $reserva){
@@ -32,9 +44,9 @@ class ReservaMapper{
     $sql->execute(array($reserva->getIdReserva()));
 
     if ($this->mysqli->query($sql)) {
-            
+
         return "Borrado realizado con exito";
-        
+
     } else {
         return "Error en el borrado";
     }
@@ -55,7 +67,7 @@ class ReservaMapper{
 
 
   	 return $toret;
-	
+
  	}
  	public function getReserva($id){
  		$sql = $this->db->prepare("SELECT * FROM RESERVA WHERE idReserva = ?");

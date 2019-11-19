@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__."/../../core/PDOConnection.php");
 
-require_once(__DIR__."/../../model/PartidoPromocionado.php");
+require_once(__DIR__."/../../model/PartidoPromocionado/PartidoPromocionado.php");
 
 
 class PartidoPromocionadoMapper{
@@ -13,7 +13,7 @@ class PartidoPromocionadoMapper{
   }
 
   public function verDisponibles($login){
-    $stmt = $this->db->prepare("SELECT * FROM partido_promocionado, promocionado_has_deportista WHERE 
+    $stmt = $this->db->prepare("SELECT * FROM partido_promocionado, promocionado_has_deportista WHERE
                               partido_promocionado.idPromocionado = promocionado_has_deportista.idPromocionado AND
                               partido_promocionado.fecha > ? AND NOT promocionado_has_deportista.deportista = ?");
 
@@ -63,7 +63,7 @@ class PartidoPromocionadoMapper{
     $stmt->execute(array($idPromocionado, $login));
 
     if ($this->db->query($stmt)){
-      return "Inscrito."
+      return "Inscrito.";
     }else{
       return "Error";
     }
@@ -92,7 +92,7 @@ class PartidoPromocionadoMapper{
     $stmt = $this->db->prepare("SELECT * FROM PARTIDO_PROMOCIONADO where idPromocionado = ?");
 		$stmt->execute(array($idPromocionado));
     $promocionado = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
     if($promocionado != null) {
       return $promocionado;
     } else {
