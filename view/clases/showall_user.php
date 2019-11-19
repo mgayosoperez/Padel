@@ -26,6 +26,9 @@ $errors = $view->getVariable("errors");
                   Descripcion
               </th>
               <th>
+                  Fecha
+              </th>
+              <th>
                   Entrenador
               </th>
 
@@ -35,6 +38,7 @@ $errors = $view->getVariable("errors");
               <td><?= $clase->getIdClase()?></td>
               <td><?= $clase->getMaxAlum()?></td>
               <td><?= $clase->getDescripcion()?></td>
+              <td><?= $clase->getFecha()?></td>
               <td><?= $clase->getLogin()?></td>
 
               <td>
@@ -44,41 +48,6 @@ $errors = $view->getVariable("errors");
           </tr>
         <?php } ?>
       </table>
-
-      <h1>Clases Particulares</h1>
-
-        <table class="table" border=1>
-
-                <tr>
-                    <!-- Títulos de la -->
-                    <th>
-                        IdClase
-                    </th>
-                    <th>
-                        Rol
-                    </th>
-                    <th>
-                        Reserva
-                    </th>
-                    <th>
-                        Entrenador
-                    </th>
-
-                </tr>
-              <?php foreach ($listaClasesParticulares as $clase){?>
-                <tr>
-                    <td><?= $clase->getIdClase()?></td>
-                    <td><?= $clase->getRol()?></td>
-                    <td><?= $clase->getReserva()?></td>
-                    <td><?= $clase->getLogin()?></td>
-                    <td>
-                      <button type="button" class="btn"> <a href="index.php?controller=clase&amp;action=inscribirse&amp;idClase=<?= $clase->getIdClase()?>">Inscribirse</a> </button>
-                    </td>
-
-                </tr>
-              <?php } ?>
-            </table>
-
 
       <h1>Mis clases Grupales</h1>
       <table class="table" border=1>
@@ -95,6 +64,9 @@ $errors = $view->getVariable("errors");
                       Descripcion
                   </th>
                   <th>
+                      Fecha
+                  </th>
+                  <th>
                       Entrenador
                   </th>
 
@@ -104,6 +76,7 @@ $errors = $view->getVariable("errors");
                   <td><?= $miclase->getIdClase()?></td>
                   <td><?= $miclase->getMaxAlum()?></td>
                   <td><?= $miclase->getDescripcion()?></td>
+                  <td><?= $miclase->getFecha()?></td>
                   <td><?= $miclase->getLogin()?></td>
 
                   <td>
@@ -114,35 +87,61 @@ $errors = $view->getVariable("errors");
             <?php } ?>
           </table>
 
-          <h1>Mis clases Particulares</h1>
-          <table class="table" border=1>
+      <h1>Clases Particulares</h1>
 
-                  <tr>
-                      <!-- Títulos de la -->
-                      <th>
-                          IdClase
-                      </th>
-                      <th>
-                          Rol
-                      </th>
-                      <th>
-                          Reserva
-                      </th>
-                      <th>
-                          Entrenador
-                      </th>
+        <table class="table" border=1>
 
-                  </tr>
-                <?php foreach ($listaMisClasesParticulares as $miclase){?>
-                  <tr>
-                      <td><?= $miclase->getIdClase()?></td>
-                      <td><?= $miclase->getRol()?></td>
-                      <td><?= $miclase->getReserva()?></td>
-                      <td><?= $miclase->getLogin()?></td>
-                      <td>
-                        <button type="button" class="btn"> <a href="index.php?controller=clase&amp;action=desinscribirse&amp;idClase=<?= $clase->getIdClase()?>">Desinscribirse</a> </button>
-                      </td>
+                <tr>
+                    <!-- Títulos de la -->
+                    <th>
+                        IdClase
+                    </th>
+                    <th>
+                        Fecha
+                    </th>
+                    <th>
+                        Entrenador
+                    </th>
 
-                  </tr>
-                <?php } ?>
-              </table>
+                </tr>
+              <?php foreach ($listaClasesParticulares as $clase){?>
+                <tr>
+                    <td><?= $clase->getIdClase()?></td>
+                    <td><?= $clase->getFecha()?></td>
+                    <td><?= $clase->getLogin()?></td>
+                    <td>
+                      <button type="button" class="btn"> <a href="index.php?controller=clase&amp;action=inscribirse&amp;idClase=<?= $clase->getIdClase()?>">Inscribirse</a> </button>
+                    </td>
+
+                </tr>
+              <?php } ?>
+            </table>
+
+            <h1>Mis clases Particulares</h1>
+            <table class="table" border=1>
+
+                    <tr>
+                        <!-- Títulos de la -->
+                        <th>
+                            IdClase
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th>
+                            Entrenador
+                        </th>
+
+                    </tr>
+                  <?php foreach ($listaMisClasesParticulares as $miclase){?>
+                    <tr>
+                        <td><?= $miclase->getIdClase()?></td>
+                        <td><?= $miclase->getFecha()?></td>
+                        <td><?= $miclase->getLogin()?></td>
+                        <td>
+                          <button type="button" class="btn"> <a href="index.php?controller=clase&amp;action=desinscribirse&amp;idClase=<?= $clase->getIdClase()?>">Desinscribirse</a> </button>
+                        </td>
+
+                    </tr>
+                  <?php } ?>
+                </table>

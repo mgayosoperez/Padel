@@ -87,8 +87,8 @@ class ClaseMapper{
 
 
   public function crear(Clase $clase){
-    $stmt = $this->db->prepare("INSERT INTO CLASE(rol, login) values (?, ?)");
-		$stmt->execute(array($clase->getRol(),$clase->getLogin()));
+    $stmt = $this->db->prepare("INSERT INTO CLASE(rol, login, reserva) values (?, ?, ?)");
+		$stmt->execute(array($clase->getRol(),$clase->getLogin(), $clase->getReserva()));
 
         return $this->db->lastInsertId();
   }
@@ -158,13 +158,21 @@ class ClaseMapper{
     }
   }
 
-  public function inscribir($idClase, $deportista, $rol){
-    if($rol == 'GRUPAL'){
-      $stmt = $this->db->prepare("INSERT INTO DEPORTISTA_HAS_CLASE_GRUPAL(idClase, login) VALUES (?, ?)");
 
-    }elseif($rol == 'PARTICULAR') {
-      $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista) VALUES(?, ?)");
+  public function inscribirGrupal($idClase, $deportista){
+    $stmt = $this->db->prepare("INSERT INTO DEPORTISTA_HAS_CLASE_GRUPAL(idClase, login) VALUES (?, ?)");
+    $stmt->execute(array($idClase, $deportista));
+
+    if(!$this->db->query($stmt)){
+
+      return 'Error en la inserción';
     }
+    else{
+      return 'Inserción realizada con éxito';
+    }
+  }
+  public function inscribirParticular($idClase, $deportista){
+    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista) VALUES(?, ?)");
     $stmt->execute(array($idClase, $deportista));
 
     if(!$this->db->query($stmt)){
@@ -200,6 +208,21 @@ class ClaseMapper{
     $stmt->execute(array($idClase));
 
     return $stmt->fetch();
+  }
+  public function getClaseGrupal($idClase){
+    $stmt = $this->db->prepare("SELECT * FROM CLASE_GRUPAL WHERE idClase = ?");
+    $stmt->execute(array($idClase));
+
+    return $stmt->fetch();
+  }
+  public function getNumAlum($idClase){
+    $stmt = $this->db->prepare("SELECT count(login) FROM DEPORTISTA_HAS_CLASE_GRUPAL WHERE idClase = ?");
+    $stmt->execute(array($idClase));
+    $numAlum = $stmt->fetch(PDO::FETCH_ASSOC);
+ 		foreach ($numAlum as $key) {
+			$toret= $key;
+		}
+    return $toret;
   }
 
 

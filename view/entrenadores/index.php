@@ -11,6 +11,7 @@ $view->setVariable("title", "index");
 $datos=$view->getVariable("cosa");
 
 $listaClases = $view->getVariable("clases");
+//$listaFechas = $view->getVariable("fechas");
 
 ?>
 
@@ -49,10 +50,10 @@ $listaClases = $view->getVariable("clases");
                     Rol
                 </th>
                 <th>
-                    Reserva
+                    Fecha
                 </th>
                 <th>
-                    Entrenador
+                    Reserva
                 </th>
                 <th>
                     <button type="button" class="btn"> <a href="index.php?controller=clase&amp;action=add">Añadir</a> </button>
@@ -62,8 +63,8 @@ $listaClases = $view->getVariable("clases");
             <tr>
                 <td><?= $clase->getIdClase()?></td>
                 <td><?= $clase->getRol()?></td>
-                <td><?= $clase->getReserva()?></td>
-                <td><?= $clase->getLogin()?></td>
+                <td><?= $clase->getFecha()?></td>
+                <td><?= $clase->getReserva();?></td>
                 <td>
                   <button type="button" name="button"><a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>">Borrar</a></button>
                   <?php /* ?><a href="index.php?controller=entrenador&amp;action=delete&amp;login=<?=$entrenador->getLogin()?>">Borrar</a>?><?*/?>

@@ -8,9 +8,10 @@ class Clase{
   private $maxAlum;
   private $reserva;
   private $login;
+  private $fecha;
 
 
-  function __construct($idClase = NULL, $login = NULL, $rol = NULL,$reserva = NULL){
+  function __construct($idClase = NULL, $login = NULL, $rol = NULL, $reserva = NULL){
     $this->idClase = $idClase;
     $this->login = $login;
     $this->rol = $rol;
@@ -31,6 +32,9 @@ class Clase{
   public function getReserva(){
     return $this->reserva;
   }
+  public function getFecha(){
+    return $this->fecha;
+  }
 
 
 //Setters
@@ -45,6 +49,9 @@ class Clase{
   }
   public function setReserva($reserva){
     $this->reserva = $reserva;
+  }
+  public function setFecha($fecha){
+    $this->fecha = $fecha;
   }
 
 
