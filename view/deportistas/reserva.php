@@ -63,8 +63,14 @@ function fondoHora(int $horis){
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=deportista&amp;action=campeonatos">Campeonatos</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=clase&amp;action=clases">Clases</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Clases
+         </a>
+         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+           <a class="dropdown-item" href="index.php?controller=clase&amp;action=clasesGrupales">Clases Grupales</a>
+           <a class="dropdown-item" href="index.php?controller=clase&amp;action=clasesParticulares">Clases Particulares</a>
+         </div>
       </li>
     </ul>
   </div>
