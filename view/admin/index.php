@@ -74,3 +74,4 @@ $datos=$view->getVariable("cosa");
   </a>
 </div>
 </div>
+<a href="index.php?controller=admin&amp;action=generarLigaRegular&amp;idCampeonato=1&amp;fechaFin=2019-11-12"><button class="btn btn-yagami">Unsaludo wey</button></a>

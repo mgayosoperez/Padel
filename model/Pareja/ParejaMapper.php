@@ -41,5 +41,19 @@ class ParejaMapper{
 
   }
 
+  public function grupo($categoria,$nivel,$campeonato){
+    $sql = $this->db->prepare("SELECT * FROM PAREJA WHERE categoria = ? AND nivel = ? AND idCampeonato= ?");
+    $sql->execute(array($categoria, $nivel, $campeonato));
+    $grupo = $sql->fetchAll(PDO::FETCH_ASSOC);
+    return $grupo;
+  }
+
+  public function modify(Pareja $pareja){
+    $sql = $this->db->prepare("UPDATE PAREJA SET pareja = ?, categoria = ?, nivel = ?, grupo = ?, puntos = ? WHERE  idCampeonato = ? AND capitan = ?");
+    $sql->execute(array($pareja->getPareja(),$pareja->getCategoria(),$pareja->getNivel(),$pareja->getGrupo(),$pareja->getPuntos(),$pareja->getIdCampeonato(),$pareja->getCapitan()));
+    $grupo = $sql->fetchAll(PDO::FETCH_ASSOC);
+    return $grupo;
+  }
+
 }
  ?>
