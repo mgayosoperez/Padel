@@ -328,10 +328,10 @@ INSERT INTO `USUARIO` (`login`, `rol`) VALUES 	('admin', 'ADMIN'), ('aglopez2', 
 												('deportista8', 'DEPORTISTA'), ('deportista9', 'DEPORTISTA'), ('deportista10', 'DEPORTISTA'), ('deportista11', 'DEPORTISTA'), ('deportista12', 'DEPORTISTA'), ('deportista13', 'DEPORTISTA'), ('deportista14', 'DEPORTISTA'),
 												('deportista15', 'DEPORTISTA'), ('deportista16', 'DEPORTISTA'), ('deportista17', 'DEPORTISTA'), ('deportista18', 'DEPORTISTA'), ('deportista19', 'DEPORTISTA'), ('deportista20', 'DEPORTISTA'), ('deportista21', 'DEPORTISTA'),
 												('deportista22', 'DEPORTISTA'), ('deportista23', 'DEPORTISTA'), ('deportista24', 'DEPORTISTA'), ('deportista25', 'DEPORTISTA'), ('deportista26', 'DEPORTISTA'), ('deportista27', 'DEPORTISTA'), ('deportista28', 'DEPORTISTA'),
-												('deportista28', 'DEPORTISTA'), ('deportista29', 'DEPORTISTA'), ('deportista30', 'DEPORTISTA'), ('deportista31', 'DEPORTISTA'), ('deportista31', 'DEPORTISTA'), ('deportista32', 'DEPORTISTA'), ('deportista33', 'DEPORTISTA'),
+												('deportista50', 'DEPORTISTA'), ('deportista29', 'DEPORTISTA'), ('deportista30', 'DEPORTISTA'), ('deportista31', 'DEPORTISTA'), ('deportista49', 'DEPORTISTA'), ('deportista32', 'DEPORTISTA'), ('deportista33', 'DEPORTISTA'),
 												('deportista34', 'DEPORTISTA'), ('deportista35', 'DEPORTISTA'), ('deportista36', 'DEPORTISTA'), ('deportista37', 'DEPORTISTA'), ('deportista38', 'DEPORTISTA'), ('deportista39', 'DEPORTISTA'), ('deportista40', 'DEPORTISTA'),
 												('deportista41', 'DEPORTISTA'), ('deportista42', 'DEPORTISTA'), ('deportista43', 'DEPORTISTA'), ('deportista44', 'DEPORTISTA'), ('deportista45', 'DEPORTISTA'), ('deportista46', 'DEPORTISTA'), ('deportista47', 'DEPORTISTA'),
-												('deportista48', 'DEPORTISTA'), ('deportista49', 'DEPORTISTA'), ('deportista50', 'DEPORTISTA');
+												('deportista48', 'DEPORTISTA');
 
 -- -- ADMIN
 INSERT INTO `ADMIN` (`login`, `password`) VALUES ('admin', 'admin');
@@ -340,7 +340,7 @@ INSERT INTO `ADMIN` (`login`, `password`) VALUES ('admin', 'admin');
 INSERT INTO `PISTA` (`idPista`, `estado`, `superficie`) VALUES ('1', 'Exterior', 'Cesped'), ('2', 'Exterior', 'Cesped'), ('3', 'Interior', 'Madera'), ('4', 'Exterior', 'Cemento'), ('5', 'Interior', 'Cesped_artificial');
 
 -- -- CAMPEONATO
-INSERT INTO `CAMPEONATO` (`idCampeonato`, `nombre`, `fechaInicio`, `fechaFin`) VALUES (NULL, 'Regional', '2019-11-05', '2019-11-12'), (NULL, 'Estatal', '2020-11-05', '2020-11-12');
+INSERT INTO `CAMPEONATO` (`idCampeonato`, `nombre`, `fechaInicio`, `fechaFin`) VALUES (NULL, 'Regional', '2019-11-05', '2019-11-22'), (NULL, 'Estatal', '2020-11-05', '2020-11-12');
 
 -- -- DEPORTISTA
 INSERT INTO `DEPORTISTA` (`login`, `password`, `DNI`, `nombre`, `apellidos`, `sexo`) VALUES ('aglopez2', '0000000000', '16472834D', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'), ('aglopez3', '0000000001', '16472834F', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'), 
@@ -420,11 +420,33 @@ INSERT INTO `LIGA_REGULAR` (`idLiga`, `fechaInicio`, `fechaFin`, `categoria`, `n
 INSERT INTO `GRUPO` (`idGrupo`,	`idLiga`) VALUES ('1', '1');
 
 -- -- TABLA PAREJA
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez2', 'anacletillo', '1', 'MASCULINA', '1', '1', '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez3', 'anacletillo1', '1', 'MASCULINA', '1', '1', '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez5', 'anacletillo3', '1', 'MASCULINA', '1', '1', '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('cuestaMucho2', 'cuestaMucho3', '1', 'MASCULINA', '1', '1', '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('8illantasDeCoche', '7illantasDeCoche', '1', 'MASCULINA', '1', '1', '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('6illantasDeCoche', '5illantasDeCoche', '1', 'MASCULINA', '1', '1', '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('deportista1', 'deportista2', '1', 'MASCULINA', '1', '1', '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez6', 'aglopez7', '1', 'MASCULINA', '1', '1', '0');																						
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez2', 'anacletillo', '1', 'MASCULINA', '1', NULL, '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez3', 'anacletillo1', '1', 'MASCULINA', '1', NULL, '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez5', 'anacletillo3', '1', 'MASCULINA', '1', NULL, '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('cuestaMucho2', 'cuestaMucho3', '1', 'MASCULINA', '1', NULL, '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('8illantasDeCoche', '7illantasDeCoche', '1', 'MASCULINA', '1', NULL, '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('6illantasDeCoche', '5illantasDeCoche', '1', 'MASCULINA', '1', NULL, '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('deportista1', 'deportista2', '1', 'MASCULINA', '1', NULL, '0');
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez6', 'aglopez7', '1', 'MASCULINA', '1', NULL, '0');	
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES 	('deportista10', 'deportista11', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista12', 'deportista13', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista14', 'deportista15', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista16', 'deportista17', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista18', 'deportista19', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista20', 'deportista21', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista22', 'deportista23', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista24', 'deportista25', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista26', 'deportista27', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista28', 'deportista29', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista30', 'deportista31', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista32', 'deportista33', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista34', 'deportista35', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista36', 'deportista37', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista38', 'deportista39', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista40', 'deportista41', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista42', 'deportista43', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista44', 'deportista45', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista46', 'deportista47', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista48', 'deportista49', '1', 'MASCULINA', '1', NULL, '0'),
+																											('deportista50', '4lordvile', '1', 'MASCULINA', '1', NULL, '0');
+																											
