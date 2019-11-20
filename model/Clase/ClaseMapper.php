@@ -71,7 +71,8 @@ class ClaseMapper{
     $clases = array();
     foreach ($clases_db as $clase) {
 
-      array_push($clases, $clase["idClase"]);
+      array_push($clases, new Clase($clase["idClase"], $clase["login"],
+                $clase["rol"], $clase["reserva"]));
     }
 
     return $clases;
@@ -98,18 +99,11 @@ class ClaseMapper{
       }
   }
 
-  /*public function crearParticular($idClase, $deportista){
-    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista) values (?, ?)");
-    $stmt->execute(array($idClase ,$deportista));
+  public function crearParticular($idClase, $deportista){
+    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista) values (?,?)");
+    $stmt->execute(array($idClase, $deportista));
 
-      if(!$this->db->query($stmt)){
-
-        return 'Error en la inserción';
-      }
-      else{
-        return 'Inserción realizada con éxito';
-      }
-  }*/
+  }
 
   public function delete(Clase $clase) {
     $stmt = $this->db->prepare("DELETE from CLASE WHERE idClase=?");
@@ -201,10 +195,12 @@ class ClaseMapper{
       }
 
   }
-  public function desinscribirParticular($idClase, $deportista){
+  public function desinscribirParticular($idClase, $deportista, $reserva){
       $stmt = $this->db->prepare("DELETE FROM CLASE_PARTICULAR WHERE idClase = ? AND deportista = ?");
       $stmt->execute(array($idClase, $deportista));
-      if ($this->db->query($stmt)) {
+      $sql = $this->db->prepare("DELETE from RESERVA WHERE idReserva = ?");
+      $sql->execute(array($reserva));
+      if ($this->db->query($stmt) && $this->db->query($sql)) {
 
           return "Borrado realizado con exito";
 

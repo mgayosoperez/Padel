@@ -8,8 +8,7 @@ $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
 $view->setVariable("title", "index");
-
-$listaClasesParticulares = $view->getVariable("clasesParticulares");
+$entrenadores = $view->getVariable("entrenadores");
 $listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
 ?>
 
@@ -63,25 +62,19 @@ $listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
               </th>
 
           </tr>
-        <?php foreach ($listaClasesParticulares as $clase){
-          if(in_array($clase->getIdClase(), $listaMisClasesParticulares)){?>
+        <?php foreach ($listaMisClasesParticulares as $clase){?>
+
             <tr>
               <td><?= $clase->getIdClase()?></td>
               <td><?= $clase->getFecha()?></td>
               <td><?= $clase->getLogin()?></td>
               <td>
-                <a href="index.php?controller=clase&amp;action=desinscribirse&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Desinscribir</button></a>
+                <a href="index.php?controller=clase&amp;action=desinscribirse&amp;idClase=<?= $clase->getIdClase()?>&reserva=<?= $clase->getReserva()?>"><button class='btn btn-yagami'>Desinscribir</button></a>
               </td>
 
           </tr>
-        <?php }else {?>
-          <tr>
-            <td><?= $clase->getIdClase()?></td>
-            <td><?= $clase->getFecha()?></td>
-            <td><?= $clase->getLogin()?></td>
-            <td>
-              <a href="index.php?controller=clase&amp;action=inscribirse&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Inscribirse</button></a>
-            </td>
-      <?php  }
+        <?php
       } ?>
       </table>
+      <a href="index.php?controller=clase&amp;action=inscribirseParticular"><button class='btn btn-yagami'>Crear Particular</button></a></a>
+      

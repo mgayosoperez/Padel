@@ -27,6 +27,7 @@ $listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="index.php?controller=deportista&amp;action=reserva">Crear reserva</a>
           <a class="dropdown-item" href="index.php?controller=deportista&amp;action=showReservas">Ver reservas</a>
+          <a class="dropdown-item" href="index.php?controller=deportista&amp;action=showPromocionados">Partidos Promocionados</a>
         </div>
       </li>
       <li class="nav-item">
