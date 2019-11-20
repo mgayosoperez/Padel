@@ -54,7 +54,7 @@ class DeportistaController extends BaseController {
 
 					}else{
 						$errors = array();
-						$errors["general"] = "Deportista is not valid";
+						$errors["general"] = "El login o contraseña es incorrecta.";
 						$this->view->setVariable("errors", $errors);
 					}
 					break;
@@ -62,15 +62,22 @@ class DeportistaController extends BaseController {
 					if($this->AdminMapper->isValidAdmin($_POST["login"], $_POST["passwd"])) {
 						$_SESSION["currentuser"]=$_POST["login"];
 						$this->view->redirect("admin", "index");
+					}else{
+						$errors = array();
+						$errors["general"] = "El login o contraseña es incorrecta.";
+						$this->view->setVariable("errors", $errors);
 					}
 					break;
 				case 'ENTRENADOR':
 					if($this->EntrenadorMapper->isValidEntrenador($_POST["login"], $_POST["passwd"])) {
 						$_SESSION["currentuser"]=$_POST["login"];
 						$this->view->redirect("clase", "index");
+					}else{
+						$errors = array();
+						$errors["general"] = "El login o contraseña es incorrecta.";
+						$this->view->setVariable("errors", $errors);
 					}
 					break;
-
 				default:
 					$errors = array();
 					$errors["general"] = "No hay ningun usuario valido";
