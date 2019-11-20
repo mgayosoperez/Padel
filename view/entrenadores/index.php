@@ -66,7 +66,7 @@ $listaClases = $view->getVariable("clases");
                 <td><?= $clase->getFecha()?></td>
                 <td><?= $clase->getDescripcion();?></td>
                 <td>
-                  <a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Borrar</button></a>
+                  <a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>&reserva=<?= $clase->getReserva()?>"><button class='btn btn-yagami'>Borrar</button></a>
                   <?php /* ?><a href="index.php?controller=entrenador&amp;action=delete&amp;login=<?=$entrenador->getLogin()?>">Borrar</a>?><?*/?>
 
 

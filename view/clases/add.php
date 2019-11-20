@@ -1,11 +1,11 @@
 <?php
 //file: view/users/register.php
 require_once(__DIR__."/../../model/Reserva/ReservaMapper.php");
+require_once(__DIR__."/../../model/Clase/ClaseMapper.php");
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
-
 
 $fies = "d M Y H i";
 $fieso = "Y-m-d ";
@@ -16,6 +16,7 @@ $HoraActual =$Dfecha[3];
 
 $fechas = array();
 $fechato = array();
+
 
 for($z = 0; $z < 7; $z++){
   $fechatito = date($fieso ,time()+(86400*$z));
@@ -28,7 +29,8 @@ for($z = 0; $z < 7; $z++){
 }
 function horaOcupada($fecha){
   $ReservaMapper = new ReservaMapper();
-  if($ReservaMapper->pistasOcupadas($fecha)>=5){
+  $claseMapper = new ClaseMapper();
+  if($ReservaMapper->pistasOcupadas($fecha)>=5 || $claseMapper->entrenadorHasClase($fecha, $_SESSION["currentuser"])){
       echo  "class='bg-dark'";
   }
 }
