@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__."/../../core/PDOConnection.php");
-require_once(__DIR__."/../Clase/ClaseGrupal.php");
+require_once(__DIR__."/../../model/Clase/ClaseGrupal.php");
+
 class ClaseMapper{
 
   private $db;
@@ -59,15 +60,7 @@ class ClaseMapper{
     $clases_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $clases = array();
     foreach ($clases_db as $clase) {
-      $claseGrupal = new ClaseGrupal();
-      $stmt2 = $this->db->query("SELECT login, reserva from CLASE WHERE idClase = $clase[idClase]");
-      $row = $stmt2->fetch();
-      $claseGrupal->setIdClase($clase["idClase"]);
-      $claseGrupal->setMaxAlum($clase["maxAlumnos"]);
-      $claseGrupal->setDescripcion($clase["descripcion"]);
-      $claseGrupal->setLogin($row["login"]);
-      $claseGrupal->setReserva($row["reserva"]);
-      array_push($clases, $claseGrupal);
+      array_push($clases, $clase["idClase"]);
     }
 
     return $clases;
@@ -78,8 +71,7 @@ class ClaseMapper{
     $clases = array();
     foreach ($clases_db as $clase) {
 
-      array_push($clases, new Clase($clase["idClase"], $clase["login"],
-                $clase["rol"], $clase["reserva"]));
+      array_push($clases, $clase["idClase"]);
     }
 
     return $clases;
@@ -158,6 +150,17 @@ class ClaseMapper{
     }
   }
 
+  public function existeParticular($idClase){
+    $stmt = $this->db->prepare("SELECT count(idClase) from CLASE_PARTICULAR WHERE idClase = ?");
+    $stmt->execute(array($idClase));
+
+    if ($stmt->fetchColumn() > 0) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 
   public function inscribirGrupal($idClase, $deportista){
     $stmt = $this->db->prepare("INSERT INTO DEPORTISTA_HAS_CLASE_GRUPAL(idClase, login) VALUES (?, ?)");
@@ -184,21 +187,29 @@ class ClaseMapper{
     }
   }
 
-  public function desinscribir($idClase, $deportista, $rol){
-    if($rol == 'GRUPAL'){
+  public function desinscribirGrupal($idClase, $deportista){
       $stmt = $this->db->prepare("DELETE FROM DEPORTISTA_HAS_CLASE_GRUPAL WHERE idClase = ? AND login = ?");
+      $stmt->execute(array($idClase, $deportista));
+      if ($this->db->query($stmt)) {
 
-    }elseif($rol == 'PARTICULAR'){
+          return "Borrado realizado con exito";
+
+      } else {
+          return "Error en el borrado";
+      }
+    
+  }
+  public function desinscribirParticular($idClase, $deportista){
       $stmt = $this->db->prepare("DELETE FROM CLASE_PARTICULAR WHERE idClase = ? AND deportista = ?");
-    }
-    $stmt->execute(array($idClase, $deportista));
-    if ($this->db->query($stmt)) {
+      $stmt->execute(array($idClase, $deportista));
+      if ($this->db->query($stmt)) {
 
-        return "Borrado realizado con exito";
+          return "Borrado realizado con exito";
 
-    } else {
-        return "Error en el borrado";
-    }
+      } else {
+          return "Error en el borrado";
+      }
+
 
   }
 

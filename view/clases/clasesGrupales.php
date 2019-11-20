@@ -9,9 +9,8 @@ $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
 $view->setVariable("title", "index");
 $listaClasesGrupales = $view->getVariable("clasesGrupales");
-$listaClasesParticulares = $view->getVariable("clasesParticulares");
 $listaMisClasesGrupales = $view->getVariable("misclasesGrupales");
-$listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
+
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -77,7 +76,7 @@ $listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
           </tr>
         <?php foreach ($listaClasesGrupales as $clase){
                 if (in_array($clase->getIdClase(), $listaMisClasesGrupales)) {?>
-                  <tr bgcolor="#FF0000">
+                  <tr bgcolor="#109DFA">
                     <td><?= $clase->getIdClase()?></td>
                     <td><?= $clase->getMaxAlum()?></td>
                     <td><?= $clase->getDescripcion()?></td>
@@ -85,7 +84,7 @@ $listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
                     <td><?= $clase->getLogin()?></td>
 
                     <td>
-                      <button type="button" class="btn"> <a href="index.php?controller=clase&amp;action=desinscribirse&amp;idClase=<?= $clase->getIdClase()?>">Desinscribirse</a> </button>
+                      <a href="index.php?controller=clase&amp;action=desinscribirse&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Desinscribir</button></a>
                     </td>
                 </tr>
           <?php }else{?>
@@ -98,51 +97,9 @@ $listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
         <td><?= $clase->getLogin()?></td>
 
         <td>
-          <button type="button" class="btn"> <a href="index.php?controller=clase&amp;action=inscribirse&amp;idClase=<?= $clase->getIdClase()?>">Inscribirse</a> </button>
+          <a href="index.php?controller=clase&amp;action=inscribirse&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Inscribirse</button></a>
         </td>
     </tr>
     <?php }?>
   <?php  } ?>
       </table>
-
-
-
-      <h1>Clases Particulares</h1>
-
-        <table class="table" border=1>
-
-                <tr>
-                    <!-- Títulos de la -->
-                    <th>
-                        IdClase
-                    </th>
-                    <th>
-                        Fecha
-                    </th>
-                    <th>
-                        Entrenador
-                    </th>
-
-                </tr>
-              <?php foreach ($listaClasesParticulares as $clase){
-                if(in_array($clase->getIdClase(), $listaMisClasesParticulares)){?>
-                  <tr bgcolor="#FF0000">
-                    <td><?= $clase->getIdClase()?></td>
-                    <td><?= $clase->getFecha()?></td>
-                    <td><?= $clase->getLogin()?></td>
-                    <td>
-                      <button type="button" class="btn"> <a href="index.php?controller=clase&amp;action=desinscribirse&amp;idClase=<?= $clase->getIdClase()?>">Desinscribirse</a> </button>
-                    </td>
-
-                </tr>
-              <?php }else {?>
-                <tr>
-                  <td><?= $clase->getIdClase()?></td>
-                  <td><?= $clase->getFecha()?></td>
-                  <td><?= $clase->getLogin()?></td>
-                  <td>
-                    <button type="button" class="btn"> <a href="index.php?controller=clase&amp;action=inscribirse&amp;idClase=<?= $clase->getIdClase()?>">Inscribirse</a> </button>
-                  </td>
-            <?php  }
-            } ?>
-            </table>

@@ -48,9 +48,7 @@ class EntrenadorController extends BaseController
 
         if (!$this->entrenadorMapper->entrenadorExiste($_POST["login"])) {
           // Guardamos el ENTRENADOR
-          $this->entrenadorMapper->add($entrenador);
-
-          $this->view->setFlash("Entrenador ".$entrenador->getLogin()." añadido.");
+          $this->entrenadorMapper->add($entrenador);;
           //Redirijimos la vista a index.php?Controller=entrenador&action=index
           $this->view->redirect("entrenador", "index");
         }else {
@@ -94,7 +92,6 @@ class EntrenadorController extends BaseController
 
         $this->entrenadorMapper->delete($entrenador);
 
-        $this->view->setFlash("Entrenador ".$entrenador->getLogin()." borrado.");
         //Redirijimos la vista a index.php?Controller=entrenador&action=index
         $this->view->redirect("entrenador", "index");
       }
@@ -103,7 +100,7 @@ class EntrenadorController extends BaseController
     $entrenador = $this->entrenadorMapper->findByUsername($_GET["login"]);
     $this->view->setVariable("entrenador", $entrenador);
     //render the view (/view/entrenadores/add.php)
-    $this->view->render("entrenadores", "delete");
+    $this->view->render("entrenadores", "showall");
 
   }
 
@@ -129,7 +126,6 @@ class EntrenadorController extends BaseController
           // Guardamos el ENTRENADOR
           $this->entrenadorMapper->update($entrenador);
 
-          $this->view->setFlash("Username ".$entrenador->getLogin()." successfully updated.");
           //Redirijimos la vista a index.php?Controller=entrenador&action=index
           $this->view->redirect("entrenador", "index");
         }else {
@@ -172,7 +168,6 @@ class EntrenadorController extends BaseController
 
     $this->view->render("entrenadores", "showcurrent");
   }
-
 
   public function logout() {
 		session_destroy();

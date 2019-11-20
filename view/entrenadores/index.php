@@ -39,10 +39,7 @@ $listaClases = $view->getVariable("clases");
 </nav>
 
 
-<div class="container">
-  <h2>Carousel Example</h2>
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <table class="table" border=1>
+<table class="table">
 
             <tr>
                 <!-- Títulos de la -->
@@ -56,10 +53,10 @@ $listaClases = $view->getVariable("clases");
                     Fecha
                 </th>
                 <th>
-                    Reserva
+                    Descripción
                 </th>
                 <th>
-                    <button type="button" class="btn"> <a href="index.php?controller=clase&amp;action=add">Añadir</a> </button>
+                    <a href="index.php?controller=clase&amp;action=add"><button class='btn'>Añadir</button></a>
                 </th>
             </tr>
           <?php foreach ($listaClases as $clase){?>
@@ -67,9 +64,9 @@ $listaClases = $view->getVariable("clases");
                 <td><?= $clase->getIdClase()?></td>
                 <td><?= $clase->getRol()?></td>
                 <td><?= $clase->getFecha()?></td>
-                <td><?= $clase->getReserva();?></td>
+                <td><?= $clase->getDescripcion();?></td>
                 <td>
-                  <button type="button" name="button"><a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>">Borrar</a></button>
+                  <a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Borrar</button></a>
                   <?php /* ?><a href="index.php?controller=entrenador&amp;action=delete&amp;login=<?=$entrenador->getLogin()?>">Borrar</a>?><?*/?>
 
 
@@ -77,15 +74,3 @@ $listaClases = $view->getVariable("clases");
             </tr>
           <?php } ?>
         </table>
-
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-</div>

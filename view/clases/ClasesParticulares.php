@@ -8,6 +8,9 @@ $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
 $view->setVariable("title", "index");
+
+$listaClasesParticulares = $view->getVariable("clasesParticulares");
+$listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -23,7 +26,6 @@ $view->setVariable("title", "index");
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="index.php?controller=deportista&amp;action=reserva">Crear reserva</a>
           <a class="dropdown-item" href="index.php?controller=deportista&amp;action=showReservas">Ver reservas</a>
-          <a class="dropdown-item" href="index.php?controller=deportista&amp;action=showPromocionados">Partidos Promocionados</a>
         </div>
       </li>
       <li class="nav-item">
@@ -46,31 +48,45 @@ $view->setVariable("title", "index");
   </form>
 </nav>
 
-<div class="container">
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="icon/p1.jpg" alt="First slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/p2.jpg" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/bola_red.jpg" alt="Third slide">
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-</div>
+
+
+
+<h1>Clases Particulares</h1>
+
+  <table class="table" border=1>
+
+          <tr>
+              <!-- Títulos de la -->
+              <th>
+                  IdClase
+              </th>
+              <th>
+                  Fecha
+              </th>
+              <th>
+                  Entrenador
+              </th>
+
+          </tr>
+        <?php foreach ($listaClasesParticulares as $clase){
+          if(in_array($clase->getIdClase(), $listaMisClasesParticulares)){?>
+            <tr bgcolor="#109DFA">
+              <td><?= $clase->getIdClase()?></td>
+              <td><?= $clase->getFecha()?></td>
+              <td><?= $clase->getLogin()?></td>
+              <td>
+                <a href="index.php?controller=clase&amp;action=desinscribirse&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Desinscribir</button></a>
+              </td>
+
+          </tr>
+        <?php }else {?>
+          <tr>
+            <td><?= $clase->getIdClase()?></td>
+            <td><?= $clase->getFecha()?></td>
+            <td><?= $clase->getLogin()?></td>
+            <td>
+              <a href="index.php?controller=clase&amp;action=inscribirse&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Inscribirse</button></a>
+            </td>
+      <?php  }
+      } ?>
+      </table>

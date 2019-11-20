@@ -28,9 +28,8 @@ class ReservaMapper{
   }
 
   public function addClase(Reserva $reserva){
-    $sql = $this->db->prepare("INSERT INTO RESERVA(fecha, idPista)
-                                VALUES (?,?)");
-    $sql->execute(array($reserva->getFecha(), $reserva->getIdPista()));
+    $sql = $this->db->prepare("INSERT INTO RESERVA(idReserva, fecha, idPista) VALUES (?,?,?)");
+    $sql->execute(array($reserva->getIdReserva(), $reserva->getFecha(), $reserva->getIdPista()));
 
     $auxiliar =  $this->db->lastInsertId();
 
