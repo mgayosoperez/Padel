@@ -119,8 +119,9 @@ class ClaseController extends BaseController
 
   public function delete(){
     $clase = new Clase();
-    if(isset($_GET["idClase"])){
+    if(isset($_GET["idClase"]) && isset($_GET["reserva"])){
       $clase->setIdClase($_GET["idClase"]);
+      $clase->setReserva($_GET["reserva"]);
 
 
       if (!$this->claseMapper->existeClaseId($_GET["idClase"])) {

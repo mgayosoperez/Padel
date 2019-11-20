@@ -114,8 +114,10 @@ class ClaseMapper{
   public function delete(Clase $clase) {
     $stmt = $this->db->prepare("DELETE from CLASE WHERE idClase=?");
     $stmt->execute(array($clase->getIdClase()));
+    $sql = $this->db->prepare("DELETE from RESERVA WHERE idReserva = ?");
+    $sql->execute(array($clase->getReserva()));
 
-    if ($this->db->query($stmt)) {
+    if ($this->db->query($stmt) && $this->db->query($sql)) {
 
         return "Borrado realizado con exito";
 
@@ -197,7 +199,7 @@ class ClaseMapper{
       } else {
           return "Error en el borrado";
       }
-    
+
   }
   public function desinscribirParticular($idClase, $deportista){
       $stmt = $this->db->prepare("DELETE FROM CLASE_PARTICULAR WHERE idClase = ? AND deportista = ?");
@@ -235,7 +237,26 @@ class ClaseMapper{
 		}
     return $toret;
   }
+  public function existeClase($fecha){
+    $stmt = $this->db->prepare("SELECT count(idClase) from CLASE, RESERVA WHERE reserva = RESERVA.idReserva AND RESERVA.fecha = ? ");
+    $stmt->execute(array($fecha));
 
+    if ($stmt->fetchColumn() > 0) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+  public function entrenadorHasClase($fecha, $entrenador){ //Comprueba si el entrenador tiene clase a esa hora
+    $stmt = $this->db->prepare("SELECT count(idClase) from CLASE, RESERVA WHERE reserva = RESERVA.idReserva AND RESERVA.fecha = ?  AND CLASE.login = ?");
+    $stmt->execute(array($fecha, $entrenador));
+
+    if ($stmt->fetchColumn() > 0) {
+      return true;
+    }else{
+      return false;
+    }
+  }
 
 }
 
