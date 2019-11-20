@@ -33,11 +33,18 @@ class ReservaController extends BaseController {
 				$reserva = new Reserva();
 
 				$reserva->setFecha($_POST["fecha"]);
-				$reserva->setPista("1");
+				$num=strval($this->ReservaMapper->pistasOcupadas($_POST["fecha"])+1);
+				while($this->ReservaMapper->pistasOcupadasMomento($_POST["fecha"],$num)){
+					if($num==5){
+						$num=1;
+					}else{
+						$num=$num+1;
+					}		
+				}
+				$reserva->setPista($num);
 
 				$this->ReservaMapper->add($reserva);
-				sleep (1);
-				$this->view->redirect("deportista", "index");
+				$this->view->redirect("deportista", "showReservas");
 			}else{
 				echo("No hay pistas");
 			}

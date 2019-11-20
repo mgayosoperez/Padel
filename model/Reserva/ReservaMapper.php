@@ -101,6 +101,17 @@ class ReservaMapper{
 
  	}
 
+  public function pistasOcupadasMomento($fecha,$pista){
+    $sql = $this->db->prepare("SELECT count(fecha) FROM RESERVA WHERE fecha = ? AND idPista = ?");
+    $sql->execute(array($fecha,$pista));
+    if ($sql->fetchColumn() > 0) {
+      return true;
+    }
+
+  }
+
+
+
 
 
 }
