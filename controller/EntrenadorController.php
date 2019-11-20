@@ -5,6 +5,9 @@ require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../model/Entrenador/Entrenador.php");
 require_once(__DIR__."/../model/Entrenador/EntrenadorMapper.php");
 
+require_once(__DIR__."/../model/Usuario/UsuarioMapper.php");
+require_once(__DIR__."/../model/Usuario/Usuario.php");
+
 require_once(__DIR__."/../controller/BaseController.php");
 
 /**
@@ -14,11 +17,13 @@ class EntrenadorController extends BaseController
 {
 
   private $entrenadorMapper;
+  private $UsuarioMapper;
 
   public function __construct(){
       parent::__construct();
 
     $this->entrenadorMapper = new EntrenadorMapper();
+    $this->UsuarioMapper = new UsuarioMapper();
   }
 
   public function index(){
@@ -31,9 +36,11 @@ class EntrenadorController extends BaseController
 
   public function add(){
     $entrenador = new Entrenador();
-
+    $usuario = new Usuario();
     if (isset($_POST["login"])){ // reaching via HTTP Post...
 
+      $usuario->setLogin($_POST["login"]);
+			$usuario->setRol("ENTRENADOR");
 			// populate the User object with data form the form
 			$entrenador->setLogin($_POST["login"]);
 			$entrenador->setPasswd($_POST["passwd"]);
@@ -46,9 +53,11 @@ class EntrenadorController extends BaseController
       try{
         $entrenador->checkIsValidForRegister();
 
-        if (!$this->entrenadorMapper->entrenadorExiste($_POST["login"])) {
+        if (!$this->entrenadorMapper->entrenadorExiste($_POST["login"]) & !$this->UsuarioMapper->loginExists($_POST["login"])) {
+          //Guardamos el Usuario
+          $this->UsuarioMapper->add($usuario);
           // Guardamos el ENTRENADOR
-          $this->entrenadorMapper->add($entrenador);;
+          $this->entrenadorMapper->add($entrenador);
           //Redirijimos la vista a index.php?Controller=entrenador&action=index
           $this->view->redirect("entrenador", "index");
         }else {
