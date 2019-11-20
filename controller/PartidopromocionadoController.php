@@ -63,7 +63,7 @@ class PartidoPromocionadoController extends BaseController
 
 
 
-    public function delete(){
+  public function delete(){
       $partido = new PartidoPromocionado();
       if(isset($_GET["idPromocionado"])){
         $partido->setIdPromocionado($_GET["idPromocionado"]);

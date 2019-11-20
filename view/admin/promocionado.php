@@ -62,7 +62,7 @@ function fondoHora(int $horis){
         Partidos Promocionados
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="index.php?controller=admin&amp;action=partidoPromocionado">Crear un Partido Promocionado</a> 
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=partidoPromocionado">Crear un Partido Promocionado</a>
           <a class="dropdown-item" href="index.php?controller=admin&amp;action=showPartidos">Partidos Promocionados</a>
         </div>
       </li>
@@ -72,12 +72,12 @@ function fondoHora(int $horis){
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="index.php?controller=admin&amp;action=campeonatos">Lista de Campeonatos</a>
-          <a class="dropdown-item" href="#">Crear un Campeonato</a> 
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=crearCampeonato">Crear un Campeonato</a>
           <a class="dropdown-item" href="#">Modificar un Campeonato</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=admin&amp;action=entrenadores">Entrenadores</a>
+        <a class="nav-link" href="index.php?controller=entrenador&amp;action=index">Entrenadores</a>
       </li>
   </div>
   <form class="form-inline">

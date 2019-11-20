@@ -2,6 +2,8 @@
 
 require_once(__DIR__."/../core/ViewManager.php");
 
+
+require_once(__DIR__."/../model/Campeonato/Campeonato.php");
 require_once(__DIR__."/../model/Campeonato/CampeonatoMapper.php");
 require_once(__DIR__."/../model/PartidoPromocionado/PartidoPromocionadoMapper.php");
 require_once(__DIR__."/../model/PartidoPromocionado/PartidoPromocionado.php");
@@ -47,16 +49,27 @@ class AdminController extends BaseController {
 	}
 
 	public function campeonatos(){
-
 		$campeonato = $this->CampeonatoMapper->campeonatoActivo();
-
 		$this->view->setVariable("campeonato", $campeonato, true);
-
 		$this->view->render("campeonato", "showAllAdmin");
 	}
 
-	public function entrenadores(){
+	public function crearCampeonato(){
+		$this->view->render("campeonato","crearCampeonato");
+	}
 
+	public function addCampeonato(){
+		$campeonato = new Campeonato();
+		$campeonato->setNombre($_POST["nombre"]);
+		$campeonato->setFechaInicio($_POST["fechaInicio"]);
+		$campeonato->setFechaFin($_POST["fechaFin"]);
+		$this->CampeonatoMapper->add($campeonato);
+		$this->view->redirect("admin", "campeonatos"); 
+	}
+
+	public function deleteCampeonato(){
+		$this->CampeonatoMapper->delete($_GET["idCampeonato"]);
+		$this->view->redirect("admin", "campeonatos"); 
 	}
 
 	public function logout(){

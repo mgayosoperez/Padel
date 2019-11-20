@@ -10,7 +10,6 @@ $user = $_SESSION["currentuser"];
 $partidos = $view->getVariable("datos");
 
 ?>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="index.php?controller=admin&amp;action=index"><img src="icon/padel.png" height="50" width="50" class="mr-2">Padelo</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +21,7 @@ $partidos = $view->getVariable("datos");
         Partidos Promocionados
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="index.php?controller=admin&amp;action=partidoPromocionado">Crear un Partido Promocionado</a> 
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=partidoPromocionado">Crear un Partido Promocionado</a>
           <a class="dropdown-item" href="index.php?controller=admin&amp;action=showPartidos">Partidos Promocionados</a>
         </div>
       </li>
@@ -32,12 +31,12 @@ $partidos = $view->getVariable("datos");
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="index.php?controller=admin&amp;action=campeonatos">Lista de Campeonatos</a>
-          <a class="dropdown-item" href="#">Crear un Campeonato</a> 
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=crearCampeonato">Crear un Campeonato</a>
           <a class="dropdown-item" href="#">Modificar un Campeonato</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=admin&amp;action=entrenadores">Entrenadores</a>
+        <a class="nav-link" href="index.php?controller=entrenador&amp;action=index">Entrenadores</a>
       </li>
   </div>
   <form class="form-inline">

@@ -2,7 +2,7 @@
 //file: view/users/register.php
 
 require_once(__DIR__."/../../core/ViewManager.php");
-require_once(__DIR__."/../../model/Reserva/Reserva.php");
+
 $view = ViewManager::getInstance();
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
@@ -46,31 +46,35 @@ $datos=$view->getVariable("cosa");
   </form>
 </nav>
 
-<div class="h-20 container mt-5 mb-5">
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="icon/p1.jpg" alt="First slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/p2.jpg" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/bola_red.jpg" alt="Third slide">
-    </div>
+<div class="container">
+        <div class="row justify-content-center align-items-center" style="height:100vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                      <h2 class="text-light">Crear un Campeonato</h2>
+                      <br>
+                      <form action="index.php?controller=admin&amp;action=addCampeonato" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre campeonato">
+                        </div>
+                            <div class="form-group">
+                            <input type="date" class="form-control" name="fechaInicio" placeholder="Fecha Inicio">
+                        </div>
+                        <div class="form-group">
+                            <input type="date" class="form-control" name="fechaFin" placeholder="Fecha Fin">
+                        </div>
+                            <div>
+                              <h8 class="text-light"><?php if(isset($errors["cam"])){echo $errors["cam"];}
+                              if(isset($errors["login"])){echo $errors["login"];}?></h8>
+                              <br>
+                              <br>
+                            </div>
+                            <input type="submit" id="sendFecha" class="btn btn-dark" value="Crear campeonato"></input>
+
+                      </form >
+
+                    </div>
+                </div>
+            </div>
+      </div>
   </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-</div>

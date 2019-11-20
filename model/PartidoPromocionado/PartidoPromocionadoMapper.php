@@ -34,7 +34,7 @@ class PartidoPromocionadoMapper{
                                   FROM partido_promocionado PP
                                   LEFT JOIN promocionado_has_deportista PHD
                                   ON PP.idPromocionado = PHD.idPromocionado
-                                WHERE (PHD.deportista NOT LIKE ? OR PHD.deportista IS NULL) AND
+                                  WHERE (PHD.deportista NOT LIKE ? OR PHD.deportista IS NULL) AND
                                       PP.fecha > NOW()");
 
     $stmt->execute(array($login));
