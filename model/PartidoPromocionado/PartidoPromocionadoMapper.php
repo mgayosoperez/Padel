@@ -30,18 +30,11 @@ class PartidoPromocionadoMapper{
   }
 
   public function verDisponibles($login){
-      $stmt = $this->db->prepare("SELECT PP.idPromocionado, PP.fecha
-                                  FROM partido_promocionado PP
-                                  LEFT JOIN promocionado_has_deportista PHD
-                                  ON PP.idPromocionado = PHD.idPromocionado
-                                WHERE (PHD.deportista NOT LIKE ? OR PHD.deportista IS NULL) AND
-                                      PP.fecha > NOW()");
+      $stmt = $this->db->prepare("SELECT * FROM partido_promocionado WHERE partido_promocionado.fecha > NOW()");
 
-    $stmt->execute(array($login));
+    $stmt->execute();
     
     $pPromocionados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    var_dump($pPromocionados);
-
     $toRet = array();
 
     foreach ($pPromocionados as $key) {
@@ -67,7 +60,7 @@ class PartidoPromocionadoMapper{
 
     foreach ($pPromocionados as $key) {
 
-      array_push($toRet, new PartidoPromocionado($key["idPromocionado"], $key["fecha"], $key["reserva"]));
+      array_push($toRet, new PartidoPromocionado($key["idPromocionado"], $key["fecha"]));
     }
     return $toRet;
 

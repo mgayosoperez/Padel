@@ -11,6 +11,7 @@ require_once(__DIR__."/../model/Usuario/Usuario.php");
 require_once(__DIR__."/../model/Reserva/ReservaMapper.php");
 
 require_once(__DIR__."/../model/PartidoPromocionado/PartidoPromocionadoMapper.php");
+require_once(__DIR__."/../model/PartidoPromocionado/PartidoPromocionado.php");
 
 require_once(__DIR__."/../model/Campeonato/CampeonatoMapper.php");
 
@@ -183,7 +184,19 @@ class DeportistaController extends BaseController {
 	public function showPromocionados(){
 		
 		$datos = $this->PartidoPromocionadoMapper->verDisponibles($_SESSION["currentuser"]);
-		
+		$inscritos = $this->PartidoPromocionadoMapper->verInscritos($_SESSION["currentuser"]);
+
+		$partidoPromocionado = new PartidoPromocionado();
+		$partido2 = new PartidoPromocionado();
+		foreach ($datos as $key => $value ) {
+			$partidoPromocionado=$value;
+			foreach ($inscritos as $keyt => $values) {
+				$partido2=$values;
+				if($partidoPromocionado->getIdPromocionado()==$partido2->getIdPromocionado()){
+					unset($datos[$key]);
+				}
+			}
+		}
 		$this->view->setVariable("pPromocionado",$datos,true);
 		$this->view->render("deportistas", "partidoPromocionado");
 	}
