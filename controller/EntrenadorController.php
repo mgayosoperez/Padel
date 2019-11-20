@@ -174,6 +174,11 @@ class EntrenadorController extends BaseController
   }
 
 
+  public function logout() {
+		session_destroy();
+		$this->view->redirect("init", "index");
+
+	}
 }
 
 
