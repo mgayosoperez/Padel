@@ -10,9 +10,6 @@ require_once(__DIR__."/../model/Reserva/ReservaMapper.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
 
-/**
- *
- */
 class ClaseController extends BaseController
 {
 

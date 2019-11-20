@@ -1,14 +1,14 @@
 <?php
+//file: view/users/register.php
 
 require_once(__DIR__."/../../core/ViewManager.php");
-require_once(__DIR__."/../../model/Reserva/Reserva.php");
-require_once(__DIR__."/../../model/PartidoPromocionado/PartidoPromocionado.php");
+
+$view = ViewManager::getInstance();
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
-
-$partidos = $view->getVariable("datos");
-
+$view->setVariable("title", "index");
+$datos=$view->getVariable("cosa");
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -22,7 +22,7 @@ $partidos = $view->getVariable("datos");
         Partidos Promocionados
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="index.php?controller=admin&amp;action=partidoPromocionado">Crear un Partido Promocionado</a> 
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=partidoPromocionado">Crear un Partido Promocionado</a>
           <a class="dropdown-item" href="index.php?controller=admin&amp;action=showPartidos">Partidos Promocionados</a>
         </div>
       </li>
@@ -32,7 +32,7 @@ $partidos = $view->getVariable("datos");
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="index.php?controller=admin&amp;action=campeonatos">Lista de Campeonatos</a>
-          <a class="dropdown-item" href="#">Crear un Campeonato</a> 
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=crearCampeonato">Crear un Campeonato</a>
           <a class="dropdown-item" href="#">Modificar un Campeonato</a>
         </div>
       </li>
@@ -46,30 +46,35 @@ $partidos = $view->getVariable("datos");
   </form>
 </nav>
 
+<div class="container">
+        <div class="row justify-content-center align-items-center" style="height:100vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                      <h2 class="text-light">Crear un Campeonato</h2>
+                      <br>
+                      <form action="index.php?controller=admin&amp;action=addCampeonato" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre campeonato">
+                        </div>
+                            <div class="form-group">
+                            <input type="date" class="form-control" name="fechaInicio" placeholder="Fecha Inicio">
+                        </div>
+                        <div class="form-group">
+                            <input type="date" class="form-control" name="fechaFin" placeholder="Fecha Fin">
+                        </div>
+                            <div>
+                              <h8 class="text-light"><?php if(isset($errors["cam"])){echo $errors["cam"];}
+                              if(isset($errors["login"])){echo $errors["login"];}?></h8>
+                              <br>
+                              <br>
+                            </div>
+                            <input type="submit" id="sendFecha" class="btn btn-dark" value="Crear campeonato"></input>
 
-<?php if(isset($partidos)){
-  echo "<table class='table table-borderless ml-5 mt-5'>";
-  echo "<thead>";
-  echo "<tr>";
-  echo "<th scope='col'></th>";
-  echo "<th scope='col'>ID</th>";
-  echo "<th scope='col'>Fecha</th>";
-  echo "<th scope='col'>Opciones</th>";
-  echo "</tr>";
-  echo "</thead>";
-  echo "<tbody>";
-  $partidoPromocionado = new PartidoPromocionado();
-  foreach($partidos as $id){
-    $partidoPromocionado = $id;
-   $nombre = $partidoPromocionado->getIdPromocionado();
-   $fecha = $partidoPromocionado->getFecha();
-  echo "<tr>";
-  echo "<th scope='row'></th>";
-  echo "<td> $nombre</td>";
-  echo "<td> $fecha</td>";
-  echo "<td> <a href='index.php?controller=admin&amp;action=borrarPartido&amp;idPartido=$nombre'> <button class='btn btn-yagami'>Borrar</button> </a> </td>";
-  echo "</tr>";
-  }
-  echo "</tbody>";
-  echo "</table>"; 
-}?>
+                      </form >
+
+                    </div>
+                </div>
+            </div>
+      </div>
+  </div>

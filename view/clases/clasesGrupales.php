@@ -26,34 +26,27 @@ $listaMisClasesGrupales = $view->getVariable("misclasesGrupales");
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="index.php?controller=deportista&amp;action=reserva">Crear reserva</a>
           <a class="dropdown-item" href="index.php?controller=deportista&amp;action=showReservas">Ver reservas</a>
+          <a class="dropdown-item" href="index.php?controller=deportista&amp;action=showPromocionados">Partidos Promocionados</a>
         </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=deportista&amp;action=campeonatos">Campeonatos</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         Clases
-         </a>
-         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-           <a class="dropdown-item" href="index.php?controller=clase&amp;action=clasesGrupales">Clases Grupales</a>
-           <a class="dropdown-item" href="index.php?controller=clase&amp;action=clasesParticulares">Clases Particulares</a>
-         </div>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?controller=clase&amp;action=clasesGrupales">Clases Grupales</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?controller=clase&amp;action=clasesParticulares">Clases Particulares</a>
       </li>
     </ul>
   </div>
   <form class="form-inline">
-   	<div class="mr-5 text-light"><?= $user?></div>
-    <a 	href="index.php?controller=deportista&amp;action=logout"><img src="icon/out.png" height="27" width="27"></a>
+    <div class="mr-5 text-light"><?= $user?></div>
+    <a  href="index.php?controller=deportista&amp;action=logout"><img src="icon/out.png" height="27" width="27"></a>
   </form>
 </nav>
 
-
-
-
-<h1>Clases Grupales</h1>
-
-  <table class="table" border=1>
+  <table class="table table-borderless ml-5 mt-5">
 
           <tr>
               <!-- Títulos de la -->
@@ -76,7 +69,7 @@ $listaMisClasesGrupales = $view->getVariable("misclasesGrupales");
           </tr>
         <?php foreach ($listaClasesGrupales as $clase){
                 if (in_array($clase->getIdClase(), $listaMisClasesGrupales)) {?>
-                  <tr bgcolor="#109DFA">
+                  <tr>
                     <td><?= $clase->getIdClase()?></td>
                     <td><?= $clase->getMaxAlum()?></td>
                     <td><?= $clase->getDescripcion()?></td>

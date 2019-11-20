@@ -20,17 +20,6 @@ $listaClases = $view->getVariable("clases");
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-    <li class="nav-item dropdown">
-       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Clases
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="index.php?controller=clase&amp;action=add">Crear mis clases</a>
-          <a class="dropdown-item" href="index.php?controller=clase&amp;action=showClases">Ver mis clases</a>
-        </div>
-      </li>
-    </ul>
   </div>
   <form class="form-inline">
     <div class="mr-5 text-light"><?= $user?></div>
@@ -38,8 +27,7 @@ $listaClases = $view->getVariable("clases");
   </form>
 </nav>
 
-
-<table class="table">
+<table class="table table-borderless ml-5 mt-5">
 
             <tr>
                 <!-- Títulos de la -->
@@ -54,9 +42,6 @@ $listaClases = $view->getVariable("clases");
                 </th>
                 <th>
                     Descripción
-                </th>
-                <th>
-                    <a href="index.php?controller=clase&amp;action=add"><button class='btn'>Añadir</button></a>
                 </th>
             </tr>
           <?php foreach ($listaClases as $clase){?>
@@ -74,3 +59,7 @@ $listaClases = $view->getVariable("clases");
             </tr>
           <?php } ?>
         </table>
+        <form  action="index.php?controller=clase&amp;action=add" method="POST" class="text-center">
+   <input type="submit" value="Añadir clase" class="mt-5 btn btn-yagami mx-auto" style="width: 200px;"></input>
+</form>
+

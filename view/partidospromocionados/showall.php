@@ -37,7 +37,7 @@ $campeonatos = $view->getVariable("campeonato");
 
 
 <?php if(isset($campeonatos)){
-  echo "<table class='table'>";
+  echo "<table class='table table-borderless ml-5 mt-5'>";
   echo "<thead>";
   echo "<tr>";
   echo "<th scope='col'></th>";

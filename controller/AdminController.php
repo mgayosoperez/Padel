@@ -33,7 +33,7 @@ class AdminController extends BaseController {
 		$partidoPromocionado = new PartidoPromocionado();
 		$partidoPromocionado->setFecha($_POST["fecha"]);
 		$this->PartidoPromocionadoMapper->add($partidoPromocionado);
-		$this->view->render("admin", "index");
+		$this->view->redirect("admin", "showPartidos");
 	}
 	public function showPartidos(){
 		$datos = $this->PartidoPromocionadoMapper->verDisponiblesAdmin();
@@ -43,7 +43,7 @@ class AdminController extends BaseController {
 
 	public function borrarPartido(){
 		$this->PartidoPromocionadoMapper->delete($_GET["idPartido"]);
-		$this->view->render("admin", "index");
+		$this->view->redirect("admin", "showPartidos");
 	}
 
 	public function campeonatos(){

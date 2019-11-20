@@ -50,8 +50,7 @@ $listaEntrenadores = $view->getVariable("entrenadores");
 
 
 
-  <table class="table">
-
+  <table class="table table-borderless ml-5 mt-5">
           <tr>
               <!-- Títulos de la -->
               <th>
@@ -74,12 +73,9 @@ $listaEntrenadores = $view->getVariable("entrenadores");
               </th>
               <th>
                   Sexo
-              </th>
-              <th>
-                  <a href="index.php?controller=entrenador&amp;action=add"><button class='btn'>Añadir</button></a>
-              </th>
-
+              </th>          
           </tr>
+
         <?php foreach ($listaEntrenadores as $entrenador){?>
           <tr>
               <td><?= $entrenador->getLogin()?></td>
@@ -102,3 +98,7 @@ $listaEntrenadores = $view->getVariable("entrenadores");
           </tr>
         <?php } ?>
       </table>
+
+<form  action="index.php?controller=entrenador&amp;action=add" method="POST" class="text-center">
+   <input type="submit" value="Añadir entrenador" class="mt-5 btn btn-yagami mx-auto" style="width: 200px;"></input>
+</form>

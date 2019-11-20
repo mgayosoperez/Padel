@@ -50,17 +50,6 @@ function fondoHora(int $horis){
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-    <li class="nav-item dropdown">
-       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Clases
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="index.php?controller=clase&amp;action=add">Crear mis clases</a>
-          <a class="dropdown-item" href="index.php?controller=clase&amp;action=showClases">Ver mis clases</a>
-        </div>
-      </li>
-    </ul>
   </div>
   <form class="form-inline">
     <div class="mr-5 text-light"><?= $user?></div>
@@ -157,25 +146,34 @@ function fondoHora(int $horis){
   </tbody>
 </table>
 
-<form  action="index.php?controller=clase&amp;action=add" method="POST" class="text-center">
+<div class="container">
+        <div class="row justify-content-center mt-5" style="height:100vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                      <br>
+                      <form action="index.php?controller=clase&amp;action=add" method="POST">
+                        <div class="form-group">
+                            <input type="number" min="1" max="10" class="form-control" name="maxAlum" placeholder="Numero de Alumnos">
+                        </div>
+                            <div class="form-group">
+                            <input type="text" class="form-control" name="descripcion" placeholder="Descripcion">
+                        </div>
+                        <div class="form-group">
+                             <input  type="text" name="fecha" id="input" >
+                        </div>
+                            
+                            <input type="submit" id="sendFecha" class="btn btn-dark" value="Crear Clase"></input>
 
+                      </form >
 
-      <div class="form-group">
-          <input type="number" class="form-control" name="maxAlum" placeholder="<?=i18n("Maximo de Alumnos")?>">
+                    </div>
+                </div>
+            </div>
       </div>
-      <div class="form-group">
-          <input type="text" class="form-control" name="descripcion" placeholder="<?=i18n("Descripcion")?>">
-      </div>
+  </div>
 
-
-      </div>
-
-      <input  type="text" name="fecha" id="input" >
-       <input type="submit" value="Crear Clase" class="btn btn-yagami mx-auto" style="width: 200px;"></input>
-
-</form >
-
-	</div>
+</div>
 <script type="text/javascript">
   var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');

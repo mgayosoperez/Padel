@@ -56,27 +56,27 @@ $entrenador = $view->getVariable("entrenador");
             <h2 class="text-light">Editar Entrenador</h2>
 <form action="index.php?controller=entrenador&amp;action=update" method="POST">
       <div class="form-group">
-          <label><?= i18n("Username")?></label>
+          <label class="text-light" ><?= i18n("Username")?></label>
           <input type="text" readonly="readonly" class="form-control" name="username" value="<?= $entrenador->getLogin()?>">
       </div>
       <div class="form-group">
-          <label><?= i18n("Password")?></label>
+          <label class="text-light" ><?= i18n("Password")?></label>
           <input type="password" class="form-control" name="passwd" value="<?= $entrenador->getPasswd()?>">
       </div>
       <div class="form-group">
-          <label><?= i18n("Dni")?></label>
+          <label class="text-light" ><?= i18n("Dni")?></label>
           <input type="text" class="form-control" name="dni" value="<?= $entrenador->getDni()?>">
       </div>
       <div class="form-group">
-         <label><?= i18n("Nss")?></label>
+         <label class="text-light" ><?= i18n("Nss")?></label>
           <input type="text" class="form-control" name="nss" value="<?= $entrenador->getNss()?>">
       </div>
       <div class="form-group">
-          <label><?= i18n("Nombre")?></label>
+          <label class="text-light" ><?= i18n("Nombre")?></label>
           <input type="text" class="form-control" name="nombre" value="<?= $entrenador->getNombre()?>">
       </div>
       <div class="form-group">
-          <label><?= i18n("Apellidos")?></label>
+          <label class="text-light" ><?= i18n("Apellidos")?></label>
           <input type="text" class="form-control" name="apellidos" value="<?= $entrenador->getApellidos()?>">
       </div>
       <div class="form-group text-light ml-3">
@@ -89,12 +89,12 @@ $entrenador = $view->getVariable("entrenador");
       <div>
         <br>
         <h8 class="text-light"><?= isset($errors["telefono"])?i18n($errors["telefono"]):"" ?>
-<?= isset($errors["nombre"])?i18n($errors["nombre"]):"" ?>
-<?= isset($errors["email"])?i18n($errors["email"]):"" ?>
-<?= isset($errors["passwd"])?i18n($errors["passwd"]):"" ?>
-<?= isset($errors["username"])?i18n($errors["username"]):"" ?>
-</h8>
-<br>
+          <?= isset($errors["nombre"])?i18n($errors["nombre"]):"" ?>
+          <?= isset($errors["email"])?i18n($errors["email"]):"" ?>
+          <?= isset($errors["passwd"])?i18n($errors["passwd"]):"" ?>
+          <?= isset($errors["username"])?i18n($errors["username"]):"" ?>
+        </h8>
+        <br>
       </div>
 
       <input type="submit" id="sendlogin" class="btn btn-dark" value="<?= i18n("Editar")?>"></input>
