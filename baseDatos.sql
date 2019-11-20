@@ -136,7 +136,7 @@ CREATE OR REPLACE TABLE `CLASE_GRUPAL` (
 CREATE OR REPLACE TABLE `DEPORTISTA_HAS_CLASE_GRUPAL` (
 
 	`idClase`	int NOT NULL,	
-	`login`		varchar(15) COLLATE latin1_spanish_ci NOT NULL,	
+	`login`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,	
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_deportista_has_clase_grupal PRIMARY KEY (`idClase`, `login`),
@@ -231,7 +231,7 @@ CREATE OR REPLACE TABLE `ENFRENTAMIENTO` (
 CREATE OR REPLACE TABLE `PAREJA_HAS_ENFRENTAMIENTO` (
 
 	`idPartido`		int NOT NULL,
-	`pareja`		varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+	`pareja`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 	`puntos`		int,
 
 		-- CLAVES PRIMARIAS
@@ -276,7 +276,7 @@ ALTER TABLE `ENFRENTAMIENTO` ADD CONSTRAINT FK_idreserva_enfrentamiento	FOREIGN 
 CREATE OR REPLACE TABLE `RESERVA_HAS_DEPORTISTA` (
 
 	`idReserva`		int NOT NULL,
-	`idDeportista`	varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+	`idDeportista`	varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_reserva_has_deportista PRIMARY KEY (`idReserva`, `idDeportista`),
@@ -304,7 +304,7 @@ CREATE OR REPLACE TABLE `PARTIDO_PROMOCIONADO` (
 CREATE OR REPLACE TABLE `PROMOCIONADO_HAS_DEPORTISTA` (
 
 	`idPromocionado`	int NOT NULL,
-	`deportista`		varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+	`deportista`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 
 	-- CLAVES PRIMARIAS
 		CONSTRAINT PK_partido_promocionado PRIMARY KEY (`idPromocionado`, `deportista`),
