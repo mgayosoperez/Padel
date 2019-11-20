@@ -37,7 +37,7 @@ $partidos = $view->getVariable("datos");
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=admin&amp;action=entrenadores">Entrenadores</a>
+        <a class="nav-link" href="index.php?controller=entrenador&amp;action=index">Entrenadores</a>
       </li>
   </div>
   <form class="form-inline">
