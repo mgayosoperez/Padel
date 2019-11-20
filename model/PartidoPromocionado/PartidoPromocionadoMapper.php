@@ -95,6 +95,21 @@ class PartidoPromocionadoMapper{
 
   }
 
+  //LA PISTA VA A MACHETE, HAY QUE CAMBIARLO
+  public function crearReserva(PartidoPromocionado $partido){
+
+    $id = $partido->getIdPromocionado();
+    $fecha = $partido->getFecha();
+                                                                          //MACHETE!!!!!!!
+    $stmt = $this->db->prepare("INSERT INTO RESERVA (fecha, idPista) VALUES (?,'1')");
+    $stmt->execute(array($fecha));
+
+    $auxiliar =  $this->db->lastInsertId();
+
+    $sql = $this->db->prepare("UPDATE PARTIDO_PROMOCIONADO SET idReserva = ? WHERE idPromocionado = ?");
+    $sql->execute(array($auxiliar, $id));
+    
+  }
 
   public function existePromocionado($idPromocionado) {
 		$stmt = $this->db->prepare("SELECT count(idPromocionado) FROM partido_promocionado where idPromocionado=?");
