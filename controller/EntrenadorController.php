@@ -82,6 +82,7 @@ class EntrenadorController extends BaseController
 
   public function delete(){
     $entrenador = new Entrenador();
+    $usuario = new Usuario();
     if(isset($_GET["username"])){
       /*$entrenador->setLogin($_POST["username"]);
 			$entrenador->setPasswd($_POST["passwd"]);
@@ -97,8 +98,8 @@ class EntrenadorController extends BaseController
         $this->view->setVariable("errors", $errors);
       }else{
         $entrenador = $this->entrenadorMapper->findByUsername($_GET["username"]);
-
-
+        $usuario->setLogin($entrenador->getLogin());
+        $this->UsuarioMapper->delete($usuario);
         $this->entrenadorMapper->delete($entrenador);
 
         //Redirijimos la vista a index.php?Controller=entrenador&action=index
