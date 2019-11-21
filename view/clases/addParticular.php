@@ -171,7 +171,7 @@ function fondoHora(int $horis){
 </table>
 
 <form  action="index.php?controller=clase&amp;action=inscribirseParticular" method="POST" class="text-center">
-      <input type="text"  name="entrenador" value = "<?php echo $GLOBALS['entrenador'] ?>"><br>
+      <input hidden type="text"  readonly="readonly" name="entrenador" value = "<?php echo $GLOBALS['entrenador'] ?>">
 
       <input hidden type="text" name="fecha" id="input" ><br>
        <input type="submit" value="Crear Clase" class="btn btn-yagami mx-auto" style="width: 200px;"></input>
