@@ -51,7 +51,6 @@ $listaClases = $view->getVariable("clases");
                   <td><?= $clase->getRol()?></td>
                   <td><?= $clase->getFecha()?></td>
                   <td><?= $clase->getDescripcion();?></td>
-                  <td><?= $clase->getAceptar();?></td>
                   <td>
                     <a href="index.php?controller=clase&amp;action=aceptarClase&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Aceptar</button></a>
                     <a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>&reserva=<?= $clase->getReserva()?>"><button class='btn btn-yagami'>Cancelar</button></a>
