@@ -71,7 +71,8 @@ class ClaseMapper{
     $clases = array();
     foreach ($clases_db as $clase) {
 
-      array_push($clases, $clase["idClase"]);
+      array_push($clases, new Clase($clase["idClase"], $clase["login"],
+                $clase["rol"], $clase["reserva"]));
     }
 
     return $clases;
@@ -98,18 +99,11 @@ class ClaseMapper{
       }
   }
 
-  /*public function crearParticular($idClase, $deportista){
-    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista) values (?, ?)");
-    $stmt->execute(array($idClase ,$deportista));
+  public function crearParticular($idClase, $deportista){
+    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista, aceptar) values (?,?,?)");
+    $stmt->execute(array($idClase, $deportista, FALSE));
 
-      if(!$this->db->query($stmt)){
-
-        return 'Error en la inserción';
-      }
-      else{
-        return 'Inserción realizada con éxito';
-      }
-  }*/
+  }
 
   public function delete(Clase $clase) {
     $stmt = $this->db->prepare("DELETE from CLASE WHERE idClase=?");
@@ -177,8 +171,8 @@ class ClaseMapper{
     }
   }
   public function inscribirParticular($idClase, $deportista){
-    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista) VALUES(?, ?)");
-    $stmt->execute(array($idClase, $deportista));
+    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista, aceptar) VALUES(?, ?, ?)");
+    $stmt->execute(array($idClase, $deportista, FALSE));
 
     if(!$this->db->query($stmt)){
 
@@ -201,10 +195,12 @@ class ClaseMapper{
       }
 
   }
-  public function desinscribirParticular($idClase, $deportista){
+  public function desinscribirParticular($idClase, $deportista, $reserva){
       $stmt = $this->db->prepare("DELETE FROM CLASE_PARTICULAR WHERE idClase = ? AND deportista = ?");
       $stmt->execute(array($idClase, $deportista));
-      if ($this->db->query($stmt)) {
+      $sql = $this->db->prepare("DELETE from RESERVA WHERE idReserva = ?");
+      $sql->execute(array($reserva));
+      if ($this->db->query($stmt) && $this->db->query($sql)) {
 
           return "Borrado realizado con exito";
 
@@ -224,6 +220,12 @@ class ClaseMapper{
   }
   public function getClaseGrupal($idClase){
     $stmt = $this->db->prepare("SELECT * FROM CLASE_GRUPAL WHERE idClase = ?");
+    $stmt->execute(array($idClase));
+
+    return $stmt->fetch();
+  }
+  public function getClaseParticular($idClase){
+    $stmt = $this->db->prepare("SELECT * FROM CLASE_PARTICULAR WHERE idClase = ?");
     $stmt->execute(array($idClase));
 
     return $stmt->fetch();
@@ -257,6 +259,12 @@ class ClaseMapper{
       return false;
     }
   }
+
+  public function aceptarClase($idClase){
+    $stmt = $this->db->prepare("UPDATE CLASE_PARTICULAR SET aceptar = ? WHERE idClase = ?");
+    $stmt->execute(array(TRUE ,$idClase));
+  }
+
 
 }
 

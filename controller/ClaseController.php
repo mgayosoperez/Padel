@@ -8,6 +8,9 @@ require_once(__DIR__."/../model/Clase/ClaseMapper.php");
 require_once(__DIR__."/../model/Reserva/Reserva.php");
 require_once(__DIR__."/../model/Reserva/ReservaMapper.php");
 
+require_once(__DIR__."/../model/Entrenador/Entrenador.php");
+require_once(__DIR__."/../model/Entrenador/EntrenadorMapper.php");
+
 require_once(__DIR__."/../controller/BaseController.php");
 
 class ClaseController extends BaseController
@@ -15,12 +18,14 @@ class ClaseController extends BaseController
 
   private $claseMapper;
   private $reservaMapper;
+  private $entrenadorMapper;
 
   public function __construct(){
       parent::__construct();
 
     $this->claseMapper = new ClaseMapper();
     $this->reservaMapper = new ReservaMapper();
+    $this->entrenadorMapper = new EntrenadorMapper();
   }
   //Visualiza las Clases del Entrenador logueado + opciones de Añadir, Editar, Borrar
   public function index(){
@@ -30,6 +35,8 @@ class ClaseController extends BaseController
       $clase->setFecha($reserva["fecha"]);
       $descripcion = $this->claseMapper->getClaseGrupal($clase->getIdClase());
       $clase->setDescripcion($descripcion["descripcion"]);
+      $aceptar = $this->claseMapper->getClaseParticular($clase->getIdClase());
+      $clase->setAceptar($aceptar["aceptar"]);
     }
 
     $this->view->setVariable('clases', $clases);
@@ -53,20 +60,22 @@ class ClaseController extends BaseController
 
   //Visualiza Todas las Clases para el usuario que se quiera Inscribir (vista Deportista)
   public function clasesParticulares(){
+    $entrenadores = $this->entrenadorMapper->findAll();
+    $this->view->setVariable("entrenadores", $entrenadores);
     $misclasesParticulares = $this->claseMapper->misClasesParticulares($_SESSION["currentuser"]);//Deportista Logueado
-    $this->view->setVariable('misClasesParticulares', $misclasesParticulares);
-    $clasesParticulares = $this->claseMapper->findAllParticulares();
-    foreach ($clasesParticulares as $clase) {
+    foreach ($misclasesParticulares as $clase) {
       $reserva = $this->reservaMapper->getReserva($clase->getReserva());
       $clase->setFecha($reserva["fecha"]);
+      $aceptar = $this->claseMapper->getClaseParticular($clase->getIdClase());
+      $clase->setAceptar($aceptar["aceptar"]);
     }
-    $this->view->setVariable('clasesParticulares', $clasesParticulares);
+    $this->view->setVariable('misClasesParticulares', $misclasesParticulares);
     //    /view/clases/showall.php
     $this->view->render('clases', 'clasesParticulares');
   }
 
 
-  //Crea Clase
+  //Crea ClaseGrupal
   public function add(){
     $clase = new Clase();
     if(isset($_POST["fecha"])){
@@ -84,15 +93,8 @@ class ClaseController extends BaseController
           $clase->setRol("GRUPAL");
           $idClase = $this->claseMapper->crear($clase); //crea en la tabla clase
           $this->claseMapper->crearGrupal($idClase, $_POST["maxAlum"], $_POST["descripcion"]); //Crea en la tabla Clase_Grupal
-
-        }else {
-          $clase->setRol("PARTICULAR");
-          $idClase = $this->claseMapper->crear($clase); //crea en la tabla CLASE
-          //$this->claseMapper->crearParticular($idClase, $clase->getLogin());
         }
-
       }
-
       //Redirijimos la vista a index.php?Controller=clase&action=index
       $this->view->redirect("clase", "index");
 
@@ -135,7 +137,32 @@ class ClaseController extends BaseController
 
     }
   }
-//Falta validacion
+  public function inscribirseParticular(){
+    $clase = new Clase();
+    if (!isset($_GET["entrenador"])) {
+      if(isset($_POST["fecha"]) & isset($_POST["entrenador"])){
+        if($this->reservaMapper->pistasOcupadas($_POST["fecha"])<5 || $this->claseMapper->entrenadorHasClase($_POST["fecha"], $_POST["entrenador"])){
+          //Crear Reserva
+          $reserva = new Reserva();
+          $reserva->setFecha($_POST["fecha"]);
+          $reserva->setPista("1");
+          $idReserva = $this->reservaMapper->addClase($reserva);  //Reserva la pista para la clase
+          //CREAR cLASE
+          $clase->setLogin($_POST["entrenador"]);//Login Entrenador se le pasa como parametro
+          $clase->setReserva($idReserva);
+          $clase->setRol("PARTICULAR");
+
+          $idClase = $this->claseMapper->crear($clase);
+          $this->claseMapper->crearParticular($idClase, $_SESSION["currentuser"]);
+        }
+      }
+    }else{
+        $this->view->setVariable("entrenador", $_GET["entrenador"]);
+        $this->view->render("clases", "addParticular");
+      }
+    $this->view->redirect("clase", "clasesParticulares");
+  }
+
   public function inscribirse(){
     if (isset($_GET["idClase"])) {
 
@@ -184,11 +211,18 @@ public function desinscribirse(){
         $this->claseMapper->desinscribirGrupal($_GET["idClase"], $_SESSION["currentuser"]);
         $this->view->redirect("clase", "clasesGrupales");
       }elseif ($clase["rol"] == "PARTICULAR") {
-        $this->claseMapper->desinscribirParticular($_GET["idClase"], $_SESSION["currentuser"]);
+        $this->claseMapper->desinscribirParticular($_GET["idClase"], $_SESSION["currentuser"], $_GET["reserva"]);
         $this->view->redirect("clase", "clasesParticulares");
       }
     }
   }
+}
+
+public function aceptarClase(){
+  if(isset($_GET["idClase"])){
+    $this->claseMapper->aceptarClase($_GET["idClase"]);
+  }
+  $this->view->redirect("clase", "index");
 }
 
 
