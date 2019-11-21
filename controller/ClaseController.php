@@ -135,7 +135,7 @@ class ClaseController extends BaseController
   }
   public function inscribirseParticular(){
     $clase = new Clase();
-
+    if (!isset($_GET["entrenador"])) {
       if(isset($_POST["fecha"]) & isset($_POST["entrenador"])){
         if($this->reservaMapper->pistasOcupadas($_POST["fecha"])<5 || $this->claseMapper->entrenadorHasClase($_POST["fecha"], $_POST["entrenador"])){
           //Crear Reserva
@@ -151,14 +151,14 @@ class ClaseController extends BaseController
           $idClase = $this->claseMapper->crear($clase);
           $this->claseMapper->crearParticular($idClase, $_SESSION["currentuser"]);
         }
-      }else{
-      //  $this->view->setVariable("entrenador", $_POST["entrenador"]);
+      }
+    }else{
+        $this->view->setVariable("entrenador", $_GET["entrenador"]);
         $this->view->render("clases", "addParticular");
       }
-
-
     $this->view->redirect("clase", "clasesParticulares");
   }
+
   public function inscribirse(){
     if (isset($_GET["idClase"])) {
 

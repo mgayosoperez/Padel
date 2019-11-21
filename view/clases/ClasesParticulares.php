@@ -76,5 +76,19 @@ $listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
         <?php
       } ?>
       </table>
-      <a href="index.php?controller=clase&amp;action=inscribirseParticular"><button class='btn btn-yagami'>Crear Particular</button></a></a>
-      
+      <table class="table  table-borderless ml-5 mt-5 ">
+        <tr>
+          <th>Entrenadores</th>
+        </tr>
+        <tr>
+          <?php foreach ($entrenadores as $entrenador) {?>
+
+              <td>
+                <?php echo $entrenador->getLogin() ?><br>
+                <a href="index.php?controller=clase&amp;action=inscribirseParticular&amp;entrenador=<?php echo $entrenador->getLogin() ?>"><button class='btn btn-yagami'>Crear Particular</button></a>
+              </td>
+
+        <?php } ?>
+        </tr>
+
+      </table>
