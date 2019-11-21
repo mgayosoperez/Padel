@@ -44,22 +44,41 @@ $listaClases = $view->getVariable("clases");
                     Descripción
                 </th>
             </tr>
-          <?php foreach ($listaClases as $clase){?>
+          <?php foreach ($listaClases as $clase){
+            if ($clase->getAceptar() == 1) {?>
+              <tr bgcolor="#96FE6C">
+                  <td><?= $clase->getIdClase()?></td>
+                  <td><?= $clase->getRol()?></td>
+                  <td><?= $clase->getFecha()?></td>
+                  <td><?= $clase->getDescripcion();?></td>
+                  <td><?= $clase->getAceptar();?></td>
+                  <td>
+                    <a href="index.php?controller=clase&amp;action=aceptarClase&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Aceptar</button></a>
+                    <a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>&reserva=<?= $clase->getReserva()?>"><button class='btn btn-yagami'>Cancelar</button></a>
+                    <?php /* ?><a href="index.php?controller=entrenador&amp;action=delete&amp;login=<?=$entrenador->getLogin()?>">Borrar</a>?><?*/?>
+
+
+                  </td>
+              </tr>
+          <?php }else{?>
             <tr>
                 <td><?= $clase->getIdClase()?></td>
                 <td><?= $clase->getRol()?></td>
                 <td><?= $clase->getFecha()?></td>
                 <td><?= $clase->getDescripcion();?></td>
+                <td><?= $clase->getAceptar();?></td>
                 <td>
-                  <a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>&reserva=<?= $clase->getReserva()?>"><button class='btn btn-yagami'>Borrar</button></a>
+                  <a href="index.php?controller=clase&amp;action=aceptarClase&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Aceptar</button></a>
+                  <a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>&reserva=<?= $clase->getReserva()?>"><button class='btn btn-yagami'>Cancelar</button></a>
                   <?php /* ?><a href="index.php?controller=entrenador&amp;action=delete&amp;login=<?=$entrenador->getLogin()?>">Borrar</a>?><?*/?>
 
 
                 </td>
             </tr>
+        <?php   }?>
+
           <?php } ?>
         </table>
         <form  action="index.php?controller=clase&amp;action=add" method="POST" class="text-center">
    <input type="submit" value="Añadir clase" class="mt-5 btn btn-yagami mx-auto" style="width: 200px;"></input>
 </form>
-

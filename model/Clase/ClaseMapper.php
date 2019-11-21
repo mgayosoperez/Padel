@@ -100,8 +100,8 @@ class ClaseMapper{
   }
 
   public function crearParticular($idClase, $deportista){
-    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista) values (?,?)");
-    $stmt->execute(array($idClase, $deportista));
+    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista, aceptar) values (?,?,?)");
+    $stmt->execute(array($idClase, $deportista, FALSE));
 
   }
 
@@ -171,8 +171,8 @@ class ClaseMapper{
     }
   }
   public function inscribirParticular($idClase, $deportista){
-    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista) VALUES(?, ?)");
-    $stmt->execute(array($idClase, $deportista));
+    $stmt = $this->db->prepare("INSERT INTO CLASE_PARTICULAR(idClase, deportista, aceptar) VALUES(?, ?, ?)");
+    $stmt->execute(array($idClase, $deportista, FALSE));
 
     if(!$this->db->query($stmt)){
 
@@ -224,6 +224,12 @@ class ClaseMapper{
 
     return $stmt->fetch();
   }
+  public function getClaseParticular($idClase){
+    $stmt = $this->db->prepare("SELECT * FROM CLASE_PARTICULAR WHERE idClase = ?");
+    $stmt->execute(array($idClase));
+
+    return $stmt->fetch();
+  }
   public function getNumAlum($idClase){
     $stmt = $this->db->prepare("SELECT count(login) FROM DEPORTISTA_HAS_CLASE_GRUPAL WHERE idClase = ?");
     $stmt->execute(array($idClase));
@@ -253,6 +259,12 @@ class ClaseMapper{
       return false;
     }
   }
+
+  public function aceptarClase($idClase){
+    $stmt = $this->db->prepare("UPDATE CLASE_PARTICULAR SET aceptar = ? WHERE idClase = ?");
+    $stmt->execute(array(TRUE ,$idClase));
+  }
+
 
 }
 

@@ -62,9 +62,9 @@ $listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
               </th>
 
           </tr>
-        <?php foreach ($listaMisClasesParticulares as $clase){?>
-
-            <tr>
+        <?php foreach ($listaMisClasesParticulares as $clase){
+          if($clase->getAceptar() == 1){?>
+            <tr bgcolor="#96FE6C">
               <td><?= $clase->getIdClase()?></td>
               <td><?= $clase->getFecha()?></td>
               <td><?= $clase->getLogin()?></td>
@@ -73,7 +73,17 @@ $listaMisClasesParticulares = $view->getVariable("misClasesParticulares");
               </td>
 
           </tr>
-        <?php
+        <?php }else{?>
+          <tr>
+            <td><?= $clase->getIdClase()?></td>
+            <td><?= $clase->getFecha()?></td>
+            <td><?= $clase->getLogin()?></td>
+            <td>
+              <a href="index.php?controller=clase&amp;action=desinscribirse&amp;idClase=<?= $clase->getIdClase()?>&reserva=<?= $clase->getReserva()?>"><button class='btn btn-yagami'>Desinscribir</button></a>
+            </td>
+
+        </tr>
+      <?php  }
       } ?>
       </table>
       <table class="table  table-borderless ml-5 mt-5 ">

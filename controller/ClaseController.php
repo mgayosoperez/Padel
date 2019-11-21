@@ -35,6 +35,8 @@ class ClaseController extends BaseController
       $clase->setFecha($reserva["fecha"]);
       $descripcion = $this->claseMapper->getClaseGrupal($clase->getIdClase());
       $clase->setDescripcion($descripcion["descripcion"]);
+      $aceptar = $this->claseMapper->getClaseParticular($clase->getIdClase());
+      $clase->setAceptar($aceptar["aceptar"]);
     }
 
     $this->view->setVariable('clases', $clases);
@@ -64,6 +66,8 @@ class ClaseController extends BaseController
     foreach ($misclasesParticulares as $clase) {
       $reserva = $this->reservaMapper->getReserva($clase->getReserva());
       $clase->setFecha($reserva["fecha"]);
+      $aceptar = $this->claseMapper->getClaseParticular($clase->getIdClase());
+      $clase->setAceptar($aceptar["aceptar"]);
     }
     $this->view->setVariable('misClasesParticulares', $misclasesParticulares);
     //    /view/clases/showall.php
@@ -212,6 +216,13 @@ public function desinscribirse(){
       }
     }
   }
+}
+
+public function aceptarClase(){
+  if(isset($_GET["idClase"])){
+    $this->claseMapper->aceptarClase($_GET["idClase"]);
+  }
+  $this->view->redirect("clase", "index");
 }
 
 

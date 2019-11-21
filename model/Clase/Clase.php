@@ -10,6 +10,7 @@ class Clase{
   private $login;
   private $fecha;
   private $descripcion;
+  private $aceptar;
 
 
   function __construct($idClase = NULL, $login = NULL, $rol = NULL, $reserva = NULL){
@@ -39,6 +40,9 @@ class Clase{
   public function getDescripcion(){
     return $this->descripcion;
   }
+  public function getAceptar(){
+    return $this->aceptar;
+  }
 
 
 //Setters
@@ -59,6 +63,9 @@ class Clase{
   }
   public function setDescripcion($descripcion){
     $this->descripcion = $descripcion;
+  }
+  public function setAceptar($aceptar){
+    $this->aceptar = $aceptar;
   }
 
 
