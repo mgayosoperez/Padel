@@ -32,9 +32,7 @@ $datos=$view->getVariable("cosa");
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="index.php?controller=admin&amp;action=campeonatos">Lista de Campeonatos</a>
-          <a class="dropdown-item" href="#">Crear un Campeonato</a>
-          <a class="dropdown-item" href="#">Modificar un Campeonato</a>
-        </div>
+          <a class="dropdown-item" href="index.php?controller=admin&amp;action=crearCampeonato">Crear un Campeonato</a>       </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=entrenador&amp;action=index">Entrenadores</a>

@@ -55,5 +55,38 @@ class ParejaMapper{
     return $grupo;
   }
 
+  public function showAll($idCampeonato){
+    $sql = $this->db->prepare("SELECT * FROM PAREJA WHERE  idCampeonato= ?");
+    $sql->execute(array($idCampeonato));
+    $grupo = $sql->fetchAll(PDO::FETCH_ASSOC);
+    return $grupo;
+  }
+
+  public function ultimoGrupo($idCampeonato){
+    $sql = $this->db->prepare("SELECT MAX(grupo) FROM PAREJA WHERE  idCampeonato= ?");
+    $sql->execute(array($idCampeonato));
+    $grupo = $sql->fetch(PDO::FETCH_ASSOC);
+    $toret="0";
+    if($grupo!=NULL){
+      foreach ($grupo as $key) {
+        $toret= $key;
+      }
+    }
+    return $toret;
+  }
+
+  public function numGrupos($idCampeonato){
+    $sql = $this->db->prepare("SELECT COUNT(DISTINCT grupo) FROM PAREJA WHERE  idCampeonato= ?");
+    $sql->execute(array($idCampeonato));
+    $grupo = $sql->fetch(PDO::FETCH_ASSOC);
+    $toret="0";
+    if($grupo!=NULL){
+      foreach ($grupo as $key) {
+        $toret= $key;
+      }
+    }
+    return $toret;
+  }
+
 }
  ?>

@@ -220,7 +220,7 @@ CREATE OR REPLACE TABLE `ENFRENTAMIENTO` (
 	
 	`idPartido`		int NOT NULL AUTO_INCREMENT,
 	`idReserva`		int,
-	`ganador`		varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+	`ganador`		varchar(15) COLLATE latin1_spanish_ci,
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_enfrentamiento PRIMARY KEY (`idPartido`)

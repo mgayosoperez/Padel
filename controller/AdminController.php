@@ -14,6 +14,8 @@ require_once(__DIR__."/../model/LigaRegular/LigaRegular.php");
 
 require_once(__DIR__."/../model/Grupo/GrupoMapper.php");
 
+require_once(__DIR__."/../model/Enfrentamiento/EnfrentamientoMapper.php");
+
 require_once(__DIR__."/../controller/BaseController.php");
 
 
@@ -58,15 +60,71 @@ class AdminController extends BaseController {
 	}
 
 	public function campeonatos(){
-
 		$campeonato = $this->CampeonatoMapper->campeonatoActivo();
-
 		$this->view->setVariable("campeonato", $campeonato, true);
-
 		$this->view->render("campeonato", "showAllAdmin");
 	}
 
+	public function crearCampeonato(){
+		$this->view->render("campeonato","crearCampeonato");
+	}
+
+	public function addCampeonato(){
+		$campeonato = new Campeonato();
+		$campeonato->setNombre($_POST["nombre"]);
+		$campeonato->setFechaInicio($_POST["fechaInicio"]);
+		$campeonato->setFechaFin($_POST["fechaFin"]);
+		$this->CampeonatoMapper->add($campeonato);
+		$this->view->redirect("admin", "campeonatos"); 
+	}
+
+	public function deleteCampeonato(){
+		$this->CampeonatoMapper->delete($_GET["idCampeonato"]);
+		$this->view->redirect("admin", "campeonatos"); 
+	}
+
 	public function entrenadores(){
+
+	}
+
+	public function generarEnfretamientos(){
+		$datos=$this->ParejaMapper->showAll($_GET["idCampeonato"]);
+		$this->view->setVariable("grupos", $datos, true);
+		foreach ($datos as $key => $value) {
+			foreach ($datos as $keya => $valuea) {
+				if($valuea["grupo"]==$value["grupo"]&&$value["capitan"]!=$valuea["capitan"]){
+					$clave=$this->EnfrentamientoMapper->add();
+					$this->EnfrentamientoMapper->addPar($value["capitan"],$clave);
+					$this->EnfrentamientoMapper->addPar($valuea["capitan"],$clave);
+				}
+			}
+		}
+	}
+
+	public function tablaEnfrentamientos(){
+		$ultimoGrupo= $this->ParejaMapper->ultimoGrupo($_GET["idCampeonato"]);
+		$numGrupos= $this->ParejaMapper->numGrupos($_GET["idCampeonato"])-1;
+		$datos=$this->ParejaMapper->showAll($_GET["idCampeonato"]);
+		$arraydatos = array();
+		echo $ultimoGrupo;
+		echo "    ad     a   a";
+		echo $numGrupos;
+		for ($i=($ultimoGrupo-$numGrupos); $i <= $ultimoGrupo; ++$i){
+			echo($i);
+
+			$datosg=array();
+			foreach ($datos as $key => $value) {
+				if($value["grupo"]==$i){
+					$pareja = new Pareja($value["capitan"],$value["pareja"],$value["idCampeonato"],$value["categoria"],$value["nivel"],$value["grupo"],$value["puntos"]);
+					array_push($datosg, $pareja);
+				}
+			}
+			array_push($arraydatos, $datosg);
+
+			
+		}
+		$this->view->setVariable("arraydatos", $arraydatos, true);
+		$this->view->render("admin","grupos");
 
 	}
 
@@ -93,6 +151,9 @@ class AdminController extends BaseController {
 					break;
 			}
 		}
+		$datos=$this->ParejaMapper->showAll($_GET["idCampeonato"]);
+		$this->view->setVariable("grupos", $datos, true);
+		$this->view->render("admin","grupos");
 	}
 
 	public function cuatroMeses($fecha){
