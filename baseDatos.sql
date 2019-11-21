@@ -109,7 +109,7 @@ CREATE OR REPLACE TABLE `CLASE_PARTICULAR` (
 
 	`idClase`		int NOT NULL,
 	`deportista`	varchar(30) COLLATE latin1_spanish_ci NOT NULL,
-	`aceptar`		bit NOT NULL,
+	`aceptar`		bit,
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_clase_particular PRIMARY KEY (`idClase`),
