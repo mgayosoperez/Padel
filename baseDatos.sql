@@ -414,6 +414,7 @@ VALUES
 	('profe9', 'ENTRENADOR'),
 	('profe10','ENTRENADOR'),
 	('profe11','ENTRENADOR'),
+<<<<<<< Updated upstream
 	('profe12','ENTRENADOR'),
 	('profe13','ENTRENADOR'),
 	('profe14','ENTRENADOR'),
@@ -434,6 +435,9 @@ VALUES
 	('profe29','ENTRENADOR'),
 	('profe30','ENTRENADOR'),
 	('profe31','ENTRENADOR');
+=======
+	('profe12','ENTRENADOR');
+>>>>>>> Stashed changes
 
 -- -- ADMIN
 INSERT INTO `ADMIN` (`login`, `password`)
@@ -555,6 +559,7 @@ VALUES
 	('profe9', '000000S0009', '16410434G', '091031', 'ultimo4', 'profe4', 'HOMBRE'),
 	('profe10', '000000S00010', '16410534G', '091041', 'ultimo5', 'profe5', 'HOMBRE'),
 	('profe11', '000000S00011', '16410634G', '091051', 'ultimo6', 'profe6', 'HOMBRE'),
+<<<<<<< Updated upstream
 	('profe12', '000000S00012', '16410734G', '091061', 'ultimo7', 'profe7', 'HOMBRE'),
 	('profe13', '000000S00013', '16410834G', '091071', 'ultimo8', 'profe8', 'HOMBRE'),
 	('profe14', '000000S00014', '16410934G', '091081', 'ultimo9', 'profe9', 'HOMBRE'),
@@ -575,6 +580,9 @@ VALUES
 	('profe29', '000000S00029', '16412434G', '091231', 'ultimo24', 'profe24', 'HOMBRE'),
 	('profe30', '000000S00030', '16412534G', '091241', 'ultimo25', 'profe25', 'HOMBRE'),
 	('profe31', '000000S00031', '16412634G', '091251', 'ultimo26', 'profe26', 'HOMBRE');
+=======
+	('profe12', '000000S00012', '16410734G', '091061', 'ultimo7', 'profe7', 'HOMBRE');
+>>>>>>> Stashed changes
 
 -- -- CLASE
 INSERT INTO `CLASE` (`idClase`, `login`, `rol`, `reserva`)
@@ -590,6 +598,14 @@ VALUES
 	('2', '20', 'Clase orientada en mejora de recepción.'),
 	('3', '20', 'Clase orientada en mejora de ataque.');
 
+<<<<<<< Updated upstream
+=======
+-- -- CLASE_PARTICULAR
+INSERT INTO `CLASE_PARTICULAR` (`idClase`, `deportista`) 
+VALUES 
+	('4', 'deportista1');
+	
+>>>>>>> Stashed changes
 -- -- RESERVA
 INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`)
 VALUES
@@ -697,3 +713,16 @@ VALUES
 	('deportista48', 'deportista49', '1', 'MASCULINA', '1', NULL, '0'),
 	('deportista50', '4lordvile', '1', 'MASCULINA', '1', NULL, '0');
 																											
+<<<<<<< Updated upstream
+=======
+-- -- ENFRENTAMIENTO
+INSERT INTO `ENFRENTAMIENTO` (`idPartido`, `idReserva`, `ganador`) 
+VALUES 
+	('1', NULL, NULL);
+
+-- -- PAREJA_HAS_ENFRENTAMIENTO
+INSERT INTO `PAREJA_HAS_ENFRENTAMIENTO` (`idPartido`, `pareja`, `puntos`) 
+VALUES 
+	('1', 'cuestaMucho2', NULL), 
+	('1', 'deportista1', NULL); 																									
+>>>>>>> Stashed changes
