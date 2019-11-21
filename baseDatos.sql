@@ -220,7 +220,7 @@ CREATE OR REPLACE TABLE `ENFRENTAMIENTO` (
 	
 	`idPartido`		int NOT NULL AUTO_INCREMENT,
 	`idReserva`		int,
-	`ganador`		varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+	`ganador`		varchar(30) COLLATE latin1_spanish_ci,
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_enfrentamiento PRIMARY KEY (`idPartido`)
@@ -391,10 +391,13 @@ INSERT INTO `ENTRENADOR` (`login`, `password`, `DNI`, `NSS`, `nombre`, `apellido
 																									('profe6', '0000000F00', '16472834A', '126789', 'profe', 'malvado', 'HOMBRE'), ('profe7', '000000S000', '16472834G', '098321', 'ultimo', 'profe', 'HOMBRE');
 
 -- -- CLASE
-INSERT INTO `CLASE` (`idClase`, `login`, `rol`, `reserva`) VALUES ('1', 'profe1', 'GRUPAL', NULL), ('2', 'profe4', 'GRUPAL', NULL), ('3', 'profe3', 'GRUPAL', NULL);
+INSERT INTO `CLASE` (`idClase`, `login`, `rol`, `reserva`) VALUES ('1', 'profe1', 'GRUPAL', NULL), ('2', 'profe4', 'GRUPAL', NULL), ('3', 'profe3', 'GRUPAL', NULL), ('4', 'profe1', 'PARTICULAR', NULL);
 
 -- -- CLASE_GRUPAL
 INSERT INTO `CLASE_GRUPAL` (`idClase`, `maxAlumnos`, `descripcion`) VALUES ('1', '20', 'Clase orientada en mejora de saque.'), ('2', '20', 'Clase orientada en mejora de recepción.'), ('3', '20', 'Clase orientada en mejora de ataque.');
+
+-- -- CLASE_PARTICULAR
+INSERT INTO `CLASE_PARTICULAR` (`idClase`, `deportista`) VALUES ('4', 'deportista1');
 
 -- -- RESERVA
 INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`) VALUES 	(NULL , '2019-04-23 18:00', '1'), (NULL, '2019-04-23 18:00', '2'), (NULL, '2019-04-23 18:00', '3'), (NULL, '2019-04-23 18:00', '4'), (NULL, '2019-04-23 18:00', '5'),
@@ -407,7 +410,7 @@ INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`) VALUES 	(NULL , '2019-04
 INSERT INTO `DEPORTISTA_HAS_CLASE_GRUPAL` (`idClase`, `login`) VALUES 	('1', 'aglopez2'), ('1', 'aglopez3'), ('1', 'aglopez4'), ('1', 'aglopez5'), ('1', 'aglopez6'),
 																		('2', 'anacletillo'), ('2', 'anacletillo1'), ('2', 'anacletillo2'), ('2', 'anacletillo3'), ('2', 'anacletillo4'),
 																		('2', 'lordvile'), ('2', '1lordvile'), ('2', '2lordvile'), ('2', '3lordvile'), ('2', '4lordvile'),
-																		('3', 'cuestaMucho'), ('3', 'cuestaMucho1'), ('3', 'cuestaMucho2'), ('3', 'cuestaMucho3');
+																		('3', 'cuestaMucho'), ('3', 'cuestaMucho1'), ('3', 'cuestaMucho2'), ('3', 'cuestaMucho3'), ('1', 'deportista1'), ('2', 'deportista1');
 
 -- -- TABLA RESERVA_HAS_DEPORTISTA
 INSERT INTO `RESERVA_HAS_DEPORTISTA` (`idReserva`, `idDeportista`) VALUES 	('1', 'aglopez2'), ('3', 'aglopez2'), ('12', 'aglopez2'), ('13', 'aglopez2'), ('14', 'anacletillo'), ('15', 'anacletillo'), ('16', 'anacletillo'),
@@ -449,4 +452,9 @@ INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`,
 																											('deportista46', 'deportista47', '1', 'MASCULINA', '1', NULL, '0'),
 																											('deportista48', 'deportista49', '1', 'MASCULINA', '1', NULL, '0'),
 																											('deportista50', '4lordvile', '1', 'MASCULINA', '1', NULL, '0');
-																											
+
+-- -- ENFRENTAMIENTO
+INSERT INTO `ENFRENTAMIENTO` (`idPartido`, `idReserva`, `ganador`) VALUES ('1', NULL, NULL);
+
+-- -- PAREJA_HAS_ENFRENTAMIENTO
+INSERT INTO `PAREJA_HAS_ENFRENTAMIENTO` (`idPartido`, `pareja`, `puntos`) VALUES ('1', 'cuestaMucho2', NULL), ('1', 'deportista1', NULL); 																									
