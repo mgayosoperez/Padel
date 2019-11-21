@@ -220,7 +220,7 @@ CREATE OR REPLACE TABLE `ENFRENTAMIENTO` (
 	
 	`idPartido`		int NOT NULL AUTO_INCREMENT,
 	`idReserva`		int,
-	`ganador`		varchar(30) COLLATE latin1_spanish_ci,
+	`ganador`		varchar(15) COLLATE latin1_spanish_ci NOT NULL,
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_enfrentamiento PRIMARY KEY (`idPartido`)
@@ -318,143 +318,382 @@ CREATE OR REPLACE TABLE `PROMOCIONADO_HAS_DEPORTISTA` (
 -- -- INSERTS
 
 -- -- USUARIOS
-INSERT INTO `USUARIO` (`login`, `rol`) VALUES 	('admin', 'ADMIN'), ('aglopez2', 'DEPORTISTA'), ('aglopez3', 'DEPORTISTA'), ('aglopez4', 'DEPORTISTA'), ('aglopez5', 'DEPORTISTA'), ('aglopez6', 'DEPORTISTA'), ('aglopez7', 'DEPORTISTA'), 
-												('anacletillo1', 'DEPORTISTA'), ('anacletillo2', 'DEPORTISTA'), ('anacletillo3', 'DEPORTISTA'), ('anacletillo4', 'DEPORTISTA'), ('anacletillo5', 'DEPORTISTA'), ('anacletillo', 'DEPORTISTA'),
-												('lordvile', 'DEPORTISTA'), ('1lordvile', 'DEPORTISTA'), ('2lordvile', 'DEPORTISTA'), ('3lordvile', 'DEPORTISTA'), ('4lordvile', 'DEPORTISTA'), ('5lordvile', 'DEPORTISTA'), ('6lordvile', 'DEPORTISTA'),
-												('7lordvile', 'DEPORTISTA'), ('1illantasDeCoche', 'DEPORTISTA'), ('2illantasDeCoche', 'DEPORTISTA'), ('3illantasDeCoche', 'DEPORTISTA'), ('4illantasDeCoche', 'DEPORTISTA'), ('5illantasDeCoche', 'DEPORTISTA'),
-												('6illantasDeCoche', 'DEPORTISTA'), ('7illantasDeCoche', 'DEPORTISTA'), ('8illantasDeCoche', 'DEPORTISTA'), ('cuestaMucho', 'DEPORTISTA'), ('cuestaMucho1', 'DEPORTISTA'), ('cuestaMucho2', 'DEPORTISTA'),
-												('cuestaMucho3', 'DEPORTISTA'), ('deportista1', 'DEPORTISTA'), ('deportista2', 'DEPORTISTA'), ('profe1', 'ENTRENADOR'), ('profe3', 'ENTRENADOR'), ('profe4', 'ENTRENADOR'), ('profe5', 'ENTRENADOR'), 
-												('profe6', 'ENTRENADOR'), ('profe7', 'ENTRENADOR'), ('deportista3', 'DEPORTISTA'), ('deportista4', 'DEPORTISTA'), ('deportista5', 'DEPORTISTA'), ('deportista6', 'DEPORTISTA'), ('deportista7', 'DEPORTISTA'), 
-												('deportista8', 'DEPORTISTA'), ('deportista9', 'DEPORTISTA'), ('deportista10', 'DEPORTISTA'), ('deportista11', 'DEPORTISTA'), ('deportista12', 'DEPORTISTA'), ('deportista13', 'DEPORTISTA'), ('deportista14', 'DEPORTISTA'),
-												('deportista15', 'DEPORTISTA'), ('deportista16', 'DEPORTISTA'), ('deportista17', 'DEPORTISTA'), ('deportista18', 'DEPORTISTA'), ('deportista19', 'DEPORTISTA'), ('deportista20', 'DEPORTISTA'), ('deportista21', 'DEPORTISTA'),
-												('deportista22', 'DEPORTISTA'), ('deportista23', 'DEPORTISTA'), ('deportista24', 'DEPORTISTA'), ('deportista25', 'DEPORTISTA'), ('deportista26', 'DEPORTISTA'), ('deportista27', 'DEPORTISTA'), ('deportista28', 'DEPORTISTA'),
-												('deportista50', 'DEPORTISTA'), ('deportista29', 'DEPORTISTA'), ('deportista30', 'DEPORTISTA'), ('deportista31', 'DEPORTISTA'), ('deportista49', 'DEPORTISTA'), ('deportista32', 'DEPORTISTA'), ('deportista33', 'DEPORTISTA'),
-												('deportista34', 'DEPORTISTA'), ('deportista35', 'DEPORTISTA'), ('deportista36', 'DEPORTISTA'), ('deportista37', 'DEPORTISTA'), ('deportista38', 'DEPORTISTA'), ('deportista39', 'DEPORTISTA'), ('deportista40', 'DEPORTISTA'),
-												('deportista41', 'DEPORTISTA'), ('deportista42', 'DEPORTISTA'), ('deportista43', 'DEPORTISTA'), ('deportista44', 'DEPORTISTA'), ('deportista45', 'DEPORTISTA'), ('deportista46', 'DEPORTISTA'), ('deportista47', 'DEPORTISTA'),
-												('deportista48', 'DEPORTISTA');
+INSERT INTO `USUARIO` (`login`, `rol`)
+VALUES 
+	('admin', 'ADMIN'),
+	('aglopez2', 'DEPORTISTA'),
+	('aglopez3', 'DEPORTISTA'),
+	('aglopez4', 'DEPORTISTA'),
+	('aglopez5', 'DEPORTISTA'),
+	('aglopez6', 'DEPORTISTA'),
+	('aglopez7', 'DEPORTISTA'),
+	('anacletillo1', 'DEPORTISTA'),
+	('anacletillo2', 'DEPORTISTA'),
+	('anacletillo3', 'DEPORTISTA'),
+	('anacletillo4', 'DEPORTISTA'),
+	('anacletillo5', 'DEPORTISTA'),
+	('anacletillo', 'DEPORTISTA'),
+	('lordvile', 'DEPORTISTA'),
+	('1lordvile', 'DEPORTISTA'),
+	('2lordvile', 'DEPORTISTA'),
+	('3lordvile', 'DEPORTISTA'),
+	('4lordvile', 'DEPORTISTA'),
+	('5lordvile', 'DEPORTISTA'),
+	('6lordvile', 'DEPORTISTA'),
+	('7lordvile', 'DEPORTISTA'),
+	('1illantasDeCoche', 'DEPORTISTA'),
+	('2illantasDeCoche', 'DEPORTISTA'),
+	('3illantasDeCoche', 'DEPORTISTA'),
+	('4illantasDeCoche', 'DEPORTISTA'),
+	('5illantasDeCoche', 'DEPORTISTA'),
+	('6illantasDeCoche', 'DEPORTISTA'),
+	('7illantasDeCoche', 'DEPORTISTA'),
+	('8illantasDeCoche', 'DEPORTISTA'),
+	('cuestaMucho', 'DEPORTISTA'),
+	('cuestaMucho1', 'DEPORTISTA'),
+	('cuestaMucho2', 'DEPORTISTA'),
+	('cuestaMucho3', 'DEPORTISTA'),
+	('deportista1', 'DEPORTISTA'),
+	('deportista2', 'DEPORTISTA'),
+	('deportista3', 'DEPORTISTA'),
+	('deportista4', 'DEPORTISTA'),
+	('deportista5', 'DEPORTISTA'),
+	('deportista6', 'DEPORTISTA'),
+	('deportista7', 'DEPORTISTA'),
+	('deportista8', 'DEPORTISTA'),
+	('deportista9', 'DEPORTISTA'),
+	('deportista10', 'DEPORTISTA'),
+	('deportista11', 'DEPORTISTA'),
+	('deportista12', 'DEPORTISTA'),
+	('deportista13', 'DEPORTISTA'),
+	('deportista14', 'DEPORTISTA'),
+	('deportista15', 'DEPORTISTA'),
+	('deportista16', 'DEPORTISTA'),
+	('deportista17', 'DEPORTISTA'),
+	('deportista18', 'DEPORTISTA'),
+	('deportista19', 'DEPORTISTA'),
+	('deportista20', 'DEPORTISTA'),
+	('deportista21', 'DEPORTISTA'),
+	('deportista22', 'DEPORTISTA'),
+	('deportista23', 'DEPORTISTA'),
+	('deportista24', 'DEPORTISTA'),
+	('deportista25', 'DEPORTISTA'),
+	('deportista26', 'DEPORTISTA'),
+	('deportista27', 'DEPORTISTA'),
+	('deportista28', 'DEPORTISTA'),
+	('deportista50', 'DEPORTISTA'),
+	('deportista29', 'DEPORTISTA'),
+	('deportista30', 'DEPORTISTA'),
+	('deportista31', 'DEPORTISTA'),
+	('deportista49', 'DEPORTISTA'),
+	('deportista32', 'DEPORTISTA'),
+	('deportista33', 'DEPORTISTA'),
+	('deportista34', 'DEPORTISTA'),
+	('deportista35', 'DEPORTISTA'),
+	('deportista36', 'DEPORTISTA'),
+	('deportista37', 'DEPORTISTA'),
+	('deportista38', 'DEPORTISTA'),
+	('deportista39', 'DEPORTISTA'),
+	('deportista40', 'DEPORTISTA'),
+	('deportista41', 'DEPORTISTA'),
+	('deportista42', 'DEPORTISTA'),
+	('deportista43', 'DEPORTISTA'),
+	('deportista44', 'DEPORTISTA'),
+	('deportista45', 'DEPORTISTA'),
+	('deportista46', 'DEPORTISTA'),
+	('deportista47', 'DEPORTISTA'),
+	('deportista48', 'DEPORTISTA'),
+	('profe1', 'ENTRENADOR'),
+	('profe2', 'ENTRENADOR'),
+	('profe3', 'ENTRENADOR'),
+	('profe4', 'ENTRENADOR'),
+	('profe5', 'ENTRENADOR'),
+	('profe6', 'ENTRENADOR'),
+	('profe7', 'ENTRENADOR'),
+	('profe8', 'ENTRENADOR'),
+	('profe9', 'ENTRENADOR'),
+	('profe10','ENTRENADOR'),
+	('profe11','ENTRENADOR'),
+	('profe12','ENTRENADOR'),
+	('profe13','ENTRENADOR'),
+	('profe14','ENTRENADOR'),
+	('profe15','ENTRENADOR'),
+	('profe16','ENTRENADOR'),
+	('profe17','ENTRENADOR'),
+	('profe18','ENTRENADOR'),
+	('profe19','ENTRENADOR'),
+	('profe20','ENTRENADOR'),
+	('profe21','ENTRENADOR'),
+	('profe22','ENTRENADOR'),
+	('profe23','ENTRENADOR'),
+	('profe24','ENTRENADOR'),
+	('profe25','ENTRENADOR'),
+	('profe26','ENTRENADOR'),
+	('profe27','ENTRENADOR'),
+	('profe28','ENTRENADOR'),
+	('profe29','ENTRENADOR'),
+	('profe30','ENTRENADOR'),
+	('profe31','ENTRENADOR');
 
 -- -- ADMIN
-INSERT INTO `ADMIN` (`login`, `password`) VALUES ('admin', 'admin');
+INSERT INTO `ADMIN` (`login`, `password`)
+VALUES 
+	('admin', 'admin');
 
 -- -- PISTA
-INSERT INTO `PISTA` (`idPista`, `estado`, `superficie`) VALUES ('1', 'Exterior', 'Cesped'), ('2', 'Exterior', 'Cesped'), ('3', 'Interior', 'Madera'), ('4', 'Exterior', 'Cemento'), ('5', 'Interior', 'Cesped_artificial');
+INSERT INTO `PISTA` (`idPista`, `estado`, `superficie`)
+VALUES
+	('1', 'Exterior', 'Cesped'),
+	('2', 'Exterior', 'Cesped'),
+	('3', 'Interior', 'Madera'),
+	('4', 'Exterior', 'Cemento'),
+	('5', 'Interior', 'Cesped_artificial');
 
 -- -- CAMPEONATO
-INSERT INTO `CAMPEONATO` (`idCampeonato`, `nombre`, `fechaInicio`, `fechaFin`) VALUES (NULL, 'Regional', '2019-11-05', '2019-11-22'), (NULL, 'Estatal', '2020-11-05', '2020-11-12');
+INSERT INTO `CAMPEONATO` (`idCampeonato`, `nombre`, `fechaInicio`, `fechaFin`)
+VALUES
+	(NULL, 'Regional', '2019-11-05', '2019-11-22'),
+	(NULL, 'Estatal', '2020-11-05', '2020-11-12');
 
 -- -- DEPORTISTA
-INSERT INTO `DEPORTISTA` (`login`, `password`, `DNI`, `nombre`, `apellidos`, `sexo`) VALUES ('aglopez2', '0000000000', '16472834D', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'), ('aglopez3', '0000000001', '16472834F', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'), 
-																							('aglopez4', '0000000002', '16472834H', 'Angel Alfonso', 'Gulias Lopez', 'MUJER'), ('aglopez5', '0000000006', '16472834J', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'),
-																							('aglopez6', '0000000F00', '16472834A', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'), ('aglopez7', '000000S000', '16472834G', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'),
-																							('anacletillo', '1000000000', '23572834G', 'Ivan', 'Gonzalez Gonzalez', 'HOMBRE'), ('anacletillo1', '10000000F0', '23534567G', 'Ivan', 'Gonzalez Gonzalez', 'HOMBRE'),
-																							('anacletillo2', '100F0000F0', '26434567G', 'Ivan', 'Gonzalez Gonzalez', 'MUJER'), ('anacletillo3', '10004456F0', '23538137G', 'Ivan', 'Gonzalez Gonzalez', 'HOMBRE'),
-																							('anacletillo4', '10000777F0', '23537772G', 'Ivan', 'Gonzalez Gonzalez', 'HOMBRE'), ('anacletillo5', '1000088880', '23534888G', 'Ivan', 'Gonzalez Gonzalez', 'HOMBRE'),
-																							('lordvile', '2222223222', '22222322G', 'Mario', 'Gayoso Perez', 'HOMBRE'), ('1lordvile', '2222222221', '22222221G', 'Mario', 'Gayoso Perez', 'HOMBRE'),
-																							('2lordvile', '2223222220', '22222220G', 'Mario', 'Gayoso Perez', 'MUJER'), ('3lordvile', '2222222223', '22222223G', 'Mario', 'Gayoso Perez', 'HOMBRE'),
-																							('4lordvile', '2222222242', '22222422G', 'Mario', 'Gayoso Perez', 'HOMBRE'), ('5lordvile', '2222552222', '22552222G', 'Mario', 'Gayoso Perez', 'HOMBRE'),
-																							('6lordvile', '2222262222', '22222622G', 'Mario', 'Gayoso Perez', 'MUJER'), ('7lordvile', '2222227722', '22227722G', 'Mario', 'Gayoso Perez', 'HOMBRE'),
-																							('1illantasDeCoche', '4445644444', '14253678G', 'David', 'Illan X', 'MUJER'), ('5illantasDeCoche', '4411144444', '14111678G', 'David', 'Illan X', 'HOMBRE'),
-																							('2illantasDeCoche', '4444224444', '14222678G', 'David', 'Illan X', 'MUJER'), ('6illantasDeCoche', '4443344444', '14253378G', 'David', 'Illan X', 'HOMBRE'),
-																							('3illantasDeCoche', '4440000444', '14200008G', 'David', 'Illan X', 'MUJER'), ('7illantasDeCoche', '4444445444', '14255578G', 'David', 'Illan X', 'HOMBRE'),
-																							('4illantasDeCoche', '4444466444', '14253668G', 'David', 'Illan X', 'MUJER'), ('8illantasDeCoche', '4444447444', '14253677G', 'David', 'Illan X', 'HOMBRE'),
-																							('cuestaMucho', '0201030608', '99999999G', 'Pedro', 'Cuesta Morales', 'MUJER'), ('cuestaMucho1', '0201110608', '99991199G', 'Pedro', 'Cuesta Morales', 'MUJER'),
-																							('cuestaMucho2', '2201030608', '99299999G', 'Pedro', 'Cuesta Morales', 'HOMBRE'), ('cuestaMucho3', '0201033308', '99993399G', 'Pedro', 'Cuesta Morales', 'HOMBRE'),
-																							('deportista1', 'deportista1', '76731597D', 'deportista1', 'deportista1', 'HOMBRE'), ('deportista2', 'deportista2', '11111111G', 'deportista2', 'deportista2', 'MUJER'),
-																							('deportista3', 'deportista3', '111111ASG', 'deportista3', 'deportista3', 'MUJER'), ('deportista4', 'deportista4', '1111RETIO', 'deportista4', 'deportista4', 'MUJER'),
-																							('deportista5', 'deportista5', '1111ADSG', 'deportista5', 'deportista5', 'MUJER'), ('deportista6', 'deportista6', '15555111G', 'deportista6', 'deportista6', 'MUJER'),
-																							('deportista7', 'deportista7', '11166661G', 'deportista7', 'deportista7', 'MUJER'), ('deportista8', 'deportista8', '11111118G', 'deportista8', 'deportista8', 'MUJER'),
-																							('deportista9', 'deportista9', '11111119G', 'deportista9', 'deportista9', 'MUJER'), ('deportista10', 'deportista10', '76730007D', 'deportista10', 'deportista10', 'HOMBRE'),
-																							('deportista11', 'deportista11', '76731591D', 'deportista11', 'deportista11', 'HOMBRE'), ('deportista12', 'deportista12', '76731592D', 'deportista12', 'deportista12', 'HOMBRE'),
-																							('deportista13', 'deportista13', '76731593D', 'deportista13', 'deportista13', 'HOMBRE'), ('deportista14', 'deportista14', '76731594D', 'deportista14', 'deportista14', 'HOMBRE'),
-																							('deportista15', 'deportista15', '76731595D', 'deportista15', 'deportista15', 'HOMBRE'), ('deportista16', 'deportista16', '76731596D', 'deportista16', 'deportista16', 'HOMBRE'), 
-																							('deportista17', 'deportista17', '76731777D', 'deportista17', 'deportista17', 'HOMBRE'), ('deportista18', 'deportista18', '76731598D', 'deportista18', 'deportista18', 'HOMBRE'),
-																							('deportista19', 'deportista19', '76731599D', 'deportista19', 'deportista19', 'HOMBRE'), ('deportista20', 'deportista20', '11101111G', 'deportista20', 'deportista20', 'HOMBRE'),
-																							('deportista21', 'deportista21', '11101121G', 'deportista21', 'deportista21', 'HOMBRE'), ('deportista22', 'deportista22', '11101112G', 'deportista22', 'deportista22', 'HOMBRE'),
-																							('deportista23', 'deportista23', '11101113G', 'deportista23', 'deportista23', 'HOMBRE'), ('deportista24', 'deportista24', '11101114G', 'deportista24', 'deportista24', 'HOMBRE'),
-																							('deportista25', 'deportista25', '11101115G', 'deportista25', 'deportista25', 'HOMBRE'), ('deportista26', 'deportista26', '11101116G', 'deportista26', 'deportista26', 'HOMBRE'),
-																							('deportista27', 'deportista27', '11101117G', 'deportista27', 'deportista27', 'HOMBRE'), ('deportista28', 'deportista28', '11101118G', 'deportista28', 'deportista28', 'HOMBRE'),
-																							('deportista29', 'deportista29', '11101119G', 'deportista29', 'deportista29', 'HOMBRE'), ('deportista30', 'deportista30', '111111A0G', 'deportista30', 'deportista30', 'HOMBRE'),
-																							('deportista31', 'deportista31', '111111A1G', 'deportista31', 'deportista31', 'HOMBRE'), ('deportista32', 'deportista32', '111111A2G', 'deportista32', 'deportista32', 'HOMBRE'),
-																							('deportista33', 'deportista33', '111111A3G', 'deportista33', 'deportista33', 'HOMBRE'), ('deportista34', 'deportista34', '111111A4G', 'deportista34', 'deportista34', 'HOMBRE'),
-																							('deportista35', 'deportista35', '111111A5G', 'deportista35', 'deportista35', 'HOMBRE'), ('deportista36', 'deportista36', '111111A6G', 'deportista36', 'deportista36', 'HOMBRE'),
-																							('deportista37', 'deportista37', '111111A7G', 'deportista37', 'deportista37', 'HOMBRE'), ('deportista38', 'deportista38', '111111A8G', 'deportista38', 'deportista38', 'HOMBRE'),
-																							('deportista39', 'deportista39', '111111A9G', 'deportista39', 'deportista39', 'HOMBRE'), ('deportista40', 'deportista40', '1111RET0O', 'deportista40', 'deportista40', 'HOMBRE'),
-																							('deportista41', 'deportista41', '1111RET1O', 'deportista41', 'deportista41', 'HOMBRE'), ('deportista42', 'deportista42', '1111RET2O', 'deportista42', 'deportista42', 'HOMBRE'),
-																							('deportista43', 'deportista43', '1111RET3O', 'deportista43', 'deportista43', 'HOMBRE'), ('deportista44', 'deportista44', '1111RET4O', 'deportista44', 'deportista44', 'HOMBRE'),
-																							('deportista45', 'deportista45', '1111RET5O', 'deportista45', 'deportista45', 'HOMBRE'), ('deportista46', 'deportista46', '1111RET6O', 'deportista46', 'deportista46', 'HOMBRE'),
-																							('deportista47', 'deportista47', '1111RET7O', 'deportista47', 'deportista47', 'HOMBRE'), ('deportista48', 'deportista48', '1111RET8O', 'deportista48', 'deportista48', 'HOMBRE'),
-																							('deportista49', 'deportista49', '1111RET9O', 'deportista49', 'deportista49', 'HOMBRE'), ('deportista50', 'deportista50', '76730055D', 'deportista50', 'deportista50', 'HOMBRE');
+INSERT INTO `DEPORTISTA` (`login`, `password`, `DNI`, `nombre`, `apellidos`, `sexo`)
+VALUES
+	('aglopez2', '0000000000', '16472834D', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'),
+	('aglopez3', '0000000001', '16472834F', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'),
+	('aglopez4', '0000000002', '16472834H', 'Angel Alfonso', 'Gulias Lopez', 'MUJER'),
+	('aglopez5', '0000000006', '16472834J', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'),
+	('aglopez6', '0000000F00', '16472834A', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'),
+	('aglopez7', '000000S000', '16472834G', 'Angel Alfonso', 'Gulias Lopez', 'HOMBRE'),
+	('anacletillo', '1000000000', '23572834G', 'Ivan', 'Gonzalez Gonzalez', 'HOMBRE'),
+	('anacletillo1', '10000000F0', '23534567G', 'Ivan', 'Gonzalez Gonzalez', 'HOMBRE'),
+	('anacletillo2', '100F0000F0', '26434567G', 'Ivan', 'Gonzalez Gonzalez', 'MUJER'),
+	('anacletillo3', '10004456F0', '23538137G', 'Ivan', 'Gonzalez Gonzalez', 'HOMBRE'),
+	('anacletillo4', '10000777F0', '23537772G', 'Ivan', 'Gonzalez Gonzalez', 'HOMBRE'),
+	('anacletillo5', '1000088880', '23534888G', 'Ivan', 'Gonzalez Gonzalez', 'HOMBRE'),
+	('lordvile', '2222223222', '22222322G', 'Mario', 'Gayoso Perez', 'HOMBRE'),
+	('1lordvile', '2222222221', '22222221G', 'Mario', 'Gayoso Perez', 'HOMBRE'),
+	('2lordvile', '2223222220', '22222220G', 'Mario', 'Gayoso Perez', 'MUJER'),
+	('3lordvile', '2222222223', '22222223G', 'Mario', 'Gayoso Perez', 'HOMBRE'),
+	('4lordvile', '2222222242', '22222422G', 'Mario', 'Gayoso Perez', 'HOMBRE'),
+	('5lordvile', '2222552222', '22552222G', 'Mario', 'Gayoso Perez', 'HOMBRE'),
+	('6lordvile', '2222262222', '22222622G', 'Mario', 'Gayoso Perez', 'MUJER'),
+	('7lordvile', '2222227722', '22227722G', 'Mario', 'Gayoso Perez', 'HOMBRE'),
+	('1illantasDeCoche', '4445644444', '14253678G', 'David', 'Illan X', 'MUJER'),
+	('5illantasDeCoche', '4411144444', '14111678G', 'David', 'Illan X', 'HOMBRE'),
+	('2illantasDeCoche', '4444224444', '14222678G', 'David', 'Illan X', 'MUJER'),
+	('6illantasDeCoche', '4443344444', '14253378G', 'David', 'Illan X', 'HOMBRE'),
+	('3illantasDeCoche', '4440000444', '14200008G', 'David', 'Illan X', 'MUJER'),
+	('7illantasDeCoche', '4444445444', '14255578G', 'David', 'Illan X', 'HOMBRE'),
+	('4illantasDeCoche', '4444466444', '14253668G', 'David', 'Illan X', 'MUJER'),
+	('8illantasDeCoche', '4444447444', '14253677G', 'David', 'Illan X', 'HOMBRE'),
+	('cuestaMucho', '0201030608', '99999999G', 'Pedro', 'Cuesta Morales', 'MUJER'),
+	('cuestaMucho1', '0201110608', '99991199G', 'Pedro', 'Cuesta Morales', 'MUJER'),
+	('cuestaMucho2', '2201030608', '99299999G', 'Pedro', 'Cuesta Morales', 'HOMBRE'),
+	('cuestaMucho3', '0201033308', '99993399G', 'Pedro', 'Cuesta Morales', 'HOMBRE'),
+	('deportista1', 'deportista1', '76731597D', 'deportista1', 'deportista1', 'HOMBRE'),
+	('deportista2', 'deportista2', '11111111G', 'deportista2', 'deportista2', 'MUJER'),
+	('deportista3', 'deportista3', '111111ASG', 'deportista3', 'deportista3', 'MUJER'),
+	('deportista4', 'deportista4', '1111RETIO', 'deportista4', 'deportista4', 'MUJER'),
+	('deportista5', 'deportista5', '1111ADSG', 'deportista5', 'deportista5', 'MUJER'),
+	('deportista6', 'deportista6', '15555111G', 'deportista6', 'deportista6', 'MUJER'),
+	('deportista7', 'deportista7', '11166661G', 'deportista7', 'deportista7', 'MUJER'),
+	('deportista8', 'deportista8', '11111118G', 'deportista8', 'deportista8', 'MUJER'),
+	('deportista9', 'deportista9', '11111119G', 'deportista9', 'deportista9', 'MUJER'),
+	('deportista10', 'deportista10', '76730007D', 'deportista10', 'deportista10', 'HOMBRE'),
+	('deportista11', 'deportista11', '76731591D', 'deportista11', 'deportista11', 'HOMBRE'),
+	('deportista12', 'deportista12', '76731592D', 'deportista12', 'deportista12', 'HOMBRE'),
+	('deportista13', 'deportista13', '76731593D', 'deportista13', 'deportista13', 'HOMBRE'),
+	('deportista14', 'deportista14', '76731594D', 'deportista14', 'deportista14', 'HOMBRE'),
+	('deportista15', 'deportista15', '76731595D', 'deportista15', 'deportista15', 'HOMBRE'),
+	('deportista16', 'deportista16', '76731596D', 'deportista16', 'deportista16', 'HOMBRE'),
+	('deportista17', 'deportista17', '76731777D', 'deportista17', 'deportista17', 'HOMBRE'),
+	('deportista18', 'deportista18', '76731598D', 'deportista18', 'deportista18', 'HOMBRE'),
+	('deportista19', 'deportista19', '76731599D', 'deportista19', 'deportista19', 'HOMBRE'),
+	('deportista20', 'deportista20', '11101111G', 'deportista20', 'deportista20', 'HOMBRE'),
+	('deportista21', 'deportista21', '11101121G', 'deportista21', 'deportista21', 'HOMBRE'),
+	('deportista22', 'deportista22', '11101112G', 'deportista22', 'deportista22', 'HOMBRE'),
+	('deportista23', 'deportista23', '11101113G', 'deportista23', 'deportista23', 'HOMBRE'),
+	('deportista24', 'deportista24', '11101114G', 'deportista24', 'deportista24', 'HOMBRE'),
+	('deportista25', 'deportista25', '11101115G', 'deportista25', 'deportista25', 'HOMBRE'),
+	('deportista26', 'deportista26', '11101116G', 'deportista26', 'deportista26', 'HOMBRE'),
+	('deportista27', 'deportista27', '11101117G', 'deportista27', 'deportista27', 'HOMBRE'),
+	('deportista28', 'deportista28', '11101118G', 'deportista28', 'deportista28', 'HOMBRE'),
+	('deportista29', 'deportista29', '11101119G', 'deportista29', 'deportista29', 'HOMBRE'),
+	('deportista30', 'deportista30', '111111A0G', 'deportista30', 'deportista30', 'HOMBRE'),
+	('deportista31', 'deportista31', '111111A1G', 'deportista31', 'deportista31', 'HOMBRE'),
+	('deportista32', 'deportista32', '111111A2G', 'deportista32', 'deportista32', 'HOMBRE'),
+	('deportista33', 'deportista33', '111111A3G', 'deportista33', 'deportista33', 'HOMBRE'),
+	('deportista34', 'deportista34', '111111A4G', 'deportista34', 'deportista34', 'HOMBRE'),
+	('deportista35', 'deportista35', '111111A5G', 'deportista35', 'deportista35', 'HOMBRE'),
+	('deportista36', 'deportista36', '111111A6G', 'deportista36', 'deportista36', 'HOMBRE'),
+	('deportista37', 'deportista37', '111111A7G', 'deportista37', 'deportista37', 'HOMBRE'),
+	('deportista38', 'deportista38', '111111A8G', 'deportista38', 'deportista38', 'HOMBRE'),
+	('deportista39', 'deportista39', '111111A9G', 'deportista39', 'deportista39', 'HOMBRE'),
+	('deportista40', 'deportista40', '1111RET0O', 'deportista40', 'deportista40', 'HOMBRE'),
+	('deportista41', 'deportista41', '1111RET1O', 'deportista41', 'deportista41', 'HOMBRE'),
+	('deportista42', 'deportista42', '1111RET2O', 'deportista42', 'deportista42', 'HOMBRE'),
+	('deportista43', 'deportista43', '1111RET3O', 'deportista43', 'deportista43', 'HOMBRE'),
+	('deportista44', 'deportista44', '1111RET4O', 'deportista44', 'deportista44', 'HOMBRE'),
+	('deportista45', 'deportista45', '1111RET5O', 'deportista45', 'deportista45', 'HOMBRE'),
+	('deportista46', 'deportista46', '1111RET6O', 'deportista46', 'deportista46', 'HOMBRE'),
+	('deportista47', 'deportista47', '1111RET7O', 'deportista47', 'deportista47', 'HOMBRE'),
+	('deportista48', 'deportista48', '1111RET8O', 'deportista48', 'deportista48', 'HOMBRE'),
+	('deportista49', 'deportista49', '1111RET9O', 'deportista49', 'deportista49', 'HOMBRE'),
+	('deportista50', 'deportista50', '76730055D', 'deportista50', 'deportista50', 'HOMBRE');
  
 -- -- ENTRENADOR
-INSERT INTO `ENTRENADOR` (`login`, `password`, `DNI`, `NSS`, `nombre`, `apellidos`, `sexo`) VALUES 	('profe1', '0000000000', '16472834D', '123456789', 'profe', 'guay', 'HOMBRE'), ('profe3', '0000000001', '16472834F', '987654321', 'profe', 'donde esta profe2?', 'HOMBRE'), 
-																									('profe4', '0000000002', '16472834H', '123456', 'profe', 'chulo', 'MUJER'), ('profe5', '0000000006', '16472834J', '9876054321', 'profe', 'perezoso', 'HOMBRE'),
-																									('profe6', '0000000F00', '16472834A', '126789', 'profe', 'malvado', 'HOMBRE'), ('profe7', '000000S000', '16472834G', '098321', 'ultimo', 'profe', 'HOMBRE');
+INSERT INTO `ENTRENADOR` (`login`, `password`, `DNI`, `NSS`, `nombre`, `apellidos`, `sexo`)
+VALUES 
+	('profe1', '00000000001', '16472834D', '123456789', 'profe', 'guay', 'HOMBRE'),
+	('profe2', '00000000012', '16472834F', '987654321', 'profe', 'donde esta profe2?', 'HOMBRE'),
+	('profe3', '00000000023', '16472834H', '123456', 'profe', 'chulo', 'MUJER'),
+	('profe4', '00000000064', '16472834J', '9876054321', 'profe', 'perezoso', 'HOMBRE'),
+	('profe5', '0000000F005', '16472834A', '126789', 'profe', 'malvado', 'HOMBRE'),
+	('profe6', '000000S0006', '16410134G', '091001', 'ultimo1', 'profe1', 'HOMBRE'),
+	('profe7', '000000S0007', '16410234G', '091011', 'ultimo2', 'profe2', 'HOMBRE'),
+	('profe8', '000000S0008', '16410334G', '091021', 'ultimo3', 'profe3', 'HOMBRE'),
+	('profe9', '000000S0009', '16410434G', '091031', 'ultimo4', 'profe4', 'HOMBRE'),
+	('profe10', '000000S00010', '16410534G', '091041', 'ultimo5', 'profe5', 'HOMBRE'),
+	('profe11', '000000S00011', '16410634G', '091051', 'ultimo6', 'profe6', 'HOMBRE'),
+	('profe12', '000000S00012', '16410734G', '091061', 'ultimo7', 'profe7', 'HOMBRE'),
+	('profe13', '000000S00013', '16410834G', '091071', 'ultimo8', 'profe8', 'HOMBRE'),
+	('profe14', '000000S00014', '16410934G', '091081', 'ultimo9', 'profe9', 'HOMBRE'),
+	('profe15', '000000S00015', '16411034G', '091091', 'ultimo10', 'profe10', 'HOMBRE'),
+	('profe16', '000000S00016', '16411134G', '091101', 'ultimo11', 'profe11', 'HOMBRE'),
+	('profe17', '000000S00017', '16411234G', '091111', 'ultimo12', 'profe12', 'HOMBRE'),
+	('profe18', '000000S00018', '16411334G', '091121', 'ultimo13', 'profe13', 'HOMBRE'),
+	('profe19', '000000S00019', '16411434G', '091131', 'ultimo14', 'profe14', 'HOMBRE'),
+	('profe20', '000000S00020', '16411534G', '091141', 'ultimo15', 'profe15', 'HOMBRE'),
+	('profe21', '000000S00021', '16411634G', '091151', 'ultimo16', 'profe16', 'HOMBRE'),
+	('profe22', '000000S00022', '16411734G', '091161', 'ultimo17', 'profe17', 'HOMBRE'),
+	('profe23', '000000S00023', '16411834G', '091171', 'ultimo18', 'profe18', 'HOMBRE'),
+	('profe24', '000000S00024', '16411934G', '091181', 'ultimo19', 'profe19', 'HOMBRE'),
+	('profe25', '000000S00025', '16412034G', '091191', 'ultimo20', 'profe20', 'HOMBRE'),
+	('profe26', '000000S00026', '16412134G', '091201', 'ultimo21', 'profe21', 'HOMBRE'),
+	('profe27', '000000S00027', '16412234G', '091211', 'ultimo22', 'profe22', 'HOMBRE'),
+	('profe28', '000000S00028', '16412334G', '091221', 'ultimo23', 'profe23', 'HOMBRE'),
+	('profe29', '000000S00029', '16412434G', '091231', 'ultimo24', 'profe24', 'HOMBRE'),
+	('profe30', '000000S00030', '16412534G', '091241', 'ultimo25', 'profe25', 'HOMBRE'),
+	('profe31', '000000S00031', '16412634G', '091251', 'ultimo26', 'profe26', 'HOMBRE');
 
 -- -- CLASE
-INSERT INTO `CLASE` (`idClase`, `login`, `rol`, `reserva`) VALUES ('1', 'profe1', 'GRUPAL', NULL), ('2', 'profe4', 'GRUPAL', NULL), ('3', 'profe3', 'GRUPAL', NULL), ('4', 'profe1', 'PARTICULAR', NULL);
+INSERT INTO `CLASE` (`idClase`, `login`, `rol`, `reserva`)
+VALUES 
+	('1', 'profe1', 'GRUPAL', NULL),
+	('2', 'profe4', 'GRUPAL', NULL),
+	('3', 'profe3', 'GRUPAL', NULL);
 
 -- -- CLASE_GRUPAL
-INSERT INTO `CLASE_GRUPAL` (`idClase`, `maxAlumnos`, `descripcion`) VALUES ('1', '20', 'Clase orientada en mejora de saque.'), ('2', '20', 'Clase orientada en mejora de recepción.'), ('3', '20', 'Clase orientada en mejora de ataque.');
-
--- -- CLASE_PARTICULAR
-INSERT INTO `CLASE_PARTICULAR` (`idClase`, `deportista`) VALUES ('4', 'deportista1');
+INSERT INTO `CLASE_GRUPAL` (`idClase`, `maxAlumnos`, `descripcion`)
+VALUES 
+	('1', '20', 'Clase orientada en mejora de saque.'),
+	('2', '20', 'Clase orientada en mejora de recepción.'),
+	('3', '20', 'Clase orientada en mejora de ataque.');
 
 -- -- RESERVA
-INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`) VALUES 	(NULL , '2019-04-23 18:00', '1'), (NULL, '2019-04-23 18:00', '2'), (NULL, '2019-04-23 18:00', '3'), (NULL, '2019-04-23 18:00', '4'), (NULL, '2019-04-23 18:00', '5'),
-																(NULL , '2019-04-24 18:00', '1'), (NULL , '2019-04-24 18:00', '2'), (NULL , '2019-04-24 18:00', '3'), (NULL , '2019-04-24 18:00', '4'), (NULL , '2019-04-24 18:00', '5'),
-																(NULL , '2019-04-21 18:00', '1'), (NULL , '2019-11-17 20:00', '1'), (NULL , '2019-11-17 20:00', '2'), (NULL , '2019-11-17 20:00', '3'), (NULL , '2019-11-17 20:00', '4'),
-																(NULL , '2019-11-17 20:00', '5'), (NULL , '2019-11-21 18:00', '1'), (NULL , '2019-11-21 18:00', '2'), (NULL , '2019-11-21 18:00', '3'), (NULL , '2019-11-21 18:00', '4'),
-																(NULL , '2019-11-21 18:00', '5');
+INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`)
+VALUES
+	(NULL , '2019-04-23 18:00', '1'),
+	(NULL, '2019-04-23 18:00', '2'),
+	(NULL, '2019-04-23 18:00', '3'),
+	(NULL, '2019-04-23 18:00', '4'),
+	(NULL, '2019-04-23 18:00', '5'),
+	(NULL , '2019-04-24 18:00', '1'),
+	(NULL , '2019-04-24 18:00', '2'),
+	(NULL , '2019-04-24 18:00', '3'),
+	(NULL , '2019-04-24 18:00', '4'),
+	(NULL , '2019-04-24 18:00', '5'),
+	(NULL , '2019-04-21 18:00', '1'),
+	(NULL , '2019-11-17 20:00', '1'),
+	(NULL , '2019-11-17 20:00', '2'),
+	(NULL , '2019-11-17 20:00', '3'),
+	(NULL , '2019-11-17 20:00', '4'),
+	(NULL , '2019-11-17 20:00', '5'),
+	(NULL , '2019-11-21 18:00', '1'),
+	(NULL , '2019-11-21 18:00', '2'),
+	(NULL , '2019-11-21 18:00', '3'),
+	(NULL , '2019-11-21 18:00', '4'),
+	(NULL , '2019-11-21 18:00', '5');
 
 -- -- DEPORTISTA_HAS_CLASE_GRUPAL
-INSERT INTO `DEPORTISTA_HAS_CLASE_GRUPAL` (`idClase`, `login`) VALUES 	('1', 'aglopez2'), ('1', 'aglopez3'), ('1', 'aglopez4'), ('1', 'aglopez5'), ('1', 'aglopez6'),
-																		('2', 'anacletillo'), ('2', 'anacletillo1'), ('2', 'anacletillo2'), ('2', 'anacletillo3'), ('2', 'anacletillo4'),
-																		('2', 'lordvile'), ('2', '1lordvile'), ('2', '2lordvile'), ('2', '3lordvile'), ('2', '4lordvile'),
-																		('3', 'cuestaMucho'), ('3', 'cuestaMucho1'), ('3', 'cuestaMucho2'), ('3', 'cuestaMucho3'), ('1', 'deportista1'), ('2', 'deportista1');
+INSERT INTO `DEPORTISTA_HAS_CLASE_GRUPAL` (`idClase`, `login`)
+VALUES
+	('1', 'aglopez2'),
+	('1', 'aglopez3'),
+	('1', 'aglopez4'),
+	('1', 'aglopez5'),
+	('1', 'aglopez6'),
+	('2', 'anacletillo'),
+	('2', 'anacletillo1'),
+	('2', 'anacletillo2'),
+	('2', 'anacletillo3'),
+	('2', 'anacletillo4'),
+	('2', 'lordvile'),
+	('2', '1lordvile'),
+	('2', '2lordvile'),
+	('2', '3lordvile'),
+	('2', '4lordvile'),
+	('3', 'cuestaMucho'),
+	('3', 'cuestaMucho1'),
+	('3', 'cuestaMucho2'),
+	('3', 'cuestaMucho3');
 
 -- -- TABLA RESERVA_HAS_DEPORTISTA
-INSERT INTO `RESERVA_HAS_DEPORTISTA` (`idReserva`, `idDeportista`) VALUES 	('1', 'aglopez2'), ('3', 'aglopez2'), ('12', 'aglopez2'), ('13', 'aglopez2'), ('14', 'anacletillo'), ('15', 'anacletillo'), ('16', 'anacletillo'),
-																			('17', 'deportista1'), ('18', 'deportista1'), ('19', 'deportista1'), ('20', 'deportista1'), ('21', 'deportista1');
+INSERT INTO `RESERVA_HAS_DEPORTISTA` (`idReserva`, `idDeportista`)
+VALUES
+	('1', 'aglopez2'), 
+	('3', 'aglopez2'), 
+	('12', 'aglopez2'), 
+	('13', 'aglopez2'), 
+	('14', 'anacletillo'), 
+	('15', 'anacletillo'), 
+	('16', 'anacletillo'),
+	('17', 'deportista1'), 
+	('18', 'deportista1'), 
+	('19', 'deportista1'), 
+	('20', 'deportista1'), 
+	('21', 'deportista1');
 
 -- -- TABLA LIGA_REGULAR
-INSERT INTO `LIGA_REGULAR` (`idLiga`, `fechaInicio`, `fechaFin`, `categoria`, `nivel`, `idCampeonato`) VALUES ('1', '2019-11-15', '2020-01-15', 'MASCULINA', '1', '1');
+INSERT INTO `LIGA_REGULAR` (`idLiga`, `fechaInicio`, `fechaFin`, `categoria`, `nivel`, `idCampeonato`)
+VALUES
+	('1', '2019-11-15', '2020-01-15', 'MASCULINA', '1', '1');
 
 -- -- TABLA GRUPO
-INSERT INTO `GRUPO` (`idGrupo`,	`idLiga`) VALUES ('1', '1');
+INSERT INTO `GRUPO` (`idGrupo`,	`idLiga`)
+VALUES
+	('1', '1');
 
 -- -- TABLA PAREJA
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez2', 'anacletillo', '1', 'MASCULINA', '1', NULL, '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez3', 'anacletillo1', '1', 'MASCULINA', '1', NULL, '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez5', 'anacletillo3', '1', 'MASCULINA', '1', NULL, '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('cuestaMucho2', 'cuestaMucho3', '1', 'MASCULINA', '1', NULL, '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('8illantasDeCoche', '7illantasDeCoche', '1', 'MASCULINA', '1', NULL, '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('6illantasDeCoche', '5illantasDeCoche', '1', 'MASCULINA', '1', NULL, '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('deportista1', 'deportista2', '1', 'MASCULINA', '1', NULL, '0');
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES ('aglopez6', 'aglopez7', '1', 'MASCULINA', '1', NULL, '0');	
-INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`) VALUES 	('deportista10', 'deportista11', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista12', 'deportista13', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista14', 'deportista15', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista16', 'deportista17', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista18', 'deportista19', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista20', 'deportista21', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista22', 'deportista23', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista24', 'deportista25', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista26', 'deportista27', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista28', 'deportista29', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista30', 'deportista31', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista32', 'deportista33', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista34', 'deportista35', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista36', 'deportista37', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista38', 'deportista39', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista40', 'deportista41', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista42', 'deportista43', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista44', 'deportista45', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista46', 'deportista47', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista48', 'deportista49', '1', 'MASCULINA', '1', NULL, '0'),
-																											('deportista50', '4lordvile', '1', 'MASCULINA', '1', NULL, '0');
-
--- -- ENFRENTAMIENTO
-INSERT INTO `ENFRENTAMIENTO` (`idPartido`, `idReserva`, `ganador`) VALUES ('1', NULL, NULL);
-
--- -- PAREJA_HAS_ENFRENTAMIENTO
-INSERT INTO `PAREJA_HAS_ENFRENTAMIENTO` (`idPartido`, `pareja`, `puntos`) VALUES ('1', 'cuestaMucho2', NULL), ('1', 'deportista1', NULL); 																									
+INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`)
+VALUES
+	('aglopez2', 'anacletillo', '1', 'MASCULINA', '1', NULL, '0'),
+	('aglopez3', 'anacletillo1', '1', 'MASCULINA', '1', NULL, '0'),
+	('aglopez5', 'anacletillo3', '1', 'MASCULINA', '1', NULL, '0'),
+	('cuestaMucho2', 'cuestaMucho3', '1', 'MASCULINA', '1', NULL, '0'),
+	('8illantasDeCoche', '7illantasDeCoche', '1', 'MASCULINA', '1', NULL, '0'),
+	('6illantasDeCoche', '5illantasDeCoche', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista1', 'deportista2', '1', 'MASCULINA', '1', NULL, '0'),
+	('aglopez6', 'aglopez7', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista10', 'deportista11', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista12', 'deportista13', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista14', 'deportista15', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista16', 'deportista17', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista18', 'deportista19', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista20', 'deportista21', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista22', 'deportista23', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista24', 'deportista25', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista26', 'deportista27', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista28', 'deportista29', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista30', 'deportista31', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista32', 'deportista33', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista34', 'deportista35', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista36', 'deportista37', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista38', 'deportista39', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista40', 'deportista41', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista42', 'deportista43', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista44', 'deportista45', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista46', 'deportista47', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista48', 'deportista49', '1', 'MASCULINA', '1', NULL, '0'),
+	('deportista50', '4lordvile', '1', 'MASCULINA', '1', NULL, '0');
+																											
