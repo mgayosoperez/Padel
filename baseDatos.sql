@@ -405,17 +405,11 @@ VALUES
 	('deportista47', 'DEPORTISTA'),
 	('deportista48', 'DEPORTISTA'),
 	('profe1', 'ENTRENADOR'),
-	('profe2', 'ENTRENADOR'),
 	('profe3', 'ENTRENADOR'),
 	('profe4', 'ENTRENADOR'),
 	('profe5', 'ENTRENADOR'),
 	('profe6', 'ENTRENADOR'),
-	('profe7', 'ENTRENADOR'),
-	('profe8', 'ENTRENADOR'),
-	('profe9', 'ENTRENADOR'),
-	('profe10','ENTRENADOR'),
-	('profe11','ENTRENADOR'),
-	('profe12','ENTRENADOR');
+	('profe7', 'ENTRENADOR');
 
 
 -- -- ADMIN
@@ -528,24 +522,19 @@ VALUES
 INSERT INTO `ENTRENADOR` (`login`, `password`, `DNI`, `NSS`, `nombre`, `apellidos`, `sexo`)
 VALUES 
 	('profe1', '00000000001', '16472834D', '123456789', 'profe', 'guay', 'HOMBRE'),
-	('profe2', '00000000012', '16472834F', '987654321', 'profe', 'donde esta profe2?', 'HOMBRE'),
-	('profe3', '00000000023', '16472834H', '123456', 'profe', 'chulo', 'MUJER'),
-	('profe4', '00000000064', '16472834J', '9876054321', 'profe', 'perezoso', 'HOMBRE'),
-	('profe5', '0000000F005', '16472834A', '126789', 'profe', 'malvado', 'HOMBRE'),
-	('profe6', '000000S0006', '16410134G', '091001', 'ultimo1', 'profe1', 'HOMBRE'),
-	('profe7', '000000S0007', '16410234G', '091011', 'ultimo2', 'profe2', 'HOMBRE'),
-	('profe8', '000000S0008', '16410334G', '091021', 'ultimo3', 'profe3', 'HOMBRE'),
-	('profe9', '000000S0009', '16410434G', '091031', 'ultimo4', 'profe4', 'HOMBRE'),
-	('profe10', '000000S00010', '16410534G', '091041', 'ultimo5', 'profe5', 'HOMBRE'),
-	('profe11', '000000S00011', '16410634G', '091051', 'ultimo6', 'profe6', 'HOMBRE'),
-	('profe12', '000000S00012', '16410734G', '091061', 'ultimo7', 'profe7', 'HOMBRE');
+	('profe3', '00000000012', '16472834F', '987654321', 'profe', 'donde esta profe2?', 'HOMBRE'),
+	('profe4', '00000000023', '16472834H', '123456', 'profe', 'chulo', 'MUJER'),
+	('profe5', '00000000064', '16472834J', '9876054321', 'profe', 'perezoso', 'HOMBRE'),
+	('profe6', '0000000F005', '16472834A', '126789', 'profe', 'malvado', 'HOMBRE'),
+	('profe7', '000000S0006', '16410134G', '091001', 'ultimo1', 'profe1', 'HOMBRE');
 
 -- -- CLASE
 INSERT INTO `CLASE` (`idClase`, `login`, `rol`, `reserva`)
 VALUES 
 	('1', 'profe1', 'GRUPAL', NULL),
 	('2', 'profe4', 'GRUPAL', NULL),
-	('3', 'profe3', 'GRUPAL', NULL);
+	('3', 'profe3', 'GRUPAL', NULL),
+	('4', 'profe1', 'PARTICULAR', NULL);
 
 -- -- CLASE_GRUPAL
 INSERT INTO `CLASE_GRUPAL` (`idClase`, `maxAlumnos`, `descripcion`)
@@ -555,9 +544,9 @@ VALUES
 	('3', '20', 'Clase orientada en mejora de ataque.');
 
 -- -- CLASE_PARTICULAR
-INSERT INTO `CLASE_PARTICULAR` (`idClase`, `deportista`) 
+INSERT INTO `CLASE_PARTICULAR` (`idClase`, `deportista`, `aceptar`) 
 VALUES 
-	('4', 'deportista1');
+	('4', 'deportista1', NULL);
 
 -- -- RESERVA
 INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`)
