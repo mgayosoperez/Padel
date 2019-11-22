@@ -429,7 +429,7 @@ VALUES
 -- -- CAMPEONATO
 INSERT INTO `CAMPEONATO` (`idCampeonato`, `nombre`, `fechaInicio`, `fechaFin`)
 VALUES
-	(NULL, 'Regional', '2019-11-05', '2019-11-22'),
+	(NULL, 'Regional', '2019-11-05', '2019-11-23'),
 	(NULL, 'Estatal', '2020-11-05', '2020-11-12');
 
 -- -- DEPORTISTA
@@ -666,3 +666,13 @@ VALUES
 	('1', 'cuestaMucho2', NULL), 
 	('1', 'deportista1', NULL); 																									
 
+INSERT INTO `PARTIDO_PROMOCIONADO` (`idPromocionado`, `fecha`, `idReserva`)
+VALUES 
+	('1', '2019-11-30 18:00'),
+	('2', '2019-12-01 18:00'),
+	('3', '2019-12-02 18:00');
+
+INSERT INTO `PROMOCIONADO_HAS_DEPORTISTA` (`idPromocionado`, `deportista`)
+VALUES
+	('1', 'aglopez2'),
+	('1', 'deportista1');
