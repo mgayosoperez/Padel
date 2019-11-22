@@ -86,6 +86,12 @@ class PartidoPromocionadoMapper{
 
   }
 
+  public function desinscribirse($login, $idPromocionado){
+    $stmt = $this->db->prepare("DELETE FROM PROMOCIONADO_HAS_DEPORTISTA WHERE deportista = ? AND idPromocionado = ?");
+
+    $stmt->execute(array($login, $idPromocionado));
+  }
+
   public function numDeportistas($idPromocionado){
     $stmt = $this->db->prepare("SELECT count(deportista) FROM PROMOCIONADO_HAS_DEPORTISTA WHERE idPromocionado = ?");
 

@@ -181,6 +181,17 @@ class DeportistaController extends BaseController {
 
 	}
 
+	public function desinscribirsePromocionado(){
+		if (isset($_GET["idPromocionado"])){
+
+			$this->PartidoPromocionadoMapper->desinscribirse($_SESSION["currentuser"],$_GET["idPromocionado"]);
+				//eliminar la reserva hasta que se vuelva a inscribir 4
+			}
+			$this->view->redirect("deportista", "showPromocionados");
+	}
+
+
+
 	public function showPromocionados(){
 		
 		$datos = $this->PartidoPromocionadoMapper->verDisponibles($_SESSION["currentuser"]);
@@ -197,8 +208,12 @@ class DeportistaController extends BaseController {
 				}
 			}
 		}
+		$this->view->setVariable("pInscritos",$inscritos,true);
+
 		$this->view->setVariable("pPromocionado",$datos,true);
 		$this->view->render("deportistas", "partidoPromocionado");
 	}
+
+
 
 }
