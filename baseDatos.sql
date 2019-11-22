@@ -668,9 +668,9 @@ VALUES
 
 INSERT INTO `PARTIDO_PROMOCIONADO` (`idPromocionado`, `fecha`, `idReserva`)
 VALUES 
-	('1', '2019-11-30 18:00'),
-	('2', '2019-12-01 18:00'),
-	('3', '2019-12-02 18:00');
+	('1', '2019-11-30 18:00',NULL),
+	('2', '2019-12-01 18:00',NULL),
+	('3', '2019-12-02 18:00',NULL);
 
 INSERT INTO `PROMOCIONADO_HAS_DEPORTISTA` (`idPromocionado`, `deportista`)
 VALUES
