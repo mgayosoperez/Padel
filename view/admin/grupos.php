@@ -36,6 +36,9 @@ $parejas = $view->getVariable("grupos");
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=entrenador&amp;action=index">Entrenadores</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?controller=admin&amp;action=verPistas">Pistas</a>
+      </li>
   </div>
   <form class="form-inline">
     <div class="mr-5 text-light"><?= $user?></div>

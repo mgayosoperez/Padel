@@ -12,6 +12,8 @@ require_once(__DIR__."/../model/Pareja/Pareja.php");
 require_once(__DIR__."/../model/LigaRegular/LigaRegularMapper.php");
 require_once(__DIR__."/../model/LigaRegular/LigaRegular.php");
 
+require_once(__DIR__."/../model/Pista/PistaMapper.php");
+
 require_once(__DIR__."/../model/Grupo/GrupoMapper.php");
 
 require_once(__DIR__."/../model/Enfrentamiento/EnfrentamientoMapper.php");
@@ -31,6 +33,8 @@ class AdminController extends BaseController {
 		$this->GrupoMapper = new GrupoMapper();
 		$this->CampeonatoMapper = new CampeonatoMapper();
 		$this->PartidoPromocionadoMapper = new PartidoPromocionadoMapper();
+		$this->PistaMapper = new PistaMapper();
+		
 	}
 
 	public function index(){
@@ -241,6 +245,11 @@ class AdminController extends BaseController {
 					}
 	}
 
+	public function verPistas(){
+		$datos = $this->PistaMapper->showPistas();
+		$this->view->setVariable("datos",$datos,true);	
+		$this->view->render("admin", "showPistas");
+	}
 
 
 	public function logout(){

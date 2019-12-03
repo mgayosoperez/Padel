@@ -1,5 +1,7 @@
 <?php
-require_once(__DIR__."/../core/PDOConnection.php");
+require_once(__DIR__."/../../core/PDOConnection.php");
+
+require_once(__DIR__."/../../model/Pista/Pista.php");
 
 class PistaMapper{
 
@@ -13,13 +15,6 @@ class PistaMapper{
     $sql = $this->db->prepare("INSERT INTO Pista(idPista, estado, superficie)
                                 VALUES (?,?,?)");
     $sql->execute(array($pista->getIdPista(), $pista->getEstado(), $pista->getSuperficie()));
-    
-    if(!$this->mysqli->query($sql)){
-    	return 'Error en la inserción';
-    }				
-    else{
-    	return 'Inserción realizada con éxito';
-    }
 
   }
 
@@ -28,13 +23,24 @@ class PistaMapper{
 
     $sql->execute(array($pista->getIdPista()));
 
-    if ($this->mysqli->query($sql)) {
-            
-        return "Borrado realizado con exito";
-        
-    } else {
-        return "Error en el borrado";
-    }
   }
+
+  public function showPistas(){
+
+    $sql = $this->db->prepare("SELECT * FROM PISTA");
+
+    $sql->execute();
+
+    $pista = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+    $toRet = array();
+
+    foreach ($pista as $key) {
+
+      array_push($toRet, new Pista($key["idPista"], $key["estado"], $key["superficie"]));
+    }
+    return $toRet;
+  }
+
 }
  ?>
