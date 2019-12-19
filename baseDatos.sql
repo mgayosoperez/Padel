@@ -178,11 +178,30 @@ CREATE OR REPLACE TABLE `LIGA_REGULAR` (
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+-- -- TABLA PLAYOFFS
+CREATE OR REPLACE TABLE `PLAYOFFS` (
+
+	`idPlayoffs`	int NOT NULL AUTO_INCREMENT,
+	`fechaInicio`	date NOT NULL,
+	`fechaFin`		date NOT NULL,
+	`categoria`		enum('FEMENINA', 'MIXTA', 'MASCULINA') COLLATE latin1_spanish_ci NOT NULL,
+	`nivel`			enum('1', '2', '3') COLLATE latin1_spanish_ci NOT NULL,
+	`idCampeonato`	int,
+	
+
+		-- CLAVES PRIMARIAS
+		CONSTRAINT PK_liga_regular PRIMARY KEY (`idLiga`, `idCampeonato`),
+		-- CLAVES FORANEAS
+		CONSTRAINT FK_campeonato_liga_regular FOREIGN KEY (`idCampeonato`) REFERENCES `CAMPEONATO` (`idCampeonato`) ON DELETE CASCADE
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
 -- -- TABLA GRUPO
 CREATE OR REPLACE TABLE `GRUPO` (
 
 	`idGrupo`		int NOT NULL AUTO_INCREMENT,
 	`idLiga`		int,
+	`idPlayoffs`	int,
 	-- `categoria`		enum('FEMENINA', 'MIXTA', 'MASCULINA') COLLATE latin1_spanish_ci NOT NULL,
 	-- `nivel`			enum('1', '2', '3') COLLATE latin1_spanish_ci NOT NULL,
 
@@ -190,7 +209,8 @@ CREATE OR REPLACE TABLE `GRUPO` (
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_grupo PRIMARY KEY (`idGrupo`,`idLiga`),
 		-- CLAVES FORANEAS
-		CONSTRAINT FK_liga_grupo FOREIGN KEY (`idLiga`) REFERENCES `LIGA_REGULAR` (`idLiga`) ON DELETE CASCADE
+		CONSTRAINT FK_liga_grupo FOREIGN KEY (`idLiga`) REFERENCES `LIGA_REGULAR` (`idLiga`) ON DELETE CASCADE,
+		CONSTRAINT FK_playoffs 	FOREIGN KEY (`idPlayoffs`) REFERENCES `PLAYOFFS` (`idPlayoffs`) ON DELETE CASCADE
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
@@ -315,7 +335,21 @@ CREATE OR REPLACE TABLE `PROMOCIONADO_HAS_DEPORTISTA` (
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+-- -- TABLA NOTIFICACIONES	
+CREATE OR REPLACE TABLE `NOTIFICACIONES` (
 
+	`idNotificacion`	int NOT NULL AUTO_INCREMENT,
+	`emisor`			varchar(30) COLLATE latin1_spanish_ci NOT NULL,
+	`destinatario`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
+	`mensaje`			text COLLATE latin1_spanish_ci NOT NULL,
+
+	-- CLAVES PRIMARIAS
+		CONSTRAINT PK_notificacion PRIMARY KEY (`idNotificacion`),
+		-- CLAVES FORANEAS
+		CONSTRAINT FK_emisor_notificacion FOREIGN KEY (`emisor`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE,
+		CONSTRAINT FK_destinatario_notificacion FOREIGN KEY (`destinatario`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 -- -- INSERTS
 
 -- -- USUARIOS
