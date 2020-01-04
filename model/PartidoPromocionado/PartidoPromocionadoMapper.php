@@ -3,6 +3,12 @@ require_once(__DIR__."/../../core/PDOConnection.php");
 
 require_once(__DIR__."/../../model/PartidoPromocionado/PartidoPromocionado.php");
 
+require_once(__DIR__."/../../model/Reserva/Reserva.php");
+require_once(__DIR__."/../../model/Reserva/ReservaMapper.php");
+
+require_once(__DIR__."/../../model/Pista/Pista.php");
+require_once(__DIR__."/../../model/Pista/PistaMapper.php");
+
 
 class PartidoPromocionadoMapper{
 
@@ -10,6 +16,8 @@ class PartidoPromocionadoMapper{
 
   function __construct(){
     $this->db = PDOConnection::getInstance();
+    $this->ReservaMapper = new ReservaMapper();
+    $this->PistaMapper = new PistaMapper();
   }
 
   public function verDisponiblesAdmin(){
@@ -30,7 +38,7 @@ class PartidoPromocionadoMapper{
   }
 
   public function verDisponibles($login){
-      $stmt = $this->db->prepare("SELECT * FROM partido_promocionado WHERE partido_promocionado.fecha > NOW()");
+      $stmt = $this->db->prepare("SELECT * FROM partido_promocionado WHERE partido_promocionado.fecha > NOW() AND partido_promocionado.idReserva IS NULL");
 
     $stmt->execute();
     
@@ -48,7 +56,7 @@ class PartidoPromocionadoMapper{
 
     $stmt = $this->db->prepare("SELECT * FROM partido_promocionado, promocionado_has_deportista WHERE
                                 partido_promocionado.idPromocionado = promocionado_has_deportista.idPromocionado AND
-                                partido_promocionado.fecha > ? AND promocionado_has_deportista.deportista = ?");
+                                partido_promocionado.fecha > ? AND promocionado_has_deportista.deportista = ? ");
     
     $fecha = date("Y-m-d H:i" ,time());
 
@@ -102,13 +110,24 @@ class PartidoPromocionadoMapper{
   }
 
   //LA PISTA VA A MACHETE, HAY QUE CAMBIARLO
-  public function crearReserva(PartidoPromocionado $partido){
+  public function crearReserva($partido){
 
-    $id = $partido->getIdPromocionado();
-    $fecha = $partido->getFecha();
-                                                                          //MACHETE!!!!!!!
-    $stmt = $this->db->prepare("INSERT INTO RESERVA (fecha, idPista) VALUES (?,'1')");
-    $stmt->execute(array($fecha));
+    $id = $partido["idPromocionado"];
+    $fecha = $partido["fecha"];
+    $pistas = $this->PistaMapper->showPistas();
+    $numeroPistas=strval(sizeof($pistas));
+    $num=0;
+    while($this->ReservaMapper->pistasOcupadasMomento($fecha,$pistas[$num]->getIdPista())){
+      if($num==$numeroPistas){
+        $num=1;
+      }else{
+        $num=$num+1;
+      }   
+    }
+    $numPista=$pistas[$num]->getIdPista();
+
+    $stmt = $this->db->prepare("INSERT INTO RESERVA (fecha, idPista) VALUES (?,?)");
+    $stmt->execute(array($fecha, $numPista));
 
     $auxiliar =  $this->db->lastInsertId();
 

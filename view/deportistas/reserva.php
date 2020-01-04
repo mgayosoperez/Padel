@@ -1,6 +1,7 @@
 <?php
 //file: view/users/register.php
 require_once(__DIR__."/../../model/Reserva/ReservaMapper.php");
+require_once(__DIR__."/../../model/Pista/PistaMapper.php");
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
@@ -13,35 +14,57 @@ $fieso = "Y-m-d ";
 $fecha = date($fies ,time());
 $Dfecha = explode(' ', $fecha);
 $HoraActual =$Dfecha[3];
+$control=false;
+if($HoraActual>20){
+  $control=true;
+}
 
 $fechas = array();
 $fechato = array();
+if($control){
+  for($z = 1; $z < 8; $z++){
+    $fechatito = date($fieso ,time()+(86400*$z));
 
-for($z = 0; $z < 7; $z++){
+    array_push($fechato, $fechatito);
+
+    $fecha=date($fies ,time()+((86400*$z)));
+    $Dfecha = explode(' ', $fecha);
+    array_push($fechas, $Dfecha[0]);
+  }
+}else{
+  for($z = 0; $z < 7; $z++){
   $fechatito = date($fieso ,time()+(86400*$z));
 
   array_push($fechato, $fechatito);
 
-  $fecha=date($fies ,time()+(86400*$z));
+  $fecha=date($fies ,time()+((86400*$z)));
   $Dfecha = explode(' ', $fecha);
   array_push($fechas, $Dfecha[0]);
 }
+
+}
+
+
 function horaOcupada($fecha){
   $ReservaMapper = new ReservaMapper();
-  if($ReservaMapper->pistasOcupadas($fecha)>=$ReservaMapper->numeroPistas()){
+  $PistaMapper = new PistaMapper();
+  if($ReservaMapper->pistasOcupadas($fecha)>=$PistaMapper->numeroPistas()){
       echo  "class='bg-dark'";
   }
 }
 
 
 function fondoHora(int $horis){
-  $fies = "d M Y H i";
-  $fecha = date($fies ,time());
-  $Dfecha = explode(' ', $fecha);
-  $HoraActual =$Dfecha[3];
-    if($horis<=$HoraActual){
-      echo  "class='bg-dark'";
+    $fies = "d M Y H i";
+    $fecha = date($fies ,time());
+    $Dfecha = explode(' ', $fecha);
+    $HoraActual =$Dfecha[3];
+    if($HoraActual<20){
+      if($horis<=$HoraActual){
+        echo  "class='bg-dark'";
+      }
   }
+
 }
 ?>
 
@@ -183,6 +206,7 @@ document.getElementById("th1").value="asdasdas";
 for(z=1;z<7;z++){
   document.getElementById("th"+z).value=dd+z-1;
 }
+
   function toinput(s, i){
     if(!document.getElementById(i).hasAttribute("class")){
       for(z = 1; z < 50; z++){

@@ -21,6 +21,9 @@ require_once(__DIR__."/../controller/BaseController.php");
 require_once(__DIR__."/../model/Entrenador/EntrenadorMapper.php");
 require_once(__DIR__."/../model/Admin/AdminMapper.php");
 
+require_once(__DIR__."/../model/Pista/PistaMapper.php");
+require_once(__DIR__."/../model/Pista/Pista.php");
+
 class DeportistaController extends BaseController {
 
 
@@ -28,6 +31,7 @@ class DeportistaController extends BaseController {
 
 	public function __construct() {
 		parent::__construct();
+		$this->PistaMapper = new PistaMapper();
 		$this->UsuarioMapper = new UsuarioMapper();
 		$this->DeportistaMapper = new DeportistaMapper();
 		$this->ReservaMapper = new ReservaMapper();
@@ -166,23 +170,33 @@ class DeportistaController extends BaseController {
 
 	public function inscribirsePromocionado(){
 		if (isset($_GET["idPromocionado"])){
-
+			$numeroPistas = $this->PistaMapper->numeroPistas(); 
 			$numDeportistas = $this->PartidoPromocionadoMapper->numDeportistas($_GET["idPromocionado"]);
-
+			$fecha = $this->PartidoPromocionadoMapper->findByIdPromocionado($_GET["idPromocionado"])["fecha"];
 			if($numDeportistas >= 4){
 				return "No hay plazas";
 			}else{
-
-				$this->PartidoPromocionadoMapper->inscribirse($_SESSION["currentuser"],$_GET["idPromocionado"]);
-				// aqui hacer la comprobacion de si hay 4 hacer reservas
+				if($this->ReservaMapper->pistasOcupadas($fecha)<$numeroPistas){
+					$this->PartidoPromocionadoMapper->inscribirse($_SESSION["currentuser"],$_GET["idPromocionado"]);
+					if($this->PartidoPromocionadoMapper->numDeportistas($_GET["idPromocionado"])==4){
+						$this->PartidoPromocionadoMapper->crearReserva($this->PartidoPromocionadoMapper->findByIdPromocionado($_GET["idPromocionado"]));
+					}
+					$this->view->redirect("deportista", "showPromocionados");
+				}else{
+					$this->PartidoPromocionadoMapper->delete($_GET["idPromocionado"]);
+					$this->view->redirect("deportista", "showPromocionados");
+				}
 			}
-			$this->view->redirect("deportista", "showPromocionados");
+			
 		}
 
 	}
 
 	public function desinscribirsePromocionado(){
 		if (isset($_GET["idPromocionado"])){
+			if(!is_null($this->PartidoPromocionadoMapper->findByIdPromocionado($_GET["idPromocionado"])["idReserva"])){
+				$this->ReservaMapper->delete($this->PartidoPromocionadoMapper->findByIdPromocionado($_GET["idPromocionado"])["idReserva"]);
+			}
 
 			$this->PartidoPromocionadoMapper->desinscribirse($_SESSION["currentuser"],$_GET["idPromocionado"]);
 				//eliminar la reserva hasta que se vuelva a inscribir 4

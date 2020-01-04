@@ -42,5 +42,16 @@ class PistaMapper{
     return $toRet;
   }
 
+    public function numeroPistas(){
+    $sql = $this->db->prepare("SELECT count(idPista) FROM PISTA");
+    $sql->execute();
+    $toret="";
+    $reservasFecha = $sql->fetch(PDO::FETCH_ASSOC);
+    foreach ($reservasFecha as $key) {
+      $toret= $key;
+    }
+    return $toret;
+  }  
+
 }
  ?>
