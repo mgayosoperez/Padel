@@ -12,16 +12,16 @@ class PistaMapper{
   }
 
   public function add(Pista $pista){
-    $sql = $this->db->prepare("INSERT INTO Pista(idPista, estado, superficie)
-                                VALUES (?,?,?)");
-    $sql->execute(array($pista->getIdPista(), $pista->getEstado(), $pista->getSuperficie()));
+    $sql = $this->db->prepare("INSERT INTO Pista(estado, superficie)
+                                VALUES (?,?)");
+    $sql->execute(array($pista->getEstado(), $pista->getSuperficie()));
 
   }
 
-  public function delete(Pista $pista){
+  public function delete($numPista){
     $sql = $this->db->prepare("DELETE FROM Pista WHERE idPista = ?");
 
-    $sql->execute(array($pista->getIdPista()));
+    $sql->execute(array($numPista));
 
   }
 

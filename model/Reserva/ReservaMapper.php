@@ -100,14 +100,25 @@ class ReservaMapper{
 
  	}
 
-  public function pistasOcupadasMomento($fecha,$pista){
-    $sql = $this->db->prepare("SELECT count(fecha) FROM RESERVA WHERE fecha = ? AND idPista = ?");
-    $sql->execute(array($fecha,$pista));
-    if ($sql->fetchColumn() > 0) {
-      return true;
-    }
+  	public function pistasOcupadasMomento($fecha,$pista){
+		$sql = $this->db->prepare("SELECT count(fecha) FROM RESERVA WHERE fecha = ? AND idPista = ?");
+		$sql->execute(array($fecha,$pista));
+		if ($sql->fetchColumn() > 0) {
+			return true;
+		}
 
-  }
+	}
+	public function numeroPistas(){
+		$sql = $this->db->prepare("SELECT count(idPista) FROM PISTA");
+		$sql->execute();
+		$toret="";
+ 		$reservasFecha = $sql->fetch(PDO::FETCH_ASSOC);
+		foreach ($reservasFecha as $key) {
+			$toret= $key;
+		}
+ 		return $toret;
+	}  
+
 
 
 

@@ -28,7 +28,8 @@ class ReservaController extends BaseController {
 
 	public function addReserva(){
 		if(isset($_POST["fecha"])){
-			if($this->ReservaMapper->numReserva($_SESSION["currentuser"])<5 && $this->ReservaMapper->pistasOcupadas($_POST["fecha"])<5){
+			$numeroPistas=strval($this->ReservaMapper->numeroPistas());
+			if($this->ReservaMapper->numReserva($_SESSION["currentuser"])<5 && $this->ReservaMapper->pistasOcupadas($_POST["fecha"])<$numeroPistas){
 				//crear metodo en PistaMapper para ver las pistas libres
 				$reserva = new Reserva();
 

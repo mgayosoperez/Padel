@@ -28,7 +28,7 @@ for($z = 0; $z < 7; $z++){
 }
 function horaOcupada($fecha){
   $ReservaMapper = new ReservaMapper();
-  if($ReservaMapper->pistasOcupadas($fecha)>=5){
+  if($ReservaMapper->pistasOcupadas($fecha)>=$ReservaMapper->numeroPistas()){
       echo  "class='bg-dark'";
   }
 }

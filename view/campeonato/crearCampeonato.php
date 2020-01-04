@@ -4,7 +4,6 @@
 require_once(__DIR__."/../../core/ViewManager.php");
 
 $view = ViewManager::getInstance();
-$view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
 $view->setVariable("title", "index");
