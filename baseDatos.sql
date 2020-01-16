@@ -346,8 +346,8 @@ CREATE OR REPLACE TABLE `NOTIFICACIONES` (
 	-- CLAVES PRIMARIAS
 		CONSTRAINT PK_notificacion PRIMARY KEY (`idNotificacion`),
 		-- CLAVES FORANEAS
-		CONSTRAINT FK_emisor_notificacion FOREIGN KEY (`emisor`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE,
-		CONSTRAINT FK_destinatario_notificacion FOREIGN KEY (`destinatario`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE
+		CONSTRAINT FK_emisor_notificacion FOREIGN KEY (`emisor`) REFERENCES `USUARIO` (`login`) ON DELETE CASCADE,
+		CONSTRAINT FK_destinatario_notificacion FOREIGN KEY (`destinatario`) REFERENCES `USUARIO` (`login`) ON DELETE CASCADE
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 -- -- INSERTS
