@@ -1,13 +1,10 @@
 <?php
-//file: view/users/register.php
-
 require_once(__DIR__."/../../core/ViewManager.php");
-require_once(__DIR__."/../../model/Reserva/Reserva.php");
-$view = ViewManager::getInstance();
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
-$view->setVariable("title", "index");
+$idFactura = $view->getVariable("idFactura");
+$importe = $view->getVariable("importe");
 ?>
 
 
@@ -46,32 +43,36 @@ $view->setVariable("title", "index");
     <a  href="index.php?controller=deportista&amp;action=logout"><img src="icon/out.png" height="27" width="27"></a>
   </form>
 </nav>
-
 <div class="container">
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="icon/p1.jpg" alt="First slide">
+        <div class="row justify-content-center align-items-center" style="height:100vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                      <h1 class="text-light">Importe: <?= $importe ?> €</h1>
+                      <h2 style="font-size:13px;"class="text-light">Your payment is secure. Your card details will not be shared with sellers.</h2>
+  <form class="" action="index.php?controller=deportista&amp;action=pagar" method="post">
+    <div class="form-group">
+      <input type="text" class="form-control" name="idFactura"  value="<?= $idFactura?>" readonly>
     </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/p2.jpg" alt="Second slide">
+    <div class="form-group">
+      <input type="text" class="form-control" name="card" placeholder="Card Number">
     </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/bola_red.jpg" alt="Third slide">
+    <div class="form-group">
+      <input type="text" class="form-control" name="date" placeholder="Expiration date">
     </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+    <div class="form-group">
+      <input type="text" class="form-control" name="code" placeholder="Security code">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" name="name" placeholder="First name">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" name="lastname" placeholder="Last name">
+    </div>
+    <input type="submit" class="btn btn-yagami" value="Pagar"></input>
+  </form>
+</div>
+</div>
+</div>
 </div>
 </div>
