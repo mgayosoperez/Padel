@@ -7,7 +7,7 @@ require_once(__DIR__."/../model/Campeonato/Campeonato.php");
 require_once(__DIR__."/../model/Pareja/ParejaMapper.php");
 require_once(__DIR__."/../model/Pareja/Pareja.php");
 require_once(__DIR__."/../model/Deportista/DeportistaMapper.php");
-
+require_once(__DIR__."/../model/LigaRegular/LigaRegularMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
 
@@ -18,6 +18,7 @@ class CampeonatoController extends BaseController {
 
 	public function __construct() {
 		parent::__construct();
+		$this->LigaRegularMapper = new LigaRegularMapper();
 		$this->DeportistaMapper = new DeportistaMapper();
 		$this->ParejaMapper = new ParejaMapper();
 
@@ -83,7 +84,24 @@ class CampeonatoController extends BaseController {
 		$this->view->render("campeonato", "registro");
 	}
 
+	public function verLiga(){
+		$idC = $_GET["idCampeonato"];
+		$ligas = $this->LigaRegularMapper->getLigaDeUnCampeonato($idC);
+		$ligasConAlgo = array();
+		foreach ($ligas as $key => $value) {
+				array_push($ligasConAlgo, $value["idLiga"]);
+		}
+		$this->view->setVariable("ligas", $ligasConAlgo, true);
+		$this->view->render("campeonato", "showLigasRegularesDeportista");
+	}
 
+	public function verPlayoffs(){
+		$idC=$_GET["idCampeonato"];
+
+		$this->view->setVariable("idC",$idC,true);
+		
+		$this->view->render("deportistas", "showPlayOffs");
+	}
 
 
 }

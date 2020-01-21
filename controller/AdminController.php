@@ -9,6 +9,8 @@ require_once(__DIR__."/../model/PartidoPromocionado/PartidoPromocionado.php");
 require_once(__DIR__."/../model/Pareja/ParejaMapper.php");
 require_once(__DIR__."/../model/Pareja/Pareja.php");
 
+require_once(__DIR__."/../model/PlayOffs/PlayOffsMapper.php");
+
 require_once(__DIR__."/../model/LigaRegular/LigaRegularMapper.php");
 require_once(__DIR__."/../model/LigaRegular/LigaRegular.php");
 
@@ -28,17 +30,16 @@ class AdminController extends BaseController {
 
 	public function __construct() {
 		parent::__construct();
+		$this->PlayOffsMapper = new PlayOffsMapper();
 		$this->ParejaMapper = new ParejaMapper();
 		$this->LigaRegularMapper = new LigaRegularMapper();
 		$this->GrupoMapper = new GrupoMapper();
 		$this->CampeonatoMapper = new CampeonatoMapper();
 		$this->PartidoPromocionadoMapper = new PartidoPromocionadoMapper();
 		$this->PistaMapper = new PistaMapper();
-		
 	}
 
 	public function index(){
-
 		$this->view->render("admin", "index");			
 	}
 	public function partidoPromocionado(){
@@ -64,7 +65,7 @@ class AdminController extends BaseController {
 	}
 
 	public function campeonatos(){
-		$campeonato = $this->CampeonatoMapper->campeonatoActivo();
+		$campeonato = $this->CampeonatoMapper->getAllCapeonatos();
 		$this->view->setVariable("campeonato", $campeonato, true);
 		$this->view->render("campeonato", "showAllAdmin");
 	}
@@ -87,50 +88,6 @@ class AdminController extends BaseController {
 		$this->view->redirect("admin", "campeonatos"); 
 	}
 
-	public function entrenadores(){
-
-	}
-
-	public function generarEnfretamientos(){
-		$datos=$this->ParejaMapper->showAll($_GET["idCampeonato"]);
-		$this->view->setVariable("grupos", $datos, true);
-		foreach ($datos as $key => $value) {
-			foreach ($datos as $keya => $valuea) {
-				if($valuea["grupo"]==$value["grupo"]&&$value["capitan"]!=$valuea["capitan"]){
-					$clave=$this->EnfrentamientoMapper->add();
-					$this->EnfrentamientoMapper->addPar($value["capitan"],$clave);
-					$this->EnfrentamientoMapper->addPar($valuea["capitan"],$clave);
-				}
-			}
-		}
-	}
-
-	public function tablaEnfrentamientos(){
-		$ultimoGrupo= $this->ParejaMapper->ultimoGrupo($_GET["idCampeonato"]);
-		$numGrupos= $this->ParejaMapper->numGrupos($_GET["idCampeonato"])-1;
-		$datos=$this->ParejaMapper->showAll($_GET["idCampeonato"]);
-		$arraydatos = array();
-		echo $ultimoGrupo;
-		echo "    ad     a   a";
-		echo $numGrupos;
-		for ($i=($ultimoGrupo-$numGrupos); $i <= $ultimoGrupo; ++$i){
-			echo($i);
-
-			$datosg=array();
-			foreach ($datos as $key => $value) {
-				if($value["grupo"]==$i){
-					$pareja = new Pareja($value["capitan"],$value["pareja"],$value["idCampeonato"],$value["categoria"],$value["nivel"],$value["grupo"],$value["puntos"]);
-					array_push($datosg, $pareja);
-				}
-			}
-			array_push($arraydatos, $datosg);
-
-			
-		}
-		$this->view->setVariable("arraydatos", $arraydatos, true);
-		$this->view->render("admin","grupos");
-
-	}
 
 	public function generarLigaRegular(){
 		for ($i=0; $i <5 ; $i++) { 
@@ -168,6 +125,47 @@ class AdminController extends BaseController {
 		$toret = date($fieso ,$mill);
 		return $toret;
 
+	}
+
+	public function gestionarLigas(){
+		$idC = $_GET["idCampeonato"];
+		$ligas = $this->LigaRegularMapper->getLigaDeUnCampeonato($idC);
+		$ligasConAlgo = array();
+		foreach ($ligas as $key => $value) {
+				array_push($ligasConAlgo, $value["idLiga"]);
+		}
+		$this->view->setVariable("ligas", $ligasConAlgo, true);
+		$this->view->render("campeonato", "showLigasRegulares");
+	}
+
+	public function parejaVictoria(){
+		$idC = $_GET["idCampeonato"];
+		$capitan = $_GET["Capitan"];
+		$puntos = $_GET["Puntos"];
+		$total = $puntos+3;
+		$this->ParejaMapper->añadirPuntos($capitan,$idC,$total);
+		$ligas = $this->LigaRegularMapper->getLigaDeUnCampeonato($idC);
+		$ligasConAlgo = array();		
+		foreach ($ligas as $key => $value) {
+				array_push($ligasConAlgo, $value["idLiga"]);
+		}
+		$this->view->setVariable("ligas", $ligasConAlgo, true);
+		$this->view->render("campeonato", "showLigasRegulares");
+	}
+
+	public function parejaEmpate(){
+		$idC = $_GET["idCampeonato"];
+		$capitan = $_GET["Capitan"];
+		$puntos = $_GET["Puntos"];
+		$total = $puntos+1;
+		$this->ParejaMapper->añadirPuntos($capitan,$idC,$total);
+		$ligas = $this->LigaRegularMapper->getLigaDeUnCampeonato($idC);
+		$ligasConAlgo = array();
+		foreach ($ligas as $key => $value) {
+				array_push($ligasConAlgo, $value["idLiga"]);
+		}
+		$this->view->setVariable("ligas", $ligasConAlgo, true);
+		$this->view->render("campeonato", "showLigasRegulares");
 	}
 
 	public function lesGrupes($nivel,$categoria,$idCampeonato,$fechaFin){
@@ -243,6 +241,40 @@ class AdminController extends BaseController {
 					}else{
 						
 					}
+	}
+
+	public function generarPlayOffs() {
+		$idC=$_GET["idCampeonato"];
+		$this->view->setVariable("idC",$idC,true);
+		if(!$this->PlayOffsMapper->existe($idC)){
+			$ligas = $this->LigaRegularMapper->getLigaDeUnCampeonato($idC);
+			foreach ($ligas as $key => $value){
+
+				$grupos = $this->GrupoMapper->getGruposLiga($value["idLiga"]);
+				$liga =	$this->LigaRegularMapper->getLiga($value["idLiga"]);
+				$fechaInicioPlayOffs = $liga[0]["fechaFin"];
+				$fechaFinPLayOffs = $this->cuatroMeses($fechaInicioPlayOffs);
+				$categoriaPlayOffs = $liga[0]["categoria"];
+				$nivelPlayOffs = $liga[0]["nivel"];
+				foreach ($grupos as $ke => $valu) {
+
+					$idPlayOff = $this->PlayOffsMapper->add($fechaInicioPlayOffs, $fechaFinPLayOffs, $categoriaPlayOffs, $nivelPlayOffs, $idC);
+					$this->GrupoMapper->update($valu["idGrupo"],$idPlayOff);
+					$parejas = $this->ParejaMapper->cogerOchoParejas($idC,$valu["idGrupo"]);
+					foreach ($parejas as $k => $val) {
+
+						$this->PlayOffsMapper->añadirParejas($val["capitan"], $idPlayOff);
+					}
+				}
+				
+			}
+		}
+		$this->view->render("campeonato", "showPlayOffsAdmin");
+	} 
+
+	public function ganador(){
+		$this->PlayOffsMapper->updateGanador($_GET["fase"],$_GET["idCap"],$_GET["idP"]);		
+		$this->view->render("campeonato", "showPlayOffsAdmin");
 	}
 
 	public function verPistas(){

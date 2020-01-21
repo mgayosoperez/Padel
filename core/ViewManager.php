@@ -197,19 +197,19 @@ class ViewManager {
 	* @param string $flashMessage The message to save into session
 	* @return void
 	*/
-	public function setFlash($flashMessage) {
-		$this->setVariable("__flashmessage__", $flashMessage, true);
+	// public function setFlash($flashMessage) {
+	// 	$this->setVariable("__flashmessage__", $flashMessage, true);
 
-	}
+	// }
 
 	/**
 	* Retrieves the flash message (and pops it)
 	*
 	* @return string The flash message
 	*/
-	public function popFlash() {
-		return $this->getVariable("__flashmessage__", "");
-	}
+	// public function popFlash() {
+	// 	return $this->getVariable("__flashmessage__", "");
+	// }
 
 
 	/// RENDERING

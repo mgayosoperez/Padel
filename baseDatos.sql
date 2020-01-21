@@ -172,7 +172,7 @@ CREATE OR REPLACE TABLE `LIGA_REGULAR` (
 	
 
 		-- CLAVES PRIMARIAS
-		CONSTRAINT PK_liga_regular PRIMARY KEY (`idLiga`, `idCampeonato`),
+		CONSTRAINT PK_liga_regular PRIMARY KEY (`idLiga`),
 		-- CLAVES FORANEAS
 		CONSTRAINT FK_campeonato_liga_regular FOREIGN KEY (`idCampeonato`) REFERENCES `CAMPEONATO` (`idCampeonato`) ON DELETE CASCADE
 
@@ -190,9 +190,25 @@ CREATE OR REPLACE TABLE `PLAYOFFS` (
 	
 
 		-- CLAVES PRIMARIAS
-		CONSTRAINT PK_liga_regular PRIMARY KEY (`idLiga`, `idCampeonato`),
+		CONSTRAINT PK_playoffs PRIMARY KEY (`idPlayoffs`),
 		-- CLAVES FORANEAS
-		CONSTRAINT FK_campeonato_liga_regular FOREIGN KEY (`idCampeonato`) REFERENCES `CAMPEONATO` (`idCampeonato`) ON DELETE CASCADE
+		CONSTRAINT FK_campeonato_playoffs FOREIGN KEY (`idCampeonato`) REFERENCES `CAMPEONATO` (`idCampeonato`) ON DELETE CASCADE
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- -- TABLA PLAYOFFS_FASE_GRUPO
+CREATE OR REPLACE TABLE `PLAYOFFS_FASE_GRUPO` (
+
+	`idPlayoff`		int NOT NULL,
+	`capitan`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
+	`fase` 			enum('1','2','3','4') COLLATE latin1_spanish_ci DEFAULT '1',
+
+		-- CLAVES PRIMARIAS
+		CONSTRAINT PK_playoffs_fase_grupo PRIMARY KEY (`idPlayoff`, `capitan`),
+		-- CLAVES FORANEAS
+		CONSTRAINT FK_capitan_playoffs_fase_grupo FOREIGN KEY (`capitan`) REFERENCES `PAREJA` (`capitan`),
+		CONSTRAINT FK_idplayoff_playoffs_fase_grupo FOREIGN KEY (`idPlayoff`) REFERENCES `PLAYOFFS` (`idPlayoffs`) ON DELETE CASCADE
+
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
@@ -209,8 +225,8 @@ CREATE OR REPLACE TABLE `GRUPO` (
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_grupo PRIMARY KEY (`idGrupo`,`idLiga`),
 		-- CLAVES FORANEAS
-		CONSTRAINT FK_liga_grupo FOREIGN KEY (`idLiga`) REFERENCES `LIGA_REGULAR` (`idLiga`) ON DELETE CASCADE,
-		CONSTRAINT FK_playoffs 	FOREIGN KEY (`idPlayoffs`) REFERENCES `PLAYOFFS` (`idPlayoffs`) ON DELETE CASCADE
+		CONSTRAINT FK_liga_grupo FOREIGN KEY (`idLiga`) REFERENCES `LIGA_REGULAR` (`idLiga`) ON DELETE SET NULL,
+		CONSTRAINT FK_playoffs 	FOREIGN KEY (`idPlayoffs`) REFERENCES `PLAYOFFS` (`idPlayoffs`) ON DELETE SET NULL
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
@@ -342,6 +358,7 @@ CREATE OR REPLACE TABLE `NOTIFICACIONES` (
 	`emisor`			varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 	`destinatario`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 	`mensaje`			text COLLATE latin1_spanish_ci NOT NULL,
+	`new`				bit,
 
 	-- CLAVES PRIMARIAS
 		CONSTRAINT PK_notificacion PRIMARY KEY (`idNotificacion`),

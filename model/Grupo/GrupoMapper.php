@@ -18,6 +18,19 @@ class GrupoMapper{
     return  $auxiliar;
   }
 
+  public function getGruposLiga($idLiga){
+    $sql = $this->db->prepare("SELECT grupo.idGrupo FROM abp.grupo WHERE grupo.idLiga=?;");
+    $sql->execute(array($idLiga));
+    $grupos = $sql->fetchAll(PDO::FETCH_ASSOC);
+    return $grupos;
+
+  }
+
+  public function update($idGrupo, $idPlayOff){
+    $sql = $this->db->prepare("UPDATE abp.grupo SET grupo.idPlayoffs = ? WHERE grupo.idGrupo=?;");
+    $sql->execute(array($idPlayOff ,$idGrupo));
+  }
+
 
 
 }

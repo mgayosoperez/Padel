@@ -30,6 +30,14 @@ class CampeonatoMapper{
      return $campeonato;
   }
 
+  public function getAllCapeonatos(){
+    $sql = $this->db->prepare("SELECT * FROM campeonato");
+    $sql->execute();
+    $campeonato = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+     return $campeonato;
+  }
+
 
 }
  ?>

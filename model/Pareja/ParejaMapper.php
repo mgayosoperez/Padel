@@ -11,7 +11,6 @@ class ParejaMapper{
   }
 
   public function add(Pareja $pareja){
-    
     $sql = $this->db->prepare("INSERT INTO PAREJA (capitan, pareja, idCampeonato, categoria, nivel, grupo, puntos) 
                                 VALUES (?,?,?,?,?,null,'0')");
 
@@ -88,5 +87,25 @@ class ParejaMapper{
     return $toret;
   }
 
+  public function parejasGrupo($idGrupo){
+      $sql = $this->db->prepare("SELECT pareja.capitan, pareja.pareja, pareja.puntos, pareja.idCampeonato FROM pareja WHERE pareja.grupo=?;");
+      $sql->execute(array($idGrupo));
+      $parejas = $sql->fetchAll(PDO::FETCH_ASSOC);
+      return $parejas;
+  }
+
+  public function añadirPuntos($capitan, $idCampeonato, $cantidad){
+    $sql = $this->db->prepare("UPDATE abp.pareja SET pareja.puntos=? WHERE pareja.capitan=? AND pareja.idCampeonato=?;");
+    $sql->execute(array($cantidad,$capitan,$idCampeonato));
+    return true;
+  }
+
+  public function cogerOchoParejas($idCampeonato,$idGrupo){
+    $sql = $this->db->prepare("SELECT * FROM abp.pareja WHERE pareja.idCampeonato = ? AND pareja.grupo = ? ORDER BY pareja.puntos DESC LIMIT 8;");
+    $sql->execute(array($idCampeonato, $idGrupo));
+
+    $parejas = $sql->fetchAll(PDO::FETCH_ASSOC);
+    return $parejas;
+  }
 }
  ?>
