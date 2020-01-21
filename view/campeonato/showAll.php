@@ -2,49 +2,23 @@
 
 require_once(__DIR__."/../../core/ViewManager.php");
 require_once(__DIR__."/../../model/Reserva/Reserva.php");
+require_once(__DIR__."/../../model/Pareja/ParejaMapper.php");
+require_once(__DIR__."/../../model/Playoffs/PlayoffsMapper.php");
+
+require_once(__DIR__."/../../view/navBar/deportista.php");
+
 $view = ViewManager::getInstance();
-$errors = $view->getVariable("errors");
-$user = $_SESSION["currentuser"];
 
 $campeonatos = $view->getVariable("campeonato");
 
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="index.php?controller=deportista&amp;action=index"><img src="icon/padel.png" height="50" width="50" class="mr-2">Padelo</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item dropdown">
-       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Reservas
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="index.php?controller=deportista&amp;action=reserva">Crear reserva</a>
-          <a class="dropdown-item" href="index.php?controller=deportista&amp;action=showReservas">Ver reservas</a>
-          <a class="dropdown-item" href="index.php?controller=deportista&amp;action=showPromocionados">Partidos Promocionados</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=deportista&amp;action=campeonatos">Campeonatos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=clase&amp;action=clasesGrupales">Clases Grupales</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?controller=clase&amp;action=clasesParticulares">Clases Particulares</a>
-      </li>
-    </ul>
-  </div>
-  <form class="form-inline">
-    <div class="mr-5 text-light"><?= $user?></div>
-    <a  href="index.php?controller=deportista&amp;action=logout"><img src="icon/out.png" height="27" width="27"></a>
-  </form>
-</nav>
 
 
 <?php if(isset($campeonatos)){
+  $mapper = new ParejaMapper();
+  //$mapperPO = new PlayoffsMapper();
+
   echo "<table class='table table-borderless ml-5 mt-5'>";
   echo "<thead>";
   echo "<tr>";
@@ -66,7 +40,16 @@ $campeonatos = $view->getVariable("campeonato");
   echo "<td> $nombre</td>";
   echo "<td> $fechaInicio</td>";
   echo "<td> $fechaFin</td>";
-  echo "<td> <a href='index.php?controller=campeonato&amp;action=inscribirse&amp;idCampeonato=$idC'> <button class='btn btn-yagami'>Incribirse</button> </a> </td>";
+  if(!$mapper->parejaExists($user,$idC)){
+     echo "<td><a href='index.php?controller=campeonato&amp;action=inscribirse&amp;idCampeonato=$idC'> <button class='btn btn-yagami'>Incribirse</button> </a> </td>";
+  }else{
+    if (true) {
+      echo "<td> <a href='index.php?controller=campeonato&amp;action=verLiga&amp;idCampeonato=$idC'> <button class='ml-3 btn btn-yagami'>Ver Liga</button> </a>";
+      echo " <a href='index.php?controller=campeonato&amp;action=verPlayoffs&amp;idCampeonato=$idC'> <button class='ml-3 btn btn-yagami'>Ver Playoff</button> </a> </td>";
+    }else{
+      echo "<td> <a href='index.php?controller=campeonato&amp;action=verLiga&amp;idCampeonato=$idC'> <button class='btn btn-yagami'>Ver Liga</button> </a> </td>";
+    }
+  }
   echo "</tr>";
   }
   echo "</tbody>";

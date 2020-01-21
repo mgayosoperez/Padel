@@ -22,9 +22,6 @@ $view = ViewManager::getInstance();
 	</header>
 
 	<main>
-		<div id="flash">
-			<?= $view->popFlash() ?>
-		</div>
 
 		<?= $view->getFragment(ViewManager::DEFAULT_FRAGMENT) ?>
 	</main>
