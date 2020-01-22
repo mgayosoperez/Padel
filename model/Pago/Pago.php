@@ -32,6 +32,9 @@ class Pago {
   public function getDescripcion(){
     return $this->descripcion;
   }
+  public function getDeportista(){
+    return $this->deportista;
+  }
   public function getPagado(){
     return $this->pagado;
   }

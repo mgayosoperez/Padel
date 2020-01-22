@@ -8,7 +8,7 @@ $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
 $view->setVariable("title", "index");
-$datos=$view->getVariable("cosa");
+$pagos = $view->getVariable("facturas");
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -50,31 +50,30 @@ $datos=$view->getVariable("cosa");
   </form>
 </nav>
 
-<div class="h-20 container mt-5 mb-5">
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="icon/p1.jpg" alt="First slide">
+<div class="container">
+        <div class="row justify-content-center align-items-center" style="height:100vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                      <div class="text-light">
+            						<img src="icon/padel.png" height="45" width="45" class="mr-2" >Padelo
+            					</div>
+
+  <form class="" action="index.php?controller=admin&amp;action=addFactura" method="post">
+
+    <div class="form-group">
+      <input type="number" class="form-control" name="importe" placeholder="Importe">
     </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/p2.jpg" alt="Second slide">
+    <div class="form-group">
+      <input type="text" class="form-control" name="descripcion" placeholder="Descripción">
     </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/bola_red.jpg" alt="Third slide">
+    <div class="form-group">
+      <input type="text" class="form-control" name="deportista" placeholder="Cliente">
     </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+    <input type="submit" class="btn btn-yagami" value="Pagar"></input>
+  </form>
+</div>
+</div>
+</div>
 </div>
 </div>

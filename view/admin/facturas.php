@@ -8,7 +8,7 @@ $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $_SESSION["currentuser"];
 $view->setVariable("title", "index");
-$datos=$view->getVariable("cosa");
+$pagos = $view->getVariable("facturas");
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -50,31 +50,52 @@ $datos=$view->getVariable("cosa");
   </form>
 </nav>
 
-<div class="h-20 container mt-5 mb-5">
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="icon/p1.jpg" alt="First slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/p2.jpg" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="icon/bola_red.jpg" alt="Third slide">
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-</div>
+<table class="table table-borderless ml-5 mt-5">
+
+        <tr>
+            <!-- Títulos de la -->
+            <th>
+                idFactura
+            </th>
+            <th>
+                Fecha
+            </th>
+            <th>
+                Importe
+            </th>
+            <th>
+                Descripción
+            </th>
+            <th>
+                Deportista
+            </th>
+
+        </tr>
+      <?php foreach ($pagos as $pago){
+              if ($pago->getPagado() == 0) {?>
+                <tr bgcolor="#96FE6C">
+                  <td><?= $pago->getIdFactura()?></td>
+                  <td><?= $pago->getFecha()?></td>
+                  <td><?= $pago->getImporte()?></td>
+                  <td><?= $pago->getDescripcion()?></td>
+                  <td><?= $pago->getDeportista()?></td>
+
+                  <td>
+                    <!--<button class='btn btn-yagami'>Ver</button>-->
+                  </td>
+              </tr>
+        <?php }else{?>
+                  <tr>
+
+                    <td><?= $pago->getIdFactura()?></td>
+                    <td><?= $pago->getFecha()?></td>
+                    <td><?= $pago->getImporte()?></td>
+                    <td><?= $pago->getDescripcion()?></td>
+                    <td><?= $pago->getDeportista()?></td>
+
+
+  </tr>
+  <?php }?>
+<?php  } ?>
+    </table>
+    <a class="nav-link" href="index.php?controller=admin&amp;action=addFactura">Añadir Factura</a>

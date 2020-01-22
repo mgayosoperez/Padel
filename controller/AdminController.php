@@ -18,6 +18,8 @@ require_once(__DIR__."/../model/Grupo/GrupoMapper.php");
 
 require_once(__DIR__."/../model/Enfrentamiento/EnfrentamientoMapper.php");
 
+require_once(__DIR__."/../model/Pago/PagoMapper.php");
+
 require_once(__DIR__."/../controller/BaseController.php");
 
 
@@ -34,17 +36,18 @@ class AdminController extends BaseController {
 		$this->CampeonatoMapper = new CampeonatoMapper();
 		$this->PartidoPromocionadoMapper = new PartidoPromocionadoMapper();
 		$this->PistaMapper = new PistaMapper();
-		
+		$this->PagoMapper = new PagoMapper();
+
 	}
 
 	public function index(){
 
-		$this->view->render("admin", "index");			
+		$this->view->render("admin", "index");
 	}
 	public function partidoPromocionado(){
 
 		$this->view->render("admin", "promocionado");
-	}	
+	}
 
 	public function addPartidoPromocionado(){
 		$partidoPromocionado = new PartidoPromocionado();
@@ -54,7 +57,7 @@ class AdminController extends BaseController {
 	}
 	public function showPartidos(){
 		$datos = $this->PartidoPromocionadoMapper->verDisponiblesAdmin();
-		$this->view->setVariable("datos",$datos,true);	
+		$this->view->setVariable("datos",$datos,true);
 		$this->view->render("admin", "showPartidos");
 	}
 
@@ -79,12 +82,12 @@ class AdminController extends BaseController {
 		$campeonato->setFechaInicio($_POST["fechaInicio"]);
 		$campeonato->setFechaFin($_POST["fechaFin"]);
 		$this->CampeonatoMapper->add($campeonato);
-		$this->view->redirect("admin", "campeonatos"); 
+		$this->view->redirect("admin", "campeonatos");
 	}
 
 	public function deleteCampeonato(){
 		$this->CampeonatoMapper->delete($_GET["idCampeonato"]);
-		$this->view->redirect("admin", "campeonatos"); 
+		$this->view->redirect("admin", "campeonatos");
 	}
 
 	public function entrenadores(){
@@ -125,7 +128,7 @@ class AdminController extends BaseController {
 			}
 			array_push($arraydatos, $datosg);
 
-			
+
 		}
 		$this->view->setVariable("arraydatos", $arraydatos, true);
 		$this->view->render("admin","grupos");
@@ -133,7 +136,7 @@ class AdminController extends BaseController {
 	}
 
 	public function generarLigaRegular(){
-		for ($i=0; $i <5 ; $i++) { 
+		for ($i=0; $i <5 ; $i++) {
 			switch ($i) {
 				case 0:
 					$this->lesGrupes("1","MASCULINA",$_GET["idCampeonato"],$_GET["fechaFin"]);
@@ -180,7 +183,7 @@ class AdminController extends BaseController {
 						$ligaRegular->setIdCampeonato($idCampeonato);
 						$ligaRegular->setFechaInicio($fechaFin);
 						$ligaRegular->setFechaFin($this->cuatroMeses($fechaFin));
-						$ligaRegularid = $this->LigaRegularMapper->add($ligaRegular); 
+						$ligaRegularid = $this->LigaRegularMapper->add($ligaRegular);
 
 
 						if((!(count($datos)%8==(5||6||7))&&((count($datos)/8)==1))){
@@ -207,7 +210,7 @@ class AdminController extends BaseController {
 								if((count($datos)/8)>1){
 									$numGrupos =(count($datos)/8);
 									$marginados = (count($datos)%8);
-									for ($i=0; $i <intval($numGrupos) ; $i++) { 
+									for ($i=0; $i <intval($numGrupos) ; $i++) {
 										$grupoId = $this->GrupoMapper->add($ligaRegularid);
 										$pareja = new Pareja();
 										$j = 0;
@@ -234,21 +237,36 @@ class AdminController extends BaseController {
 													unset($datos[$index]);
 												}
 											}
-										}	
+										}
 									}
 								}
 							}
 
 						}
 					}else{
-						
+
 					}
 	}
 
 	public function verPistas(){
 		$datos = $this->PistaMapper->showPistas();
-		$this->view->setVariable("datos",$datos,true);	
+		$this->view->setVariable("datos",$datos,true);
 		$this->view->render("admin", "showPistas");
+	}
+
+	public function facturas(){
+		$facturas = $this->PagoMapper->facturas();
+		$this->view->setVariable("facturas", $facturas);
+		$this->view->render("admin", "facturas");
+	}
+
+	public function addFactura(){
+		if(isset($_POST["deportista"])){
+			$this->PagoMapper->addFactura($_POST["importe"], $_POST["descripcion"], $_POST["deportista"]);
+			$this->view->redirect("admin", "facturas");
+		}
+		$this->view->render("admin", "addFactura");
+
 	}
 
 
@@ -258,6 +276,6 @@ class AdminController extends BaseController {
 		$this->view->redirect("init", "index");
 	}
 
-	
+
 
 }
