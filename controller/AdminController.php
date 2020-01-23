@@ -14,6 +14,9 @@ require_once(__DIR__."/../model/PlayOffs/PlayOffsMapper.php");
 require_once(__DIR__."/../model/LigaRegular/LigaRegularMapper.php");
 require_once(__DIR__."/../model/LigaRegular/LigaRegular.php");
 
+require_once(__DIR__."/../model/Notificacion/NotificacionMapper.php");
+require_once(__DIR__."/../model/Notificacion/Notificacion.php");
+
 require_once(__DIR__."/../model/Pista/PistaMapper.php");
 
 require_once(__DIR__."/../model/Grupo/GrupoMapper.php");
@@ -40,6 +43,8 @@ class AdminController extends BaseController {
 		$this->PartidoPromocionadoMapper = new PartidoPromocionadoMapper();
 		$this->PistaMapper = new PistaMapper();
 		$this->PagoMapper = new PagoMapper();		
+		$this->NotificacionMapper = new NotificacionMapper();
+
 	}
 
 	public function index(){
@@ -55,6 +60,10 @@ class AdminController extends BaseController {
 		$partidoPromocionado = new PartidoPromocionado();
 		$partidoPromocionado->setFecha($_POST["fecha"]);
 		$this->PartidoPromocionadoMapper->add($partidoPromocionado);
+		$notificacion = new Notificacion();
+		$notificacion->setEmisor("admin");
+		$notificacion->setMensaje("El club ha añadido una nueva promocion para el dia".$_POST["fecha"].".");
+		$this->NotificacionMapper->crearBroadCast($notificacion,'DEPORTISTA');
 		$this->view->redirect("admin", "showPartidos");
 	}
 	public function showPartidos(){
@@ -83,13 +92,22 @@ class AdminController extends BaseController {
 		$campeonato->setNombre($_POST["nombre"]);
 		$campeonato->setFechaInicio($_POST["fechaInicio"]);
 		$campeonato->setFechaFin($_POST["fechaFin"]);
+		$notificacion = new Notificacion();
+		$notificacion->setEmisor("admin");
+		$notificacion->setMensaje("Se ha creado un nuevo campeonato la fecha de inscripcion finaliza: ".$_POST["fechaFin"].".");
+		$this->NotificacionMapper->crearBroadCast($notificacion,'DEPORTISTA');
 		$this->CampeonatoMapper->add($campeonato);
 		$this->view->redirect("admin", "campeonatos");
+
 	}
 
 	public function deleteCampeonato(){
 		$this->CampeonatoMapper->delete($_GET["idCampeonato"]);
-		$this->view->redirect("admin", "campeonatos");
+		$notificacion = new Notificacion();
+		$notificacion->setEmisor("admin");
+		$notificacion->setMensaje("El campeonato ha sido cancelado, sentimos las molestias");
+		$this->NotificacionMapper->crearBroadCast($notificacion,'DEPORTISTA');
+		$this->view->redirect("admin", "campeonatos"); 
 	}
 
 
@@ -116,6 +134,10 @@ class AdminController extends BaseController {
 					break;
 			}
 		}
+		$notificacion = new Notificacion();
+		$notificacion->setEmisor("admin");
+		$notificacion->setMensaje("Ha comenzado la liga regular");
+		$this->NotificacionMapper->crearBroadCast($notificacion,'DEPORTISTA');
 		$datos=$this->ParejaMapper->showAll($_GET["idCampeonato"]);
 		$this->view->setVariable("grupos", $datos, true);
 		$this->view->render("admin","grupos");
@@ -272,6 +294,10 @@ class AdminController extends BaseController {
 				}
 				
 			}
+		$notificacion = new Notificacion();
+		$notificacion->setEmisor("admin");
+		$notificacion->setMensaje("Han comenzado los PlayOffs");
+		$this->NotificacionMapper->crearBroadCast($notificacion,'DEPORTISTA');
 		}
 		$this->view->render("campeonato", "showPlayOffsAdmin");
 	} 

@@ -34,6 +34,18 @@ $user = $_SESSION["currentuser"];
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=clase&amp;action=clasesParticulares">Clases Particulares</a>
       </li>
+      <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Notificaciones
+        </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="index.php?controller=notificaciones&amp;action=addDeportista">Crear Notificacion</a>
+          <a class="dropdown-item" href="index.php?controller=notificaciones&amp;action=verNotificacionesEnviadasDeportista">Notificaciones enviadas</a>
+          <a class="dropdown-item" href="index.php?controller=notificaciones&amp;action=verNotificacionesDeportista">Notificaciones recibidas</a></div>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="index.php?controller=Deportista&amp;action=pagos">Pagos</a>
+      </li>
     </ul>
   </div>
   <form class="form-inline">

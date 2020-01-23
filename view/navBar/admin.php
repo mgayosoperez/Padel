@@ -31,11 +31,23 @@ $user = $_SESSION["currentuser"];
           <a class="dropdown-item" href="index.php?controller=admin&amp;action=campeonatos">Lista de Campeonatos</a>
           <a class="dropdown-item" href="index.php?controller=admin&amp;action=crearCampeonato">Crear un Campeonato</a></div>
       </li>
+      <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Notificaciones
+        </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="index.php?controller=notificaciones&amp;action=addAdmin">Crear Notificacion</a>
+          <a class="dropdown-item" href="index.php?controller=notificaciones&amp;action=verNotificacionesEnviadasAdmin">Notificaciones enviadas</a>
+          <a class="dropdown-item" href="index.php?controller=notificaciones&amp;action=verNotificacionesAdmin">Notificaciones recibidas</a></div>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=entrenador&amp;action=index">Entrenadores</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="index.php?controller=admin&amp;action=verPistas">Pistas</a>
+      </li>
+            <li class="nav-item">
+        <a class="nav-link" href="index.php?controller=admin&amp;action=facturas">Facturas</a>
       </li>
   </div>
   <form class="form-inline">

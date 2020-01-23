@@ -27,6 +27,8 @@ require_once(__DIR__."/../model/Pista/Pista.php");
 require_once(__DIR__."/../model/Pago/Pago.php");
 require_once(__DIR__."/../model/Pago/PagoMapper.php");
 
+require_once(__DIR__."/../model/Notificacion/NotificacionMapper.php");
+require_once(__DIR__."/../model/Notificacion/Notificacion.php");
 
 
 class DeportistaController extends BaseController {
@@ -45,6 +47,7 @@ class DeportistaController extends BaseController {
 		$this->AdminMapper = new AdminMapper();
 		$this->EntrenadorMapper = new EntrenadorMapper();
 		$this->PagoMapper = new PagoMapper();
+		$this->NotificacionMapper = new NotificacionMapper();
 
 	}
 
@@ -183,6 +186,11 @@ class DeportistaController extends BaseController {
 			}else{
 				if($this->ReservaMapper->pistasOcupadas($fecha)<$numeroPistas){
 					$this->PartidoPromocionadoMapper->inscribirse($_SESSION["currentuser"],$_GET["idPromocionado"]);
+					$notificacion = new Notificacion();
+					$notificacion->setEmisor("admin");
+					$notificacion->setDestinatario($_SESSION["currentuser"]);
+					$notificacion->setMensaje("Te has inscrito a un partido promocionado");
+					$this->NotificacionMapper->crearUniCast($notificacion);
 					if($this->PartidoPromocionadoMapper->numDeportistas($_GET["idPromocionado"])==4){
 						$this->PartidoPromocionadoMapper->crearReserva($this->PartidoPromocionadoMapper->findByIdPromocionado($_GET["idPromocionado"]));
 					}
@@ -202,6 +210,12 @@ class DeportistaController extends BaseController {
 			if(!is_null($this->PartidoPromocionadoMapper->findByIdPromocionado($_GET["idPromocionado"])["idReserva"])){
 				$this->ReservaMapper->delete($this->PartidoPromocionadoMapper->findByIdPromocionado($_GET["idPromocionado"])["idReserva"]);
 			}
+
+					$notificacion = new Notificacion();
+					$notificacion->setEmisor("admin");
+					$notificacion->setDestinatario($_SESSION["currentuser"]);
+					$notificacion->setMensaje("Te has desinscrito a un partido promocionado");
+					$this->NotificacionMapper->crearUniCast($notificacion);
 
 			$this->PartidoPromocionadoMapper->desinscribirse($_SESSION["currentuser"],$_GET["idPromocionado"]);
 				//eliminar la reserva hasta que se vuelva a inscribir 4

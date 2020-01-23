@@ -6,6 +6,8 @@ require_once(__DIR__."/../model/Reserva/Reserva.php");
 require_once(__DIR__."/../model/Reserva/ReservaMapper.php");
 require_once(__DIR__."/../model/Pista/Pista.php");
 require_once(__DIR__."/../model/Pista/PistaMapper.php");
+require_once(__DIR__."/../model/Notificacion/Notificacion.php");
+require_once(__DIR__."/../model/Notificacion/NotificacionMapper.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
 
@@ -17,7 +19,7 @@ class ReservaController extends BaseController {
 
 	public function __construct() {
 		parent::__construct();
-
+		$this->NotificacionMapper = new NotificacionMapper();
 		$this->ReservaMapper = new ReservaMapper();
 		$this->PistaMapper = new PistaMapper();
 
@@ -48,6 +50,11 @@ class ReservaController extends BaseController {
 					}		
 				}
 				$reserva->setPista($pistas[$num]->getIdPista());
+				$notificacion = new Notificacion();
+				$notificacion->setEmisor("admin");
+				$notificacion->setDestinatario($_SESSION["currentuser"]);
+				$notificacion->setMensaje("Has realizado una reserva para el dia: ".$_POST["fecha"].".");
+				$this->NotificacionMapper->crearUniCast($notificacion);
 				$this->ReservaMapper->add($reserva);
 				$this->view->redirect("deportista", "showReservas");
 			}else{
@@ -60,6 +67,10 @@ class ReservaController extends BaseController {
 
 	public function deleteReserva(){
 		$this->ReservaMapper->delete($_GET["idReserva"]);
+		$notificacion = new Notificacion();
+		$notificacion->setEmisor("admin");
+		$notificacion->setDestinatario($_SESSION["currentuser"]);
+		$notificacion->setMensaje("Has eliminado la reserva");
 		$this->view->redirect("deportista", "showReservas");
 	}
 

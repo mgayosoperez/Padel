@@ -196,22 +196,6 @@ CREATE OR REPLACE TABLE `PLAYOFFS` (
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
--- -- TABLA PLAYOFFS_FASE_GRUPO
-CREATE OR REPLACE TABLE `PLAYOFFS_FASE_GRUPO` (
-
-	`idPlayoff`		int NOT NULL,
-	`capitan`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
-	`fase` 			enum('1','2','3','4') COLLATE latin1_spanish_ci DEFAULT '1',
-
-		-- CLAVES PRIMARIAS
-		CONSTRAINT PK_playoffs_fase_grupo PRIMARY KEY (`idPlayoff`, `capitan`),
-		-- CLAVES FORANEAS
-		CONSTRAINT FK_capitan_playoffs_fase_grupo FOREIGN KEY (`capitan`) REFERENCES `PAREJA` (`capitan`),
-		CONSTRAINT FK_idplayoff_playoffs_fase_grupo FOREIGN KEY (`idPlayoff`) REFERENCES `PLAYOFFS` (`idPlayoffs`) ON DELETE CASCADE
-
-
-)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
-
 -- -- TABLA GRUPO
 CREATE OR REPLACE TABLE `GRUPO` (
 
@@ -223,10 +207,11 @@ CREATE OR REPLACE TABLE `GRUPO` (
 
 
 		-- CLAVES PRIMARIAS
-		CONSTRAINT PK_grupo PRIMARY KEY (`idGrupo`,`idLiga`),
+		
+		CONSTRAINT PK_grupo PRIMARY KEY (`idGrupo`),
 		-- CLAVES FORANEAS
 		CONSTRAINT FK_liga_grupo FOREIGN KEY (`idLiga`) REFERENCES `LIGA_REGULAR` (`idLiga`) ON DELETE SET NULL,
-		CONSTRAINT FK_playoffs 	FOREIGN KEY (`idPlayoffs`) REFERENCES `PLAYOFFS` (`idPlayoffs`) ON DELETE SET NULL
+		CONSTRAINT FK_playoffs_grupo 	FOREIGN KEY (`idPlayoffs`) REFERENCES `PLAYOFFS` (`idPlayoffs`) ON DELETE SET NULL
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
@@ -358,7 +343,7 @@ CREATE OR REPLACE TABLE `NOTIFICACIONES` (
 	`emisor`			varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 	`destinatario`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 	`mensaje`			text COLLATE latin1_spanish_ci NOT NULL,
-	`new`				bit,
+	`new`				bit DEFAULT 1,
 
 	-- CLAVES PRIMARIAS
 		CONSTRAINT PK_notificacion PRIMARY KEY (`idNotificacion`),
@@ -367,6 +352,23 @@ CREATE OR REPLACE TABLE `NOTIFICACIONES` (
 		CONSTRAINT FK_destinatario_notificacion FOREIGN KEY (`destinatario`) REFERENCES `USUARIO` (`login`) ON DELETE CASCADE
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- -- TABLA PLAYOFFS_FASE_GRUPO
+CREATE OR REPLACE TABLE `PLAYOFFS_FASE_GRUPO` (
+
+	`idPlayoff`		int NOT NULL,
+	`capitan`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
+	`fase` 			enum('1','2','3','4') COLLATE latin1_spanish_ci DEFAULT '1',
+
+		-- CLAVES PRIMARIAS
+		CONSTRAINT PK_playoffs_fase_grupo PRIMARY KEY (`idPlayoff`, `capitan`),
+		-- CLAVES FORANEAS
+		CONSTRAINT FK_capitan_playoffs_fase_grupo FOREIGN KEY (`capitan`) REFERENCES `PAREJA` (`capitan`),
+		CONSTRAINT FK_idplayoff_playoffs_fase_grupo FOREIGN KEY (`idPlayoff`) REFERENCES `PLAYOFFS` (`idPlayoffs`) ON DELETE CASCADE
+
+
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
 
 -- -- TABLA FACTURAS
 CREATE OR REPLACE TABLE `FACTURAS` (
@@ -495,7 +497,7 @@ VALUES
 -- -- CAMPEONATO
 INSERT INTO `CAMPEONATO` (`idCampeonato`, `nombre`, `fechaInicio`, `fechaFin`)
 VALUES
-	(NULL, 'Regional', '2019-11-05', '2019-11-23'),
+	(NULL, 'Regional', '2019-11-05', '2020-11-23'),
 	(NULL, 'Estatal', '2020-11-05', '2020-11-12');
 
 -- -- DEPORTISTA
@@ -678,15 +680,6 @@ VALUES
 	('20', 'deportista1'),
 	('21', 'deportista1');
 
--- -- TABLA LIGA_REGULAR
-INSERT INTO `LIGA_REGULAR` (`idLiga`, `fechaInicio`, `fechaFin`, `categoria`, `nivel`, `idCampeonato`)
-VALUES
-	('1', '2019-11-15', '2020-01-15', 'MASCULINA', '1', '1');
-
--- -- TABLA GRUPO
-INSERT INTO `GRUPO` (`idGrupo`,	`idLiga`)
-VALUES
-	('1', '1');
 
 -- -- TABLA PAREJA
 INSERT INTO `PAREJA` (`capitan`, `pareja`, `idCampeonato`, `categoria`, `nivel`, `grupo`, `puntos`)
@@ -748,3 +741,4 @@ INSERT INTO `PROMOCIONADO_HAS_DEPORTISTA` (`idPromocionado`, `deportista`)
 VALUES
 	('1', 'aglopez2'),
 	('1', 'deportista1');
+
