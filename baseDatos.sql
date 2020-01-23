@@ -596,15 +596,6 @@ VALUES
 	('profe6', '0000000F005', '16472834A', '126789', 'profe', 'malvado', 'HOMBRE'),
 	('profe7', '000000S0006', '16410134G', '091001', 'ultimo1', 'profe1', 'HOMBRE');
 
--- -- CLASE
-INSERT INTO `CLASE` (`idClase`, `login`, `rol`, `reserva`)
-VALUES
-	('1', 'profe1', 'PARTICULAR', NULL);
-
--- -- CLASE_PARTICULAR
-INSERT INTO `CLASE_PARTICULAR` (`idClase`, `deportista`, `aceptar`)
-VALUES
-	('1', 'deportista1', NULL);
 
 -- -- RESERVA
 INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`)
