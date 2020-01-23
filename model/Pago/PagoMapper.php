@@ -46,7 +46,7 @@ class PagoMapper {
 	}
 
 	public function addFactura($importe, $descripcion, $deportista){
-		$stmt = $this->db->prepare("INSERT INTO FACTURAS(importe, descripcion, deportista, pagado) VALUES (?, ?, ?, ?)");
+		$stmt = $this->db->prepare("INSERT INTO FACTURAS(importe, fecha, descripcion, deportista, pagado) VALUES (?, NOW(), ?, ?, ?)");
 		$stmt->execute(array($importe, $descripcion, $deportista, 1));
 	}
 

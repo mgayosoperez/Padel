@@ -70,7 +70,7 @@ $pagos = $view->getVariable("facturas");
     <div class="form-group">
       <input type="text" class="form-control" name="deportista" placeholder="Cliente">
     </div>
-    <input type="submit" class="btn btn-yagami" value="Pagar"></input>
+    <input type="submit" class="btn btn-yagami" value="Enviar"></input>
   </form>
 </div>
 </div>
