@@ -631,28 +631,6 @@ VALUES
 	(NULL , '2019-11-21 18:00', '4'),
 	(NULL , '2019-11-21 18:00', '5');
 
--- -- DEPORTISTA_HAS_CLASE_GRUPAL
-INSERT INTO `DEPORTISTA_HAS_CLASE_GRUPAL` (`idClase`, `login`)
-VALUES
-	('1', 'aglopez2'),
-	('1', 'aglopez3'),
-	('1', 'aglopez4'),
-	('1', 'aglopez5'),
-	('1', 'aglopez6'),
-	('2', 'anacletillo'),
-	('2', 'anacletillo1'),
-	('2', 'anacletillo2'),
-	('2', 'anacletillo3'),
-	('2', 'anacletillo4'),
-	('2', 'lordvile'),
-	('2', '1lordvile'),
-	('2', '2lordvile'),
-	('2', '3lordvile'),
-	('2', '4lordvile'),
-	('3', 'cuestaMucho'),
-	('3', 'cuestaMucho1'),
-	('3', 'cuestaMucho2'),
-	('3', 'cuestaMucho3');
 
 -- -- TABLA RESERVA_HAS_DEPORTISTA
 INSERT INTO `RESERVA_HAS_DEPORTISTA` (`idReserva`, `idDeportista`)
