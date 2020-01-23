@@ -24,6 +24,11 @@ require_once(__DIR__."/../model/Admin/AdminMapper.php");
 require_once(__DIR__."/../model/Pista/PistaMapper.php");
 require_once(__DIR__."/../model/Pista/Pista.php");
 
+require_once(__DIR__."/../model/Pago/Pago.php");
+require_once(__DIR__."/../model/Pago/PagoMapper.php");
+
+
+
 class DeportistaController extends BaseController {
 
 
@@ -39,6 +44,7 @@ class DeportistaController extends BaseController {
 		$this->PartidoPromocionadoMapper = new PartidoPromocionadoMapper();
 		$this->AdminMapper = new AdminMapper();
 		$this->EntrenadorMapper = new EntrenadorMapper();
+		$this->PagoMapper = new PagoMapper();
 
 	}
 
@@ -46,7 +52,6 @@ class DeportistaController extends BaseController {
 
 		$this->view->render("deportistas", "index");
 	}
-
 
 	public function login() {
 		if (isset($_POST["login"])){
@@ -170,7 +175,7 @@ class DeportistaController extends BaseController {
 
 	public function inscribirsePromocionado(){
 		if (isset($_GET["idPromocionado"])){
-			$numeroPistas = $this->PistaMapper->numeroPistas(); 
+			$numeroPistas = $this->PistaMapper->numeroPistas();
 			$numDeportistas = $this->PartidoPromocionadoMapper->numDeportistas($_GET["idPromocionado"]);
 			$fecha = $this->PartidoPromocionadoMapper->findByIdPromocionado($_GET["idPromocionado"])["fecha"];
 			if($numDeportistas >= 4){
@@ -187,7 +192,7 @@ class DeportistaController extends BaseController {
 					$this->view->redirect("deportista", "showPromocionados");
 				}
 			}
-			
+
 		}
 
 	}
@@ -207,7 +212,7 @@ class DeportistaController extends BaseController {
 
 
 	public function showPromocionados(){
-		
+
 		$datos = $this->PartidoPromocionadoMapper->verDisponibles($_SESSION["currentuser"]);
 		$inscritos = $this->PartidoPromocionadoMapper->verInscritos($_SESSION["currentuser"]);
 
@@ -226,6 +231,33 @@ class DeportistaController extends BaseController {
 
 		$this->view->setVariable("pPromocionado",$datos,true);
 		$this->view->render("deportistas", "partidoPromocionado");
+	}
+
+	public function pagos(){
+		$misPagos = $this->PagoMapper->facturasDeportista($_SESSION["currentuser"]);
+		$this->view->setVariable("misPagos", $misPagos);
+		$this->view->render("deportistas", "pagos");
+	}
+
+	public function pagar(){
+		if(isset($_POST["idFactura"])){
+			$this->PagoMapper->pagar($_POST["idFactura"]);
+
+		}else{
+			if(isset($_GET["idFactura"])){ //RENDEr FORMULARIO
+				$this->view->setVariable("idFactura", $_GET["idFactura"]);
+				$this->view->setVariable("importe", $_GET["importe"]);
+				$this->view->render("deportistas", "pagar");
+			}
+		}
+		$this->view->redirect("deportista", "pagos");
+		/*if(isset($_GET["idFactura"])){
+			$this->PagoMapper->pagar($_GET["idFactura"]);
+		}
+		$this->view->redirect("deportista", "pagos");*/
+
+
+
 	}
 
 

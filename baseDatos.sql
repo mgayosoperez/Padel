@@ -26,7 +26,7 @@ GRANT ALL PRIVILEGES ON `ABP`.* TO `adminABP`@`localhost` WITH GRANT OPTION;
 
 -- -- TABLA USUARIO
 CREATE OR REPLACE TABLE `USUARIO` (
-	
+
 	`login` 		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 	`rol`			enum('DEPORTISTA', 'ENTRENADOR', 'ADMIN') COLLATE latin1_spanish_ci NOT NULL,
 
@@ -55,7 +55,7 @@ CREATE OR REPLACE TABLE `DEPORTISTA` (
 	`password` 		varchar(128) COLLATE latin1_spanish_ci NOT NULL,
 	`DNI` 			varchar(9) COLLATE latin1_spanish_ci NOT NULL,
 	`nombre` 		varchar(30) COLLATE latin1_spanish_ci  NOT NULL,
-	`apellidos` 	varchar(50) COLLATE latin1_spanish_ci NOT NULL,	
+	`apellidos` 	varchar(50) COLLATE latin1_spanish_ci NOT NULL,
 	`sexo`			enum('MUJER', 'HOMBRE') COLLATE latin1_spanish_ci NOT NULL,
 
 		-- CLAVES PRIMARIAS
@@ -124,20 +124,20 @@ CREATE OR REPLACE TABLE `CLASE_GRUPAL` (
 
 	`idClase`		int NOT NULL,
 	`maxAlumnos`	int COLLATE latin1_spanish_ci NOT NULL,
-	`descripcion`	varchar(500) COLLATE latin1_spanish_ci NOT NULL, 
+	`descripcion`	varchar(500) COLLATE latin1_spanish_ci NOT NULL,
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_clase_grupal PRIMARY KEY (`idClase`),
 		-- CLAVES FORANEAS
 		CONSTRAINT FK_idclase_clase_grupal FOREIGN KEY (`idClase`) REFERENCES `CLASE` (`idClase`) ON DELETE CASCADE
-		
+
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- -- TABLA DEPORTISTA_HAS_CLASE_GRUPAL
 CREATE OR REPLACE TABLE `DEPORTISTA_HAS_CLASE_GRUPAL` (
 
-	`idClase`	int NOT NULL,	
-	`login`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,	
+	`idClase`	int NOT NULL,
+	`login`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_deportista_has_clase_grupal PRIMARY KEY (`idClase`, `login`),
@@ -153,7 +153,7 @@ CREATE OR REPLACE TABLE `CAMPEONATO` (
 	`idCampeonato`	int NOT NULL AUTO_INCREMENT,
 	`nombre`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 	`fechaInicio`	date NOT NULL,
-	`fechaFin`		date NOT NULL,		
+	`fechaFin`		date NOT NULL,
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_campeonato PRIMARY KEY (`idCampeonato`)
@@ -169,7 +169,7 @@ CREATE OR REPLACE TABLE `LIGA_REGULAR` (
 	`categoria`		enum('FEMENINA', 'MIXTA', 'MASCULINA') COLLATE latin1_spanish_ci NOT NULL,
 	`nivel`			enum('1', '2', '3') COLLATE latin1_spanish_ci NOT NULL,
 	`idCampeonato`	int,
-	
+
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_liga_regular PRIMARY KEY (`idLiga`),
@@ -187,7 +187,7 @@ CREATE OR REPLACE TABLE `PLAYOFFS` (
 	`categoria`		enum('FEMENINA', 'MIXTA', 'MASCULINA') COLLATE latin1_spanish_ci NOT NULL,
 	`nivel`			enum('1', '2', '3') COLLATE latin1_spanish_ci NOT NULL,
 	`idCampeonato`	int,
-	
+
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_playoffs PRIMARY KEY (`idPlayoffs`),
@@ -254,7 +254,7 @@ CREATE OR REPLACE TABLE `PAREJA`(
 
 -- -- TABLA ENFRENTAMIENTO
 CREATE OR REPLACE TABLE `ENFRENTAMIENTO` (
-	
+
 	`idPartido`		int NOT NULL AUTO_INCREMENT,
 	`idReserva`		int,
 	`ganador`		varchar(15) COLLATE latin1_spanish_ci,
@@ -284,12 +284,12 @@ CREATE OR REPLACE TABLE `PISTA` (
 
 	`idPista`		int NOT NULL AUTO_INCREMENT,
 	`estado`		varchar(30) COLLATE latin1_spanish_ci NOT NULL,
-	`superficie`	varchar(30) COLLATE latin1_spanish_ci NOT NULL,	
+	`superficie`	varchar(30) COLLATE latin1_spanish_ci NOT NULL,
 
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_pista PRIMARY KEY (`idPista`)
 
-)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci; 
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- -- TABLA RESERVA
 CREATE OR REPLACE TABLE `RESERVA` (
@@ -307,7 +307,7 @@ CREATE OR REPLACE TABLE `RESERVA` (
 
 ALTER TABLE `CLASE` ADD CONSTRAINT FK_reserva_clase FOREIGN KEY (`reserva`) REFERENCES `RESERVA` (`idReserva`) ON DELETE SET NULL;
 
-ALTER TABLE `ENFRENTAMIENTO` ADD CONSTRAINT FK_idreserva_enfrentamiento	FOREIGN KEY (`idReserva`) REFERENCES `RESERVA` (`idReserva`) ON DELETE SET NULL; 
+ALTER TABLE `ENFRENTAMIENTO` ADD CONSTRAINT FK_idreserva_enfrentamiento	FOREIGN KEY (`idReserva`) REFERENCES `RESERVA` (`idReserva`) ON DELETE SET NULL;
 
 -- -- TABLA RESERVA_HAS_DEPORTISTA
 CREATE OR REPLACE TABLE `RESERVA_HAS_DEPORTISTA` (
@@ -318,7 +318,7 @@ CREATE OR REPLACE TABLE `RESERVA_HAS_DEPORTISTA` (
 		-- CLAVES PRIMARIAS
 		CONSTRAINT PK_reserva_has_deportista PRIMARY KEY (`idReserva`, `idDeportista`),
 		-- CLAVES FORANEAS
-		CONSTRAINT FK_idreserva_reserva_has_deportista	FOREIGN KEY (`idReserva`) REFERENCES `RESERVA` (`idReserva`) ON DELETE CASCADE,	
+		CONSTRAINT FK_idreserva_reserva_has_deportista	FOREIGN KEY (`idReserva`) REFERENCES `RESERVA` (`idReserva`) ON DELETE CASCADE,
 		CONSTRAINT FK_iddeportista_reserva_has_deportista	FOREIGN KEY (`idDeportista`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
@@ -351,7 +351,7 @@ CREATE OR REPLACE TABLE `PROMOCIONADO_HAS_DEPORTISTA` (
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
--- -- TABLA NOTIFICACIONES	
+-- -- TABLA NOTIFICACIONES
 CREATE OR REPLACE TABLE `NOTIFICACIONES` (
 
 	`idNotificacion`	int NOT NULL AUTO_INCREMENT,
@@ -367,11 +367,26 @@ CREATE OR REPLACE TABLE `NOTIFICACIONES` (
 		CONSTRAINT FK_destinatario_notificacion FOREIGN KEY (`destinatario`) REFERENCES `USUARIO` (`login`) ON DELETE CASCADE
 
 )ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- -- TABLA FACTURAS
+CREATE OR REPLACE TABLE `FACTURAS` (
+	 `idFactura`	int NOT NULL AUTO_INCREMENT,
+	 `importe`			int NOT NULL,
+	 `fecha`		datetime NOT NULL,
+	 `descripcion`			text COLLATE latin1_spanish_ci NOT NULL,
+	 `deportista`	varchar(30) COLLATE latin1_spanish_ci NOT NULL,
+	 `pagado` boolean,
+		-- CLAVES PRIMARIAS
+		CONSTRAINT PK_pago PRIMARY KEY (`idFactura`),
+		-- CLAVES FORANEAS
+		CONSTRAINT FK_emisor_pago FOREIGN KEY (`deportista`) REFERENCES `DEPORTISTA` (`login`) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
 -- -- INSERTS
 
 -- -- USUARIOS
 INSERT INTO `USUARIO` (`login`, `rol`)
-VALUES 
+VALUES
 	('admin', 'ADMIN'),
 	('aglopez2', 'DEPORTISTA'),
 	('aglopez3', 'DEPORTISTA'),
@@ -465,7 +480,7 @@ VALUES
 
 -- -- ADMIN
 INSERT INTO `ADMIN` (`login`, `password`)
-VALUES 
+VALUES
 	('admin', 'admin');
 
 -- -- PISTA
@@ -568,10 +583,10 @@ VALUES
 	('deportista48', 'deportista48', '1111RET8O', 'deportista48', 'deportista48', 'HOMBRE'),
 	('deportista49', 'deportista49', '1111RET9O', 'deportista49', 'deportista49', 'HOMBRE'),
 	('deportista50', 'deportista50', '76730055D', 'deportista50', 'deportista50', 'HOMBRE');
- 
+
 -- -- ENTRENADOR
 INSERT INTO `ENTRENADOR` (`login`, `password`, `DNI`, `NSS`, `nombre`, `apellidos`, `sexo`)
-VALUES 
+VALUES
 	('profe1', '00000000001', '16472834D', '123456789', 'profe', 'guay', 'HOMBRE'),
 	('profe3', '00000000012', '16472834F', '987654321', 'profe', 'donde esta profe2?', 'HOMBRE'),
 	('profe4', '00000000023', '16472834H', '123456', 'profe', 'chulo', 'MUJER'),
@@ -581,7 +596,7 @@ VALUES
 
 -- -- CLASE
 INSERT INTO `CLASE` (`idClase`, `login`, `rol`, `reserva`)
-VALUES 
+VALUES
 	('1', 'profe1', 'GRUPAL', NULL),
 	('2', 'profe4', 'GRUPAL', NULL),
 	('3', 'profe3', 'GRUPAL', NULL),
@@ -589,14 +604,14 @@ VALUES
 
 -- -- CLASE_GRUPAL
 INSERT INTO `CLASE_GRUPAL` (`idClase`, `maxAlumnos`, `descripcion`)
-VALUES 
+VALUES
 	('1', '20', 'Clase orientada en mejora de saque.'),
 	('2', '20', 'Clase orientada en mejora de recepción.'),
 	('3', '20', 'Clase orientada en mejora de ataque.');
 
 -- -- CLASE_PARTICULAR
-INSERT INTO `CLASE_PARTICULAR` (`idClase`, `deportista`, `aceptar`) 
-VALUES 
+INSERT INTO `CLASE_PARTICULAR` (`idClase`, `deportista`, `aceptar`)
+VALUES
 	('4', 'deportista1', NULL);
 
 -- -- RESERVA
@@ -650,17 +665,17 @@ VALUES
 -- -- TABLA RESERVA_HAS_DEPORTISTA
 INSERT INTO `RESERVA_HAS_DEPORTISTA` (`idReserva`, `idDeportista`)
 VALUES
-	('1', 'aglopez2'), 
-	('3', 'aglopez2'), 
-	('12', 'aglopez2'), 
-	('13', 'aglopez2'), 
-	('14', 'anacletillo'), 
-	('15', 'anacletillo'), 
+	('1', 'aglopez2'),
+	('3', 'aglopez2'),
+	('12', 'aglopez2'),
+	('13', 'aglopez2'),
+	('14', 'anacletillo'),
+	('15', 'anacletillo'),
 	('16', 'anacletillo'),
-	('17', 'deportista1'), 
-	('18', 'deportista1'), 
-	('19', 'deportista1'), 
-	('20', 'deportista1'), 
+	('17', 'deportista1'),
+	('18', 'deportista1'),
+	('19', 'deportista1'),
+	('20', 'deportista1'),
 	('21', 'deportista1');
 
 -- -- TABLA LIGA_REGULAR
@@ -707,21 +722,27 @@ VALUES
 	('deportista50', '4lordvile', '1', 'MASCULINA', '1', NULL, '0');
 
 -- -- ENFRENTAMIENTO
-INSERT INTO `ENFRENTAMIENTO` (`idPartido`, `idReserva`, `ganador`) 
-VALUES 
+INSERT INTO `ENFRENTAMIENTO` (`idPartido`, `idReserva`, `ganador`)
+VALUES
 	('1', NULL, NULL);
 
 -- -- PAREJA_HAS_ENFRENTAMIENTO
-INSERT INTO `PAREJA_HAS_ENFRENTAMIENTO` (`idPartido`, `pareja`, `puntos`) 
-VALUES 
-	('1', 'cuestaMucho2', NULL), 
-	('1', 'deportista1', NULL); 																									
+INSERT INTO `PAREJA_HAS_ENFRENTAMIENTO` (`idPartido`, `pareja`, `puntos`)
+VALUES
+	('1', 'cuestaMucho2', NULL),
+	('1', 'deportista1', NULL);
 
 INSERT INTO `PARTIDO_PROMOCIONADO` (`idPromocionado`, `fecha`, `idReserva`)
-VALUES 
+VALUES
 	('1', '2019-11-30 18:00',NULL),
 	('2', '2019-12-01 18:00',NULL),
 	('3', '2019-12-02 18:00',NULL);
+
+-- -- FACTURAS
+INSERT INTO `FACTURAS` (`idFactura`, `importe`, `fecha`, `descripcion`, `deportista`, `pagado`)
+VALUES
+	('1', '50', '2020-01-15', 'Factura mensual', 'aglopez2', '1' ),
+	('2', '25', '2020-01-17', 'Factura clase grupal', 'aglopez2', '1' );
 
 INSERT INTO `PROMOCIONADO_HAS_DEPORTISTA` (`idPromocionado`, `deportista`)
 VALUES
