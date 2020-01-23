@@ -3,7 +3,6 @@
 require_once(__DIR__."/../../model/Reserva/ReservaMapper.php");
 require_once(__DIR__."/../../model/Pista/PistaMapper.php");
 require_once(__DIR__."/../../core/ViewManager.php");
-
 require_once(__DIR__."/../../view/navBar/deportista.php");
 
 $view = ViewManager::getInstance();
@@ -23,6 +22,7 @@ if($HoraActual>20){
 
 $fechas = array();
 $fechato = array();
+
 if($control){
   for($z = 1; $z < 8; $z++){
     $fechatito = date($fieso ,time()+(86400*$z));
@@ -45,7 +45,6 @@ if($control){
 }
 
 }
-
 
 function horaOcupada($fecha){
   $ReservaMapper = new ReservaMapper();
@@ -181,7 +180,7 @@ for(z=1;z<7;z++){
     if(!document.getElementById(i).hasAttribute("class")){
       for(z = 1; z < 50; z++){
         if(!(document.getElementById(z).getAttribute("class") === null)){
-          if(!document.getElementById(z).getAttribute("class").includes("bg-dark")){
+          if(!document.getElementById(z).getAttribute("class").includes("bg-danger") || !document.getElementById(z).getAttribute("class").includes("bg-dark")){
             document.getElementById(z).removeAttribute("class");
           }
         }
