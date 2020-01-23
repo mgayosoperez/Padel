@@ -9,6 +9,8 @@ require_once(__DIR__."/../model/Pareja/Pareja.php");
 require_once(__DIR__."/../model/Deportista/DeportistaMapper.php");
 require_once(__DIR__."/../model/LigaRegular/LigaRegularMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
+require_once(__DIR__."/../model/Notificacion/NotificacionMapper.php");
+require_once(__DIR__."/../model/Notificacion/Notificacion.php");
 
 
 class CampeonatoController extends BaseController {
@@ -18,6 +20,7 @@ class CampeonatoController extends BaseController {
 
 	public function __construct() {
 		parent::__construct();
+		$this->NotificacionMapper = new NotificacionMapper();
 		$this->LigaRegularMapper = new LigaRegularMapper();
 		$this->DeportistaMapper = new DeportistaMapper();
 		$this->ParejaMapper = new ParejaMapper();
@@ -57,6 +60,11 @@ class CampeonatoController extends BaseController {
 						}
 
 						$this->ParejaMapper->add($pareja);
+						$notificacion = new Notificacion();
+						$notificacion->setEmisor("admin");
+						$notificacion->setDestinatario($_SESSION["currentuser"]);
+						$notificacion->setMensaje("Te has desinscrito a un campeonato");
+						$this->NotificacionMapper->crearUniCast($notificacion);
 						
 						$this->view->redirect("deportista", "index");
 					} else {

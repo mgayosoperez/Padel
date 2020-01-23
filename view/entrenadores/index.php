@@ -14,15 +14,14 @@ $view->setVariable("title", "index");
 $datos=$view->getVariable("cosa");
 
 $listaClases = $view->getVariable("clases");
-//$listaFechas = $view->getVariable("fechas");
+
 
 ?>
 
 
-<table class="table table-borderless ml-5 mt-5">
+<table class="table table-borderless  mt-5">
 
             <tr>
-                <!-- Títulos de la -->
                 <th>
                     IdClase
                 </th>
@@ -44,11 +43,7 @@ $listaClases = $view->getVariable("clases");
                   <td><?= $clase->getFecha()?></td>
                   <td><?= $clase->getDescripcion();?></td>
                   <td>
-                    <a href="index.php?controller=clase&amp;action=aceptarClase&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Aceptar</button></a>
-                    <a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>&reserva=<?= $clase->getReserva()?>"><button class='btn btn-yagami'>Cancelar</button></a>
-                    <?php /* ?><a href="index.php?controller=entrenador&amp;action=delete&amp;login=<?=$entrenador->getLogin()?>">Borrar</a>?><?*/?>
-
-
+                    <a href="index.php?controller=clase&amp;action=NOaceptarClase&amp;idClase=<?= $clase->getIdClase()?>&reserva=<?= $clase->getReserva()?>"><button class='btn btn-yagami'>Cancelar</button></a>
                   </td>
               </tr>
           <?php }else{?>
@@ -57,13 +52,14 @@ $listaClases = $view->getVariable("clases");
                 <td><?= $clase->getRol()?></td>
                 <td><?= $clase->getFecha()?></td>
                 <td><?= $clase->getDescripcion();?></td>
-                <td><?= $clase->getAceptar();?></td>
                 <td>
-                  <a href="index.php?controller=clase&amp;action=aceptarClase&amp;idClase=<?= $clase->getIdClase()?>"><button class='btn btn-yagami'>Aceptar</button></a>
+                 <?php
+                  $rol=$clase->getRol();
+                 if($rol=="PARTICULAR"){
+                  $idC=$clase->getIdClase();
+                  echo "<a href='index.php?controller=clase&amp;action=aceptarClase&amp;idClase=$idC'><button class='btn btn-yagami'>Aceptar</button></a>";
+                 }?>
                   <a href="index.php?controller=clase&amp;action=delete&amp;idClase=<?= $clase->getIdClase()?>&reserva=<?= $clase->getReserva()?>"><button class='btn btn-yagami'>Cancelar</button></a>
-                  <?php /* ?><a href="index.php?controller=entrenador&amp;action=delete&amp;login=<?=$entrenador->getLogin()?>">Borrar</a>?><?*/?>
-
-
                 </td>
             </tr>
         <?php   }?>

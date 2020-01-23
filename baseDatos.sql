@@ -599,22 +599,12 @@ VALUES
 -- -- CLASE
 INSERT INTO `CLASE` (`idClase`, `login`, `rol`, `reserva`)
 VALUES
-	('1', 'profe1', 'GRUPAL', NULL),
-	('2', 'profe4', 'GRUPAL', NULL),
-	('3', 'profe3', 'GRUPAL', NULL),
-	('4', 'profe1', 'PARTICULAR', NULL);
-
--- -- CLASE_GRUPAL
-INSERT INTO `CLASE_GRUPAL` (`idClase`, `maxAlumnos`, `descripcion`)
-VALUES
-	('1', '20', 'Clase orientada en mejora de saque.'),
-	('2', '20', 'Clase orientada en mejora de recepción.'),
-	('3', '20', 'Clase orientada en mejora de ataque.');
+	('1', 'profe1', 'PARTICULAR', NULL);
 
 -- -- CLASE_PARTICULAR
 INSERT INTO `CLASE_PARTICULAR` (`idClase`, `deportista`, `aceptar`)
 VALUES
-	('4', 'deportista1', NULL);
+	('1', 'deportista1', NULL);
 
 -- -- RESERVA
 INSERT INTO `RESERVA` (`idReserva`, `fecha`, `idPista`)

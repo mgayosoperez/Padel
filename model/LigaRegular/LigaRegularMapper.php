@@ -32,6 +32,17 @@ class LigaRegularMapper {
     	return $liga;
 	}
 
+	public function existe($idCampeonato){
+		$sql = $this->db->prepare("SELECT count(liga_regular.idLiga) FROM abp.liga_regular WHERE liga_regular.idCampeonato=?;");
+		$sql->execute(array($idCampeonato));
+
+		if ($sql->fetchColumn() > 0) {
+			return true;
+		}else{
+			return false;
+		}
+	
+	}
 	
 
 

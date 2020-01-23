@@ -13,6 +13,9 @@ require_once(__DIR__."/../model/Entrenador/EntrenadorMapper.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
 
+require_once(__DIR__."/../model/Notificacion/NotificacionMapper.php");
+require_once(__DIR__."/../model/Notificacion/Notificacion.php");
+
 class ClaseController extends BaseController
 {
 
@@ -26,6 +29,7 @@ class ClaseController extends BaseController
     $this->claseMapper = new ClaseMapper();
     $this->reservaMapper = new ReservaMapper();
     $this->entrenadorMapper = new EntrenadorMapper();
+    $this->NotificacionMapper = new NotificacionMapper();
   }
   //Visualiza las Clases del Entrenador logueado + opciones de Añadir, Editar, Borrar
   public function index(){
@@ -70,7 +74,6 @@ class ClaseController extends BaseController
       $clase->setAceptar($aceptar["aceptar"]);
     }
     $this->view->setVariable('misClasesParticulares', $misclasesParticulares);
-    //    /view/clases/showall.php
     $this->view->render('clases', 'clasesParticulares');
   }
 
@@ -93,6 +96,13 @@ class ClaseController extends BaseController
           $clase->setRol("GRUPAL");
           $idClase = $this->claseMapper->crear($clase); //crea en la tabla clase
           $this->claseMapper->crearGrupal($idClase, $_POST["maxAlum"], $_POST["descripcion"]); //Crea en la tabla Clase_Grupal
+          $notificacion = new Notificacion();
+            $notificacion->setEmisor("admin");
+            $notificacion->setDestinatario($_SESSION["currentuser"]);
+            $notificacion->setMensaje("Se ha creado una nueva clase grupal del profesor ".$_SESSION["currentuser"]);
+            $this->NotificacionMapper->crearBroadcast($notificacion, 'DEPORTISTA');
+        }else{
+          $this->view->render("clases", "add");
         }
       }
       //Redirijimos la vista a index.php?Controller=clase&action=index
@@ -152,7 +162,13 @@ class ClaseController extends BaseController
           $clase->setReserva($idReserva);
           $clase->setRol("PARTICULAR");
 
+
           $idClase = $this->claseMapper->crear($clase);
+            $notificacion = new Notificacion();
+            $notificacion->setEmisor("admin");
+            $notificacion->setDestinatario($_SESSION["currentuser"]);
+            $notificacion->setMensaje("Te has inscrito en una clase particular");
+            $this->NotificacionMapper->crearUniCast($notificacion);
           $this->claseMapper->crearParticular($idClase, $_SESSION["currentuser"]);
         }
       }
@@ -177,6 +193,11 @@ class ClaseController extends BaseController
           $numAlum = $this->claseMapper->getNumAlum($_GET["idClase"]);
           if ($numAlum < $claseGrupal["maxAlumnos"]) {                            //Comprobamos si hay plazas libres
             $this->claseMapper->inscribirGrupal($_GET["idClase"], $_SESSION["currentuser"]);
+            $notificacion = new Notificacion();
+            $notificacion->setEmisor("admin");
+            $notificacion->setDestinatario($_SESSION["currentuser"]);
+            $notificacion->setMensaje("Te has inscrito en una clase grupal");
+            $this->NotificacionMapper->crearUniCast($notificacion);
           }else {
             $errors["clase"] = "Clase Completa";
             $this->view->setVariable("errors", $errors);
@@ -206,6 +227,11 @@ public function desinscribirse(){
       $errors["reserva"] = "Clase no existe";
       $this->view->setVariable("errors", $errors);
     }else{
+            $notificacion = new Notificacion();
+            $notificacion->setEmisor("admin");
+            $notificacion->setDestinatario($_SESSION["currentuser"]);
+            $notificacion->setMensaje("Te has desinscrito de una clase");
+            $this->NotificacionMapper->crearUniCast($notificacion);
       $clase = $this->claseMapper->getClase($_GET["idClase"]);
       if($clase["rol"] == "GRUPAL"){
         $this->claseMapper->desinscribirGrupal($_GET["idClase"], $_SESSION["currentuser"]);
@@ -221,6 +247,13 @@ public function desinscribirse(){
 public function aceptarClase(){
   if(isset($_GET["idClase"])){
     $this->claseMapper->aceptarClase($_GET["idClase"]);
+  }
+  $this->view->redirect("clase", "index");
+}
+
+public function NOaceptarClase(){
+  if(isset($_GET["idClase"])){
+    $this->claseMapper->NOaceptarClase($_GET["idClase"]);
   }
   $this->view->redirect("clase", "index");
 }

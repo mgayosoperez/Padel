@@ -58,7 +58,21 @@ class ReservaController extends BaseController {
 				$this->ReservaMapper->add($reserva);
 				$this->view->redirect("deportista", "showReservas");
 			}else{
-				echo("No hay pistas");
+				if ($this->ReservaMapper->numReserva($_SESSION["currentuser"])==5) {
+					$notificacion = new Notificacion();
+					$notificacion->setEmisor("admin");
+					$notificacion->setDestinatario($_SESSION["currentuser"]);
+					$notificacion->setMensaje("Has llegado al limite de tus reservas.");
+					$this->NotificacionMapper->crearUniCast($notificacion);
+					$this->view->render("deportistas", "verNotificaciones");
+				}else{
+					$notificacion = new Notificacion();
+					$notificacion->setEmisor("admin");
+					$notificacion->setDestinatario($_SESSION["currentuser"]);
+					$notificacion->setMensaje("No quedan pistas.");
+					$this->NotificacionMapper->crearUniCast($notificacion);
+					$this->view->render("deportistas", "verNotificaciones");
+				}
 			}
 			
 

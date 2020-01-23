@@ -261,8 +261,13 @@ class ClaseMapper{
   }
 
   public function aceptarClase($idClase){
-    $stmt = $this->db->prepare("UPDATE CLASE_PARTICULAR SET aceptar = ? WHERE idClase = ?");
-    $stmt->execute(array(TRUE ,$idClase));
+    $stmt = $this->db->prepare("UPDATE CLASE_PARTICULAR SET aceptar = 1 WHERE idClase = ?");
+    $stmt->execute(array($idClase));
+  }
+
+    public function NOaceptarClase($idClase){
+    $stmt = $this->db->prepare("UPDATE CLASE_PARTICULAR SET aceptar = 0 WHERE idClase = ?");
+    $stmt->execute(array($idClase));
   }
 
 

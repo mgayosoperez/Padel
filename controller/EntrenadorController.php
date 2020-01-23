@@ -10,6 +10,9 @@ require_once(__DIR__."/../model/Usuario/Usuario.php");
 
 require_once(__DIR__."/../controller/BaseController.php");
 
+require_once(__DIR__."/../model/Notificacion/NotificacionMapper.php");
+require_once(__DIR__."/../model/Notificacion/Notificacion.php");
+
 /**
  *
  */
@@ -24,6 +27,7 @@ class EntrenadorController extends BaseController
 
     $this->entrenadorMapper = new EntrenadorMapper();
     $this->UsuarioMapper = new UsuarioMapper();
+    $this->NotificacionMapper = new NotificacionMapper();
   }
 
   public function index(){

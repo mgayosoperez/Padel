@@ -4,6 +4,8 @@ require_once(__DIR__."/../../core/ViewManager.php");
 require_once(__DIR__."/../../model/Reserva/Reserva.php");
 require_once(__DIR__."/../../model/Pareja/ParejaMapper.php");
 require_once(__DIR__."/../../model/Playoffs/PlayoffsMapper.php");
+require_once(__DIR__."/../../model/LigaRegular/LigaRegularMapper.php");
+
 
 require_once(__DIR__."/../../view/navBar/deportista.php");
 
@@ -17,7 +19,8 @@ $campeonatos = $view->getVariable("campeonato");
 
 <?php if(isset($campeonatos)){
   $mapper = new ParejaMapper();
-  //$mapperPO = new PlayoffsMapper();
+  $mapperLR = new LigaRegularMapper();
+  $mapperPO = new PlayoffsMapper();
 
   echo "<table class='table table-borderless ml-5 mt-5'>";
   echo "<thead>";
@@ -43,11 +46,13 @@ $campeonatos = $view->getVariable("campeonato");
   if(!$mapper->parejaExists($user,$idC)){
      echo "<td><a href='index.php?controller=campeonato&amp;action=inscribirse&amp;idCampeonato=$idC'> <button class='btn btn-yagami'>Incribirse</button> </a> </td>";
   }else{
-    if (true) {
+    if($mapperPO->existe($idC)){
       echo "<td> <a href='index.php?controller=campeonato&amp;action=verLiga&amp;idCampeonato=$idC'> <button class='ml-3 btn btn-yagami'>Ver Liga</button> </a>";
       echo " <a href='index.php?controller=campeonato&amp;action=verPlayoffs&amp;idCampeonato=$idC'> <button class='ml-3 btn btn-yagami'>Ver Playoff</button> </a> </td>";
+    }elseif ($mapperLR->existe($idC)) {
+      echo "<td> <a href='index.php?controller=campeonato&amp;action=verLiga&amp;idCampeonato=$idC'> <button class='ml-3 btn btn-yagami'>Ver Liga</button> </a>";
     }else{
-      echo "<td> <a href='index.php?controller=campeonato&amp;action=verLiga&amp;idCampeonato=$idC'> <button class='btn btn-yagami'>Ver Liga</button> </a> </td>";
+      echo "<td> La Liga empezará próximamente</td>";
     }
   }
   echo "</tr>";
