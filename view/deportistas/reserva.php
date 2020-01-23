@@ -51,7 +51,7 @@ function horaOcupada($fecha){
   $ReservaMapper = new ReservaMapper();
   $PistaMapper = new PistaMapper();
   if($ReservaMapper->pistasOcupadas($fecha)>=$PistaMapper->numeroPistas()){
-      echo  "class='bg-dark'";
+      echo  "class='bg-danger'";
   }
 }
 
