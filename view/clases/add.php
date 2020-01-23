@@ -50,7 +50,8 @@ if($control){
 function horaOcupada($fecha){
   $ReservaMapper = new ReservaMapper();
   $claseMapper = new ClaseMapper();
-  if($ReservaMapper->pistasOcupadas($fecha)>=5 || $claseMapper->entrenadorHasClase($fecha, $_SESSION["currentuser"])){
+  $PistaMapper = new PistaMapper();
+  if($ReservaMapper->pistasOcupadas($fecha)>=$PistaMapper->numeroPistas() || $claseMapper->entrenadorHasClase($fecha, $_SESSION["currentuser"])){
       echo  "class='bg-danger'";
   }
 }
@@ -205,7 +206,7 @@ for(z=1;z<7;z++){
     if(!document.getElementById(i).hasAttribute("class")){
       for(z = 1; z < 50; z++){
         if(!(document.getElementById(z).getAttribute("class") === null)){
-          if(!document.getElementById(z).getAttribute("class").includes("bg-danger") || !document.getElementById(z).getAttribute("class").includes("bg-dark")){
+          if(!document.getElementById(z).getAttribute("class").includes("bg-danger") && !document.getElementById(z).getAttribute("class").includes("bg-dark")){
             document.getElementById(z).removeAttribute("class");
           }
         }
