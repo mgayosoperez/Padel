@@ -207,7 +207,7 @@ CREATE OR REPLACE TABLE `GRUPO` (
 
 
 		-- CLAVES PRIMARIAS
-		
+
 		CONSTRAINT PK_grupo PRIMARY KEY (`idGrupo`),
 		-- CLAVES FORANEAS
 		CONSTRAINT FK_liga_grupo FOREIGN KEY (`idLiga`) REFERENCES `LIGA_REGULAR` (`idLiga`) ON DELETE SET NULL,
@@ -693,11 +693,10 @@ VALUES
 -- -- FACTURAS
 INSERT INTO `FACTURAS` (`idFactura`, `importe`, `fecha`, `descripcion`, `deportista`, `pagado`)
 VALUES
-	('1', '50', '2020-01-15', 'Factura mensual', 'aglopez2', '1' ),
-	('2', '25', '2020-01-17', 'Factura clase grupal', 'aglopez2', '1' );
+	('1', '50', '2020-01-15', 'Factura mensual', 'deportista1', '1' ),
+	('2', '25', '2020-01-17', 'Factura clase grupal', 'deportista1', '1' );
 
 INSERT INTO `PROMOCIONADO_HAS_DEPORTISTA` (`idPromocionado`, `deportista`)
 VALUES
 	('1', 'aglopez2'),
 	('1', 'deportista1');
-
